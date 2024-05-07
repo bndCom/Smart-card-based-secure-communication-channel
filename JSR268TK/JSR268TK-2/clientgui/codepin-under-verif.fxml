@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ProgressIndicator layoutX="224.0" layoutY="201.0" />
+      <Text layoutX="82.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="We Are Verifying Your Pin Code" textAlignment="CENTER" wrappingWidth="336.4000244140625">
+         <font>
+            <Font name="Product Sans Bold" size="25.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

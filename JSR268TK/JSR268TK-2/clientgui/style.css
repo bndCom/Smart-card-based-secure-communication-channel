@@ -1,0 +1,149 @@
+.buttons {
+    -fx-background-color: transparent;
+    -fx-background-radius: 24;
+    -fx-cursor: hand;
+    -fx-padding: 10px 20px;
+    -fx-transition: all 0.3s;
+}
+.buttons:hover {
+	-fx-translate-y: -5px;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #185FA1;
+    
+}
+.getStarted {
+    -fx-background-color: #185FA1;
+    -fx-background-radius: 14;
+    -fx-font-weight: bold;
+    -fx-font-size: 32;
+    -fx-text-fill: white;
+}
+
+.getStarted:hover {
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.GoBackToHome {
+	-fx-background-color: transparent;
+	-fx-background-radius: 18;
+	-fx-font-size: 32;
+}
+
+.GoBackToHome:hover {
+	-fx-border-color: white;
+	-fx-opacity: 0.8;
+}
+
+
+.logDoctor {
+	-fx-font-size: 32;
+}
+.logAdmin {
+	-fx-font-size: 32;
+}
+.logDoctor:hover {
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.logAdmin:hover {
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.logDoctor:pressed {
+	-fx-opacity: 0.8;
+}
+
+.logAdmin:pressed {
+	-fx-opacity: 0.8;
+
+}
+.admin-button {
+	-fx-background-color: #185FA1;
+    -fx-background-radius: 24;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-family: "Product Sans Bold";
+    -fx-transition: all 0.3s;
+}
+.admin-button:hover {	
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+.admin-button:pressed {
+    -fx-opacity: 0.3;
+    -fx-cursor: hand;
+}
+.doctor-button {
+	-fx-background-color: #185FA1;
+    -fx-background-radius: 24;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-family: "Product Sans Bold";
+    -fx-transition: all 0.3s;
+}
+.doctor-button:hover {	
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+.doctor-button:pressed {
+    -fx-opacity: 0.3;
+    -fx-cursor: hand;
+}
+
+.auth-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.auth-button:pressed {
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+
+.auth-button {
+    -fx-background-color: #185FA1;
+    -fx-background-radius: 24;
+    -fx-text-fill: white;
+    -fx-font-size: 30px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+}
+
+
+.cancel-button {
+    -fx-background-color: #185FA1;
+    -fx-background-radius: 24;
+    -fx-text-fill: white;
+    -fx-font-size: 24px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+}
+.cancel-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.cancel-button:pressed {
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+
+.next-button {
+    -fx-background-color: #185FA1;
+    -fx-background-radius: 24;
+    -fx-text-fill: white;
+    -fx-font-size: 24px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+}
+.next-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.next-button:pressed {
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}

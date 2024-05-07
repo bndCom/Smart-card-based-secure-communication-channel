@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane stylesheets="@style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="#185fa1" layoutX="132.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Please Enter Your Pin Code">
+         <font>
+            <Font name="Product Sans Bold" size="25.0" />
+         </font>
+      </Text>
+      <PasswordField layoutX="184.0" layoutY="168.0" prefHeight="102.0" prefWidth="304.0" promptText="_ _ _ _" style="-fx-background-color: transparent;">
+         <font>
+            <Font name="Product Sans Bold" size="58.0" />
+         </font>
+      </PasswordField>
+      <Button styleClass="next-button" layoutX="243.0" layoutY="315.0" mnemonicParsing="false" style="-fx-background-color: #185fa1; -fx-background-radius: 24; -fx-font-weight: bold;" text="Verify" textFill="WHITE">
+         <font>
+            <Font name="Product Sans Bold" size="27.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
