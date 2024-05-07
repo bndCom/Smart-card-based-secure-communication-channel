@@ -227,14 +227,16 @@ public class SampleClient {
 				handleAddUser(connection);
                 break ;
             case 2 :
-            	
+            	String k = "35PqYxzUTBobnqCPZz2MKw==";
             	Map<String, Object> map = new HashMap<String, Object>();
-            	map.put("nom", "Smith");
+            	map.put("first_name", "Smith");
             	map.put("prenom", "John");
             	map.put("age", 30);
             	map.put("adresse", "123 Main St");
             	map.put("numdoss", 1001);
             	map.put("nbseances", 5);
+            	String js = UtilRequest.mapToJsonString(map);
+            	byte[] data = UtilRequest.aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA==");
             	UtilRequest.Response response1 = UtilRequest.sendRequest("POST", UtilRequest.mapToJsonString(map), "http://localhost:8080/patientsignup", "application/json");
             	System.out.println(response1.getCode());
             	System.out.println(response1.getBody());
@@ -277,7 +279,7 @@ public class SampleClient {
             	mp.put("UID", Base64.getEncoder().encodeToString(UID));
             	mp.put("P", Base64.getEncoder().encodeToString(P));
             	mp.put("calc", Base64.getEncoder().encodeToString(A));
-            	String data = UtilRequest.mapToJsonString(mp);
+            	data = UtilRequest.mapToJsonString(mp);
             	String result = new String();
 //            	data="UID="+Base64.getEncoder().encodeToString(UID)+"&P="+Base64.getEncoder().encodeToString(P)+"&calc="+Base64.getEncoder().encodeToString(A);
             	data="uid="+URLEncoder.encode(b64Encoder.encodeToString(UID), StandardCharsets.UTF_8.toString())+"&p="+URLEncoder.encode(b64Encoder.encodeToString(P), StandardCharsets.UTF_8.toString())+"&a="+URLEncoder.encode(b64Encoder.encodeToString(A), StandardCharsets.UTF_8.toString());

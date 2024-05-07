@@ -17,8 +17,18 @@ public class PatientController {
      PatientRepository patientRepository;
 
     @PostMapping("/patientsignup")
-    public ResponseEntity<String> addPatient(@RequestBody PatientDto patientDto) {
-        Patient patient = new Patient();
+    public ResponseEntity<String> addPatient(@RequestBody byte[] data) {
+        
+    	String js;
+    	PatientDto patientDto ;
+    	try{
+    		js = Util.aesByteToJson(data, "gFn/XoAfNz0LjSnrsHc3CA==");
+    		patientDto = (PatientDto)Util.JsonToObject(js);
+    	}catch(Exception e){
+    		throw new RuntimeException();
+    	}
+    	
+    	Patient patient = new Patient();
         patient.setNom(patientDto.getNom());
         patient.setPrenom(patientDto.getPrenom());
         patient.setAge(patientDto.getAge());

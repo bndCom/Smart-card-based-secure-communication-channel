@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -197,5 +198,12 @@ public class UtilRequest {
         Type type = new com.google.gson.reflect.TypeToken<Map<K, V>>(){}.getType();
         return gson.fromJson(jsonString, type);
     }
+    // aes encrypt and decrypt json
+    public static String aesByteToJson(byte[] data, String key) throws Exception{
+		return new String(AesCBCPad.decrypt_CBC(data, Base64.getDecoder().decode(key)), java.nio.charset.StandardCharsets.UTF_8);					
+	}
+	public static byte[] aesJsonToByte(String data, String key) throws Exception{
+		return AesCBCPad.encrypt_CBC(data.getBytes(), Base64.getDecoder().decode(key));
+	}
     
 }
