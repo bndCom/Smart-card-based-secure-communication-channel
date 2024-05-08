@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
 
@@ -96,8 +99,9 @@ public class UtilRequest {
         
     }
     
-    public static int sendRequest(String requestType, byte[] data, String urlString,String result) throws Exception {
-        if (requestType == null || urlString == null) {
+    public static Response sendRequest(String requestType, byte[] data, String urlString) throws Exception {
+    	String result = new String();
+    	if (requestType == null || urlString == null) {
             throw new IllegalArgumentException("Request type and URL cannot be null");
         }
 
@@ -109,6 +113,7 @@ public class UtilRequest {
         URL url = new URL(urlString);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(requestType);
+        con.setRequestProperty("Content-Type", "application/octet-stream");
 
         // If there's data to be sent and the request type allows it
         if (data != null && requestType.equals("POST")) {
@@ -166,7 +171,7 @@ public class UtilRequest {
 //        }
 
         con.disconnect(); // Close the connection
-        return responseCode;
+        return new Response(responseCode, result);
     }
     // response 
     static class Response{
@@ -205,5 +210,19 @@ public class UtilRequest {
 	public static byte[] aesJsonToByte(String data, String key) throws Exception{
 		return AesCBCPad.encrypt_CBC(data.getBytes(), Base64.getDecoder().decode(key));
 	}
+	
+	// calculate hash
+	 public static String Hash_256(String toHash) throws NoSuchAlgorithmException {
+	        MessageDigest md = MessageDigest.getInstance("SHA-256");
+	        byte [] digest = md.digest(toHash.getBytes(StandardCharsets.UTF_8));
+	        return Base64.getEncoder().encodeToString(digest);
+
+	    }
+	
+	// calculate the hmac of the message
+	public static String requestHash(long timestamp , String keyAES , String encryptedJsonBody) throws NoSuchAlgorithmException {
+        String toHash = keyAES + timestamp + encryptedJsonBody;
+        return Hash_256(toHash);
+    }
     
 }

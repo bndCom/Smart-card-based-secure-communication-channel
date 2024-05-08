@@ -16,9 +16,12 @@ import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
+import java.sql.Date;
 
 import javafx.util.Pair;
 
@@ -224,28 +227,65 @@ public class SampleClient {
 	public static boolean handleUserChoice (int choice , Connection connection) throws Exception{
         switch (choice) {
             case 1 :
-				handleAddUser(connection);
-                break ;
+				//handleAddUser(connection);
+            	LinkedHashMap<String, Object> map2 = new LinkedHashMap<String, Object>();
+            	map2.put("patientId", 5);
+            	map2.put("firstName", "anes");
+            	map2.put("lastName", "bnd");
+            	//map2.put("dateOfBirth", date);
+            	map2.put("nationalId", 14);
+            	map2.put("gender", 1001);
+            	map2.put("email", "anesGmail");
+            	map2.put("phoneNumber", "293847");
+            	map2.put("sessionKey", "mqlksjdf");
+            	map2.put("address", "ainTrig");
+            	UtilRequest.Response r = UtilRequest.sendRequest("POST",
+            			UtilRequest.mapToJsonString(map2),
+            			"http://localhost:8080/patients/add",
+            			"application/json"
+            			); 
+            	System.out.println(r.getBody()+r.getCode());
+            	break ;
             case 2 :
-            	String k = "35PqYxzUTBobnqCPZz2MKw==";
-            	Map<String, Object> map = new HashMap<String, Object>();
-            	map.put("first_name", "Smith");
-            	map.put("prenom", "John");
-            	map.put("age", 30);
-            	map.put("adresse", "123 Main St");
-            	map.put("numdoss", 1001);
-            	map.put("nbseances", 5);
-            	String js = UtilRequest.mapToJsonString(map);
-            	byte[] data = UtilRequest.aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA==");
-            	UtilRequest.Response response1 = UtilRequest.sendRequest("POST", UtilRequest.mapToJsonString(map), "http://localhost:8080/patientsignup", "application/json");
-            	System.out.println(response1.getCode());
-            	System.out.println(response1.getBody());
+            	
+            	LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+            	Date date = new Date((long)12344566);
+
+            	map.put("patientId", 5);
+            	map.put("firstName", "anes");
+            	map.put("lastName", "bnd");
+            	map.put("dateOfBirth", date);
+            	map.put("nationalId", 14);
+            	map.put("gender", 1001);
+            	map.put("email", "anesGmail");
+            	map.put("phoneNumber", "293847");
+            	map.put("sessionKey", "mqlksjdf");
+            	map.put("address", "ainTrig");
+            	SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
+            	try{
+            		System.out.println(admin.addNewUser(map));
+            	}catch(ServerError e){
+            		e.printError();
+            	}
+//            	String js = UtilRequest.mapToJsonString(map);
+//            	String data2 = URLEncoder.encode(Base64.getEncoder().encodeToString(UtilRequest.aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA==")), StandardCharsets.UTF_8.toString());
+//            	int uid = 99;
+//            	int timestamp = 1234;
+//            	String hmac = "testmac";
+//            	UtilRequest.Response response1 = UtilRequest.sendRequest(
+//            			"POST",
+//            			"uid="+uid+"&timestamp="+timestamp+"&hmac="+hmac+"&data="+data2,
+//            			"http://localhost:8080/patientsignup",
+//            			"application/x-www-form-urlencoded"
+//            			);
+//            	System.out.println(response1.getCode());
+//            	System.out.println(response1.getBody());
                 break ;
             case 3 :
             	
-                Session admin = new SessionAdmin(canal, "http://localhost:8080");
+                Session admin2 = new SessionAdmin(canal, "http://localhost:8080");
                 try{
-                	System.out.println(admin.auth());
+                	System.out.println(admin2.auth());
                 }catch(ServerError e){
                 	System.out.println("Error happened in the server! Error code: ");
                 	e.printError();
@@ -279,7 +319,7 @@ public class SampleClient {
             	mp.put("UID", Base64.getEncoder().encodeToString(UID));
             	mp.put("P", Base64.getEncoder().encodeToString(P));
             	mp.put("calc", Base64.getEncoder().encodeToString(A));
-            	data = UtilRequest.mapToJsonString(mp);
+            	String data = UtilRequest.mapToJsonString(mp);
             	String result = new String();
 //            	data="UID="+Base64.getEncoder().encodeToString(UID)+"&P="+Base64.getEncoder().encodeToString(P)+"&calc="+Base64.getEncoder().encodeToString(A);
             	data="uid="+URLEncoder.encode(b64Encoder.encodeToString(UID), StandardCharsets.UTF_8.toString())+"&p="+URLEncoder.encode(b64Encoder.encodeToString(P), StandardCharsets.UTF_8.toString())+"&a="+URLEncoder.encode(b64Encoder.encodeToString(A), StandardCharsets.UTF_8.toString());

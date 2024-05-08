@@ -64,6 +64,13 @@ public class DH {
         return byteArray;
 	}
 	
+	public static long bytesToLong(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+        buffer.put(bytes);
+        buffer.flip(); // Need to flip the buffer to read it
+        return buffer.getLong();
+    }
+	
 	// convert byte array to long
 	public static long byteArrayToLong(byte[] byteArray) {
 	    if (byteArray.length < 8) {

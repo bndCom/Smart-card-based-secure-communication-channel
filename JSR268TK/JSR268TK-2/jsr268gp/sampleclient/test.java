@@ -8,19 +8,12 @@ public class test {
 
 	public static void main(String[] args) throws Exception {
 		// -------------- encryption routin ---------
-		Map<String, String> mp = new HashMap<String, String>();
-		mp.put("name",  "anes");
-		String js = UtilRequest.mapToJsonString(mp);
-//		byte[] res = AesCBC.encrypt_CBC(padZero(js.getBytes()), Base64.getDecoder().decode("gFn/XoAfNz0LjSnrsHc3CA=="));
-//		DH.printByteArray(js.getBytes());
-//		DH.printByteArray(res);
-//		// ------------ decryption routin -----------
-//		byte[] out = AesCBC.decrypt_CBC(res, Base64.getDecoder().decode("gFn/XoAfNz0LjSnrsHc3CA=="));
-//		js = new String(unpadZero(out), java.nio.charset.StandardCharsets.UTF_8);
-//		System.out.println(js);
-		
-		System.out.println(aesByteToJson(aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA=="), "gFn/XoAfNz0LjSnrsHc3CA=="));
-		
+		PatientDto patientDto = new PatientDto();
+    	try{
+    		patientDto = Util.JsonToObject(Util.aesByteToJson(Base64.getDecoder().decode(data), "gFn/XoAfNz0LjSnrsHc3CA=="));
+    	}catch(Exception e){
+    		throw new RuntimeException();
+    	}
 	}
 	
 	public static byte[] padZero(byte[] data){

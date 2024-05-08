@@ -1,5 +1,10 @@
 package jsr268gp.sampleclient;
 
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.smartcardio.CardChannel;
@@ -30,15 +35,36 @@ public class SessionAdmin extends Session{
 	}
 	
 	// add new user either doctor or patient
-	public void addNewUser(Map<String, String> mp) throws Exception{
+	public boolean addNewUser(LinkedHashMap<String, Object> mp) throws Exception{
 		if(this.K == null){
 			throw new NotAuthenticatedError();
 		}
-//		result = new String("");
-//		requestStatus = UtilRequest.sendRequest("POST", UtilRequest.mapToJsonString(mp), this.url, result);
-//		if(requestStatus != HttpURLConnection.HTTP_OK){
-//			throw new ServerError(requestStatus);
-//		}
+		// converting the map containing user data to json
+		String js = UtilRequest.mapToJsonString(mp);
+		// encrypt the data using AES with the admin's session key
+		// then base64
+		data = Base64.getEncoder().encodeToString(UtilRequest.aesJsonToByte(js, this.K));
+		// other useful paramters for the request
+    	timestamp = System.currentTimeMillis();
+    	hmac = UtilRequest.requestHash(timestamp, this.K, data);
+    	// url encode data
+    	data = URLEncoder.encode(data, StandardCharsets.UTF_8.toString());
+    	hmac = URLEncoder.encode(hmac, StandardCharsets.UTF_8.toString());
+    	// sending the request
+    	response = UtilRequest.sendRequest(
+    			"POST",
+    			"uid="+this.UID+"&timestamp="+timestamp+"&hmac="+hmac+"&data="+data,
+    			this.url+"/patients/add",
+    			"application/x-www-form-urlencoded"
+    			);
+    	// checking the status of the request
+    	if(response.getCode() != HttpURLConnection.HTTP_OK){
+    		throw new ServerError(response.getCode());
+    	}
+    	System.out.println(response.getBody());
+    	return true;
+		
+
 		
 	}
 	
