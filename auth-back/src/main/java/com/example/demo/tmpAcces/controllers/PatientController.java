@@ -52,15 +52,15 @@ public class PatientController {
     		throw new RuntimeException();
     	}
         patient.setPatientId(patientDto.getPatientId());
-        patient.setFirstName(patientDto.getFirstName().getBytes());
-        patient.setLastName(patientDto.getLastName().getBytes());
+        patient.setFirstName(patientDto.getFirstName());
+        patient.setLastName(patientDto.getLastName());
         patient.setDateOfBirth(patientDto.getDateOfBirth());
         patient.setNationalId(patientDto.getNationalId());
         patient.setGender(patientDto.getGender());
-        patient.setEmail(patientDto.getEmail().getBytes());
-        patient.setPhoneNumber(patientDto.getPhoneNumber().getBytes());
-        patient.setSessionKey(patientDto.getSessionKey().getBytes());
-        patient.setAddress(patientDto.getAddress().getBytes());
+        patient.setEmail(patientDto.getEmail());
+        patient.setPhoneNumber(patientDto.getPhoneNumber());
+        patient.setSessionKey(patientDto.getSessionKey());
+        patient.setAddress(patientDto.getAddress());
         // saving patient to the database
         patientRepository.save(patient);
         return ResponseEntity.ok("Patient has been added");
@@ -78,15 +78,15 @@ public class PatientController {
         Optional<Patient> patientOptional = patientRepository.findById(patientDto.getPatientId());
         if (patientOptional.isPresent()) {
             Patient patient = patientOptional.get();
-            patient.setFirstName(patientDto.getFirstName().getBytes());
-            patient.setLastName(patientDto.getLastName().getBytes());
+            patient.setFirstName(patientDto.getFirstName());
+            patient.setLastName(patientDto.getLastName());
             //patient.setDateOfBirth(patientDto.getDateOfBirth());
             patient.setNationalId(patientDto.getNationalId());
             patient.setGender(patientDto.getGender());
-            patient.setEmail(patientDto.getEmail().getBytes());
-            patient.setPhoneNumber(patientDto.getPhoneNumber().getBytes());
-            patient.setSessionKey(patientDto.getSessionKey().getBytes());
-            patient.setAddress(patientDto.getAddress().getBytes());
+            patient.setEmail(patientDto.getEmail());
+            patient.setPhoneNumber(patientDto.getPhoneNumber());
+            patient.setSessionKey(patientDto.getSessionKey());
+            patient.setAddress(patientDto.getAddress());
 
             patientRepository.save(patient);
             return ResponseEntity.ok("Patient mis à jour avec succès.");
@@ -95,11 +95,28 @@ public class PatientController {
         }
     }
 
-    @GetMapping("/getall")
-    public ResponseEntity<String> getAllPatients() {
+    @PostMapping("/getall")
+    public ResponseEntity<String> getAllPatients(
+    		@RequestParam long uid,
+    		@RequestParam long timestamp,
+    		@RequestParam String hmac
+    		) {
+    	
+    	try{
+    		if(!Util.validateRequest(timestamp, "gFn/XoAfNz0LjSnrsHc3CA==", "", hmac)){
+        		return ResponseEntity.status(401).build();
+        	}
+    	}catch(NoSuchAlgorithmException e){
+    		throw new RuntimeException();
+    	}
         List<Patient> patients = (List<Patient>) patientRepository.findAll();
         String js = Util.listToJson(patients);
-        return ResponseEntity.ok(js);
+//        return ResponseEntity.ok(js);
+        try{
+        	return ResponseEntity.ok(Base64.getEncoder().encodeToString(Util.aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA==")));
+        }catch(Exception e){
+        	throw new RuntimeException();
+        }
     }
 
     @DeleteMapping("/deletebyid")

@@ -1,103 +1,105 @@
+-- Create the main database for the health care system
 CREATE DATABASE health_care_system;
+
+-- Set the context to the newly created database
 USE health_care_system;
 
--- ALL SENSITIVE DATA IS ENCRYPTED USING AES 128
-
-
--- THE ADMINS TABLE
-CREATE TABLE ADMINS (
-    ADMIN_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    NATIONAL_ID BIGINT UNIQUE,
-    FIRST_NAME VARBINARY(32),
-    LAST_NAME VARBINARY(32),
-    PICTURE VARBINARY(32),
-    EMAIL VARBINARY(336) ,
-    PHONE_NUMBER VARBINARY(16), -- FOR BACK UP
-    ADDRESS VARBINARY(256),
-    HASHED_CODEPIN VARCHAR(72), -- BCrypt
-    CARD_EXPIRING_DATE DATE,
-    USER_PUBLIC_KEY VARBINARY(131),
-    SESSION_KEY varbinary(128),
-    INDEX IDX_ADMINS (ADMIN_ID)
-);
--- Creating the DOCTORS table without encryption for non-sensitive data
-CREATE TABLE DOCTORS (
-    DOCTOR_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    FIRST_NAME VARCHAR(32) ,
-    LAST_NAME VARCHAR(32) ,
-    GENDER TINYINT CHECK (GENDER IN (0,1)), -- 0 for female, 1 for male
-    PICTURE VARCHAR(30),
-	NATIONAL_ID BIGINT UNIQUE NOT NULL,
-    ABOUT TEXT, -- Detailed information about the doctor
-    EMAIL VARCHAR(255), -- No need for encryption
-    PHONE_NUMBER VARCHAR(16), -- Standard phone number format
-    ADDRESS VARCHAR(256),
-    HASHED_CODEPIN VARCHAR(72) NOT NULL, -- BCrypt hashed passwords
-    CARD_EXPIRING_DATE DATE NOT NULL,
-    USER_PUBLIC_KEY VARBINARY(131),
-    DOCTOR_STATUS VARCHAR(10) CHECK (DOCTOR_STATUS IN ('ACTIVE', 'INACTIVE', 'DISABLED')),
-    INDEX IDX_DOCTORS (DOCTOR_ID, NATIONAL_ID)
-);
-CREATE TABLE Patients (
-    patient_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARBINARY(32),
-    last_name VARBINARY(32),
-    date_of_birth DATE,
-    NATIONAL_ID BIGINT UNIQUE,
-    gender TINYINT,
-    EMAIL VARBINARY(336) ,
-    PHONE_NUMBER VARBINARY(16), -- FOR BACK UP
-    SESSION_KEY varbinary(128),
-    ADDRESS VARBINARY(256),
-    INDEX IDX_PATIENTS (PATIENT_ID,NATIONAL_ID)
+-- Admins table storing sensitive encrypted data
+CREATE TABLE admins (
+    admin_id BIGINT AUTO_INCREMENT PRIMARY KEY,      -- Primary key for admin identity
+    national_id BIGINT UNIQUE,                       -- Unique national ID for each admin
+    first_name VARCHAR(50),                        -- Encrypted first name
+    last_name VARCHAR(50),                         -- Encrypted last name
+    picture VARCHAR(64),                           -- Encrypted image data
+    email VARCHAR(336),                            -- Encrypted email address
+    phone_number VARCHAR(32),                      -- Encrypted phone number for backup
+    address VARCHAR(256),                          -- Encrypted home address
+    hashed_codepin VARCHAR(72),                      -- BCrypt hashed security code
+    card_expiring_date DATE,                         -- Expiry date of admin's identification card
+    user_public_key VARCHAR(256),                  -- Public key for secure communication
+    session_key VARCHAR(128),                      -- Session key for secure transactions
+    INDEX idx_admins (admin_id)                      -- Index on admin_id for faster lookups
 );
 
-CREATE TABLE Treatments (
-    treatment_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    patient_id BIGINT,
-    doctor_id BIGINT,
-    treatment_date DATE,
-    treatment_type VARCHAR(100),
-    description TEXT,
-    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES DOCTORS(doctor_id)
+-- Doctors table storing non-sensitive and sensitive data
+CREATE TABLE doctors (
+    doctor_id BIGINT AUTO_INCREMENT PRIMARY KEY,     -- Primary key for doctor identity
+    first_name VARCHAR(32),                          -- Doctor's first name
+    last_name VARCHAR(32),                           -- Doctor's last name
+    gender ENUM('female', 'male'),                   -- Gender of the doctor
+    picture VARCHAR(64),                             -- Profile picture of the doctor
+    national_id BIGINT UNIQUE NOT NULL,              -- Unique national ID for each doctor
+    about TEXT,                                      -- Detailed information about the doctor
+    email VARCHAR(255),                              -- Doctor's email address
+    phone_number VARCHAR(16),                        -- Doctor's phone number
+    address VARCHAR(256),                            -- Doctor's home address
+    hashed_codepin VARCHAR(72) NOT NULL,             -- BCrypt hashed password
+    card_expiring_date DATE NOT NULL,                -- Expiry date of doctor's identification card
+    user_public_key VARCHAR(256),                  -- Public key for secure communication
+    doctor_status ENUM('ACTIVE', 'INACTIVE', 'DISABLED'), -- Status of the doctor
+    INDEX idx_doctors (doctor_id, national_id)       -- Composite index for faster lookups
 );
 
-CREATE TABLE Appointments (
-    appointment_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    patient_id BIGINT,
-    doctor_id BIGINT,
-    treatment_id BIGINT,
-    appointment_date_time DATETIME,
-    duration INT,
-    notes TEXT,
-    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES DOCTORS(doctor_id),
-    FOREIGN KEY (treatment_id) REFERENCES Treatments(treatment_id)
+-- Patients table storing encrypted sensitive data
+CREATE TABLE patients (
+    patient_id BIGINT AUTO_INCREMENT PRIMARY KEY,    -- Primary key for patient identity
+    first_name VARCHAR(64),                        -- Encrypted first name of the patient
+    last_name VARCHAR(50),                         -- Encrypted last name of the patient
+    date_of_birth DATE,                              -- Date of birth of the patient
+    national_id BIGINT UNIQUE,                       -- Unique national ID for each patient
+    gender ENUM('female', 'male'),                   -- Gender of the patient
+    email VARCHAR(400),                            -- Encrypted email address of the patient
+    phone_number VARCHAR(50),                      -- Encrypted phone number for backup
+    session_key VARCHAR(200),                      -- Session key for secure transactions
+    address VARCHAR(300),                          -- Encrypted address of the patient
+    INDEX idx_patients (patient_id, national_id)     -- Composite index for faster lookups
 );
 
-
-
--- THE ACCESSES HISTORY TO PATIENTS TABLE
-CREATE TABLE ACCESSES_TO_PATIENT (
-    ACCESS_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    PATIENT_ID BIGINT,
-    DOCTOR_ID BIGINT,
-    ACCESS_DATE DATETIME,
-    ACCESS_TYPE ENUM('QUICK CHECK', 'NEW SESSION', 'UPDATE'),
-    ACCESS_DURATION INT,
-    INDEX IDX_ACCESS_TP (ACCESS_ID , PATIENT_ID , DOCTOR_ID),
-    FOREIGN KEY (PATIENT_ID) REFERENCES patients(PATIENT_ID),
-    FOREIGN KEY (DOCTOR_ID) REFERENCES DOCTORS(DOCTOR_ID)
+-- Treatments table linking patients and doctors
+CREATE TABLE treatments (
+    treatment_id BIGINT AUTO_INCREMENT PRIMARY KEY,  -- Primary key for each treatment record
+    patient_id BIGINT,                               -- Foreign key to patients table
+    doctor_id BIGINT,                                -- Foreign key to doctors table
+    treatment_date DATE,                             -- Date of the treatment
+    treatment_type VARCHAR(100),                     -- Type of treatment administered
+    description TEXT,                                -- Detailed description of the treatment
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id), -- Link to patients table
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)      -- Link to doctors table
 );
 
+-- Appointments table for scheduling and tracking
+CREATE TABLE appointments (
+    appointment_id BIGINT AUTO_INCREMENT PRIMARY KEY,-- Primary key for each appointment
+    patient_id BIGINT,                               -- Foreign key to patients table
+    doctor_id BIGINT,                                -- Foreign key to doctors table
+    treatment_id BIGINT,                             -- Foreign key to treatments table
+    appointment_date_time DATETIME,                  -- Date and time of the appointment
+    duration INT,                                    -- Duration of the appointment in minutes
+    notes TEXT,                                      -- Notes about the appointment
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id), -- Link to patients table
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id),    -- Link to doctors table
+    FOREIGN KEY (treatment_id) REFERENCES treatments(treatment_id) -- Link to treatments table
+);
 
--- THE ACCESSES HISTORY TO DOCTORS TABLE
-CREATE TABLE ACCESSES_TO_DOCOTR (
-    ACCESS_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    DOCTOR_ID BIGINT,
-    ACCESS_DATE DATETIME,
-    ACCESS_DURATION INT,
-    INDEX IDX_ACCESS_TP (ACCESS_ID , DOCTOR_ID),
-    FOREIGN KEY (DOCTOR_ID) REFERENCES DOCTORS(DOCTOR_ID)
+-- Access history to patients table for audit and tracking
+CREATE TABLE accesses_to_patient (
+    access_id BIGINT AUTO_INCREMENT PRIMARY KEY,     -- Primary key for each access record
+    patient_id BIGINT,                               -- Foreign key to patients table
+    doctor_id BIGINT,                                -- Foreign key to doctors table
+    access_date DATETIME,                            -- Date and time of access
+    access_type ENUM('QUICK CHECK', 'NEW SESSION', 'UPDATE'), -- Type of access
+    access_duration INT,                             -- Duration of the access in minutes
+    INDEX idx_access_tp (access_id, patient_id, doctor_id), -- Composite index for faster lookups
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id), -- Link to patients table
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)    -- Link to doctors table
+);
+
+-- Access history to doctors table for audit and tracking
+CREATE TABLE accesses_to_doctor (
+    access_id BIGINT AUTO_INCREMENT PRIMARY KEY,     -- Primary key for each access record
+    doctor_id BIGINT,                                -- Foreign key to doctors table
+    access_date DATETIME,                            -- Date and time of access
+    access_duration INT,                             -- Duration of the access in minutes
+    INDEX idx_access_tp (access_id, doctor_id),      -- Index for faster lookups
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)    -- Link to doctors table
 );

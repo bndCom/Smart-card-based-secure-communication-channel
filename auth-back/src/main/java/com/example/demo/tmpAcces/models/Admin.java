@@ -22,22 +22,22 @@ public class Admin {
     private Long nationalId;
 
     @Column(name = "FIRST_NAME")
-    private byte[] firstName;
+    private String firstName;
 
     @Column(name = "LAST_NAME")
-    private byte[] lastName;
+    private String lastName;
 
     @Column(name = "PICTURE")
-    private byte[] picture;
+    private String picture;
 
     @Column(name = "EMAIL")
-    private byte[] email;
+    private String email;
 
     @Column(name = "PHONE_NUMBER")
-    private byte[] phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "ADDRESS")
-    private byte[] address;
+    private String address;
 
     @Column(name = "HASHED_CODEPIN")
     private String hashedCodepin;
@@ -46,10 +46,10 @@ public class Admin {
     private Date cardExpiringDate;
 
     @Column(name = "USER_PUBLIC_KEY")
-    private byte[] userPublicKey;
+    private String userPublicKey;
 
     @Column(name = "SESSION_KEY")
-    private byte[] sessionKey;
+    private String sessionKey;
 
 	public Admin() {
 
@@ -71,51 +71,51 @@ public class Admin {
 		this.nationalId = nationalId;
 	}
 
-	public byte[] getFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(byte[] firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public byte[] getLastName() {
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(byte[] lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	public byte[] getPicture() {
+	public String getPicture() {
 		return picture;
 	}
 
-	public void setPicture(byte[] picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 
-	public byte[] getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(byte[] email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public byte[] getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(byte[] phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public byte[] getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(byte[] address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
@@ -135,19 +135,19 @@ public class Admin {
 		this.cardExpiringDate = cardExpiringDate;
 	}
 
-	public byte[] getUserPublicKey() {
+	public String getUserPublicKey() {
 		return userPublicKey;
 	}
 
-	public void setUserPublicKey(byte[] userPublicKey) {
+	public void setUserPublicKey(String userPublicKey) {
 		this.userPublicKey = userPublicKey;
 	}
 
-	public byte[] getSessionKey() {
+	public String getSessionKey() {
 		return sessionKey;
 	}
 
-	public void setSessionKey(byte[] sessionKey) {
+	public void setSessionKey(String sessionKey) {
 		this.sessionKey = sessionKey;
 	}
 

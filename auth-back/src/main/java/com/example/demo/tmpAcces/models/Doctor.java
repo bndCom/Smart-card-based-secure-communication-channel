@@ -51,7 +51,7 @@ public class Doctor {
     private Date cardExpiringDate;
 
     @Column(name = "USER_PUBLIC_KEY")
-    private byte[] userPublicKey;
+    private String userPublicKey;
 
     @Column(name = "DOCTOR_STATUS")
     private String doctorStatus;
@@ -156,11 +156,11 @@ public class Doctor {
 		this.cardExpiringDate = cardExpiringDate;
 	}
 
-	public byte[] getUserPublicKey() {
+	public String getUserPublicKey() {
 		return userPublicKey;
 	}
 
-	public void setUserPublicKey(byte[] userPublicKey) {
+	public void setUserPublicKey(String userPublicKey) {
 		this.userPublicKey = userPublicKey;
 	}
 

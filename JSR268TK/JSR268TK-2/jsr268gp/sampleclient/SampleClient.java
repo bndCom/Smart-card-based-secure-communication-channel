@@ -16,10 +16,16 @@ import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
+
+
 
 
 
@@ -250,12 +256,18 @@ public class SampleClient {
             case 2 :
             	
             	LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-
+            	List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
             	//map.put("patientId", 5);
 
             	SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
             	try{
-            		System.out.println(admin.addNewUser("anes", "bnd", "2021-05-08", (long)21, 1, "gmail", "123", "setif"));
+            		//System.out.println(admin.addNewUser("anes", "bnd", "2021-05-08", (long)23, 1, "gmail", "123", "setif"));
+            		mapList = admin.getAllPatients();
+//            		System.out.println(mapList);
+            		Iterator<Map<String, Object>> itr = mapList.iterator();
+            		while(itr.hasNext()){
+            			System.out.println((itr.next().get("nationalId")));
+            		}
             	}catch(ServerError e){
             		e.printError();
             	}catch(NotAuthenticatedError e){

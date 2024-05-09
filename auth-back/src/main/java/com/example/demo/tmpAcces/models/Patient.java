@@ -20,10 +20,10 @@ public class Patient {
     private Long patientId;
 
     @Column(name = "FIRST_NAME")
-    private byte[] firstName;
+    private String firstName;
 
     @Column(name = "LAST_NAME")
-    private byte[] lastName;
+    private String lastName;
 
     @Column(name = "DATE_OF_BIRTH")
     private Date dateOfBirth;
@@ -35,16 +35,16 @@ public class Patient {
     private int gender;
 
     @Column(name = "EMAIL")
-    private byte[] email;
+    private String email;
 
     @Column(name = "PHONE_NUMBER")
-    private byte[] phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "SESSION_KEY")
-    private byte[] sessionKey;
+    private String sessionKey;
 
     @Column(name = "ADDRESS")
-    private byte[] address;
+    private String address;
 
 	public Patient() {
 
@@ -58,19 +58,19 @@ public class Patient {
 		this.patientId = patientId;
 	}
 
-	public byte[] getFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(byte[] firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public byte[] getLastName() {
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(byte[] lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -98,35 +98,35 @@ public class Patient {
 		this.gender = gender;
 	}
 
-	public byte[] getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(byte[] email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public byte[] getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(byte[] phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public byte[] getSessionKey() {
+	public String getSessionKey() {
 		return sessionKey;
 	}
 
-	public void setSessionKey(byte[] sessionKey) {
+	public void setSessionKey(String sessionKey) {
 		this.sessionKey = sessionKey;
 	}
 
-	public byte[] getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(byte[] address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 

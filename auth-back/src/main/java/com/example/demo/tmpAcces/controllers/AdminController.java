@@ -27,16 +27,16 @@ public class AdminController {
     public ResponseEntity<String> addAdmin(@RequestBody AdminDto adminDto) {
         Admin admin = new Admin();
         admin.setNationalId(adminDto.getNationalId());
-        admin.setFirstName(adminDto.getFirstName().getBytes());
-        admin.setLastName(adminDto.getLastName().getBytes());
-        admin.setPicture(adminDto.getPicture().getBytes());
-        admin.setEmail(adminDto.getEmail().getBytes());
-        admin.setPhoneNumber(adminDto.getPhoneNumber().getBytes());
-        admin.setAddress(adminDto.getAddress().getBytes());
+        admin.setFirstName(adminDto.getFirstName());
+        admin.setLastName(adminDto.getLastName());
+        admin.setPicture(adminDto.getPicture());
+        admin.setEmail(adminDto.getEmail());
+        admin.setPhoneNumber(adminDto.getPhoneNumber());
+        admin.setAddress(adminDto.getAddress());
         admin.setHashedCodepin(adminDto.getHashedCodepin());
         admin.setCardExpiringDate(adminDto.getCardExpiringDate());
-        admin.setUserPublicKey(adminDto.getUserPublicKey().getBytes());
-        admin.setSessionKey(adminDto.getSessionKey().getBytes());
+        admin.setUserPublicKey(adminDto.getUserPublicKey());
+        admin.setSessionKey(adminDto.getSessionKey());
 
         adminRepository.save(admin);
         return ResponseEntity.ok("Admin ajouté avec succès.");
@@ -55,16 +55,16 @@ public class AdminController {
         if (adminOptional.isPresent()) {
             Admin admin = adminOptional.get();
             admin.setNationalId(adminDto.getNationalId());
-            admin.setFirstName(adminDto.getFirstName().getBytes());
-            admin.setLastName(adminDto.getLastName().getBytes());
-            admin.setPicture(adminDto.getPicture().getBytes());
-            admin.setEmail(adminDto.getEmail().getBytes());
-            admin.setPhoneNumber(adminDto.getPhoneNumber().getBytes());
-            admin.setAddress(adminDto.getAddress().getBytes());
+            admin.setFirstName(adminDto.getFirstName());
+            admin.setLastName(adminDto.getLastName());
+            admin.setPicture(adminDto.getPicture());
+            admin.setEmail(adminDto.getEmail());
+            admin.setPhoneNumber(adminDto.getPhoneNumber());
+            admin.setAddress(adminDto.getAddress());
             admin.setHashedCodepin(adminDto.getHashedCodepin());
             admin.setCardExpiringDate(adminDto.getCardExpiringDate());
-            admin.setUserPublicKey(adminDto.getUserPublicKey().getBytes());
-            admin.setSessionKey(adminDto.getSessionKey().getBytes());
+            admin.setUserPublicKey(adminDto.getUserPublicKey());
+            admin.setSessionKey(adminDto.getSessionKey());
 
             adminRepository.save(admin);
             return ResponseEntity.ok("Admin mis à jour avec succès.");

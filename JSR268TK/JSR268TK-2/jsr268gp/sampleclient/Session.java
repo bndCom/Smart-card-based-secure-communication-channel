@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
@@ -47,7 +49,7 @@ public abstract class Session {
 	protected UtilRequest.Response response;
 	protected long timestamp;
 	protected LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-	
+	protected List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
 	
 	public Session(CardChannel canal, String url){
 		this.url = url;
