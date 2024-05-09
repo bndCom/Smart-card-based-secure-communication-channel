@@ -35,12 +35,25 @@ public class SessionAdmin extends Session{
 	}
 	
 	// add new user either doctor or patient
-	public boolean addNewUser(LinkedHashMap<String, Object> mp) throws Exception{
+	public boolean addNewUser(String firstName, String lastName, String dateOfBirth, long nationalId, int gender, String email, String phoneNumber, String address) throws Exception{
 		if(this.K == null){
 			throw new NotAuthenticatedError();
 		}
+		// creating the map
+		if(map != null){
+			map.clear();
+		}	
+    	map.put("firstName", firstName);
+    	map.put("lastName", lastName);
+    	map.put("dateOfBirth", dateOfBirth);
+    	map.put("nationalId", nationalId);
+    	map.put("gender", gender);
+    	map.put("email", email);
+    	map.put("phoneNumber", phoneNumber);
+    	map.put("sessionKey", this.K);
+    	map.put("address", address);
 		// converting the map containing user data to json
-		String js = UtilRequest.mapToJsonString(mp);
+		String js = UtilRequest.mapToJsonString(this.map);
 		// encrypt the data using AES with the admin's session key
 		// then base64
 		data = Base64.getEncoder().encodeToString(UtilRequest.aesJsonToByte(js, this.K));
@@ -59,9 +72,13 @@ public class SessionAdmin extends Session{
     			);
     	// checking the status of the request
     	if(response.getCode() != HttpURLConnection.HTTP_OK){
+    		// the user is not authenticated
+    		if(response.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
+    			throw new NotAuthenticatedError();
+    		}
     		throw new ServerError(response.getCode());
     	}
-    	System.out.println(response.getBody());
+    	
     	return true;
 		
 

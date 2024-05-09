@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-import java.sql.Date;
+
 
 import javafx.util.Pair;
 
@@ -229,16 +229,17 @@ public class SampleClient {
             case 1 :
 				//handleAddUser(connection);
             	LinkedHashMap<String, Object> map2 = new LinkedHashMap<String, Object>();
-            	map2.put("patientId", 5);
+            	//map2.put("patientId", 5);
             	map2.put("firstName", "anes");
             	map2.put("lastName", "bnd");
-            	//map2.put("dateOfBirth", date);
-            	map2.put("nationalId", 14);
+            	map2.put("dateOfBirth", "2021-12-12");
+            	map2.put("nationalId", 15);
             	map2.put("gender", 1001);
             	map2.put("email", "anesGmail");
             	map2.put("phoneNumber", "293847");
             	map2.put("sessionKey", "mqlksjdf");
             	map2.put("address", "ainTrig");
+            	System.out.println(UtilRequest.mapToJsonString(map2));
             	UtilRequest.Response r = UtilRequest.sendRequest("POST",
             			UtilRequest.mapToJsonString(map2),
             			"http://localhost:8080/patients/add",
@@ -249,23 +250,16 @@ public class SampleClient {
             case 2 :
             	
             	LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-            	Date date = new Date((long)12344566);
 
-            	map.put("patientId", 5);
-            	map.put("firstName", "anes");
-            	map.put("lastName", "bnd");
-            	map.put("dateOfBirth", date);
-            	map.put("nationalId", 14);
-            	map.put("gender", 1001);
-            	map.put("email", "anesGmail");
-            	map.put("phoneNumber", "293847");
-            	map.put("sessionKey", "mqlksjdf");
-            	map.put("address", "ainTrig");
+            	//map.put("patientId", 5);
+
             	SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
             	try{
-            		System.out.println(admin.addNewUser(map));
+            		System.out.println(admin.addNewUser("anes", "bnd", "2021-05-08", (long)21, 1, "gmail", "123", "setif"));
             	}catch(ServerError e){
             		e.printError();
+            	}catch(NotAuthenticatedError e){
+            		System.out.println("Not allowed!");
             	}
 //            	String js = UtilRequest.mapToJsonString(map);
 //            	String data2 = URLEncoder.encode(Base64.getEncoder().encodeToString(UtilRequest.aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA==")), StandardCharsets.UTF_8.toString());

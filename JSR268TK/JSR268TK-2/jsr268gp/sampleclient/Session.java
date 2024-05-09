@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
@@ -39,12 +40,13 @@ public abstract class Session {
 	//protected long UID;
 	protected long UID = 99;
 	// used variables
-	protected static String data = new String("");
-	protected static String hmac = new String(""); 
-	protected static Decoder b64Decoder = Base64.getDecoder();
-	protected static Encoder b64Encoder = Base64.getEncoder();
-	protected static UtilRequest.Response response;
-	protected static long timestamp;
+	protected String data = new String("");
+	protected String hmac = new String(""); 
+	protected Decoder b64Decoder = Base64.getDecoder();
+	protected Encoder b64Encoder = Base64.getEncoder();
+	protected UtilRequest.Response response;
+	protected long timestamp;
+	protected LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 	
 	
 	public Session(CardChannel canal, String url){

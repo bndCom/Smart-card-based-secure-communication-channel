@@ -3,6 +3,7 @@ package com.example.demo.tmpAcces.controllers;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,33 +34,36 @@ public class PatientController {
     		@RequestParam String hmac,
     		@RequestParam String data
     		) {
+        // we have to validate the request
     	try{
-    		String js = Util.aesByteToJson(Base64.getDecoder().decode(data), "gFn/XoAfNz0LjSnrsHc3CA==");
-    		return ResponseEntity.ok(js);
-    	}catch(Exception e){
-    		return ResponseEntity.ok("error");
+    		if(!Util.validateRequest(timestamp, "gFn/XoAfNz0LjSnrsHc3CA==", data, hmac)){
+        		return ResponseEntity.status(401).build();
+        	}
+    	}catch(NoSuchAlgorithmException e){
+    		throw new RuntimeException();
     	}
-//        Patient patient = new Patient();
-//        // decrypt received data
-//        PatientDto patientDto = new PatientDto();
-//    	try{
-//    		patientDto = Util.JsonToObject(Util.aesByteToJson(Base64.getDecoder().decode(data), "gFn/XoAfNz0LjSnrsHc3CA=="));
-//    	}catch(Exception e){
-//    		throw new RuntimeException();
-//    	}
-//        patient.setPatientId(patientDto.getPatientId());
-//        patient.setFirstName(patientDto.getFirstName().getBytes());
-//        patient.setLastName(patientDto.getLastName().getBytes());
-//        patient.setDateOfBirth(patientDto.getDateOfBirth());
-//        patient.setNationalId(patientDto.getNationalId());
-//        patient.setGender(patientDto.getGender());
-//        patient.setEmail(patientDto.getEmail().getBytes());
-//        patient.setPhoneNumber(patientDto.getPhoneNumber().getBytes());
-//        patient.setSessionKey(patientDto.getSessionKey().getBytes());
-//        patient.setAddress(patientDto.getAddress().getBytes());
-//
-//        patientRepository.save(patient);
-        //return ResponseEntity.ok("Patient ajouté avec succès.");
+    	
+    	Patient patient = new Patient();
+        // decrypt received data
+        PatientDto patientDto = new PatientDto();
+    	try{
+    		patientDto = Util.JsonToObject(Util.aesByteToJson(Base64.getDecoder().decode(data), "gFn/XoAfNz0LjSnrsHc3CA=="));
+    	}catch(Exception e){
+    		throw new RuntimeException();
+    	}
+        patient.setPatientId(patientDto.getPatientId());
+        patient.setFirstName(patientDto.getFirstName().getBytes());
+        patient.setLastName(patientDto.getLastName().getBytes());
+        patient.setDateOfBirth(patientDto.getDateOfBirth());
+        patient.setNationalId(patientDto.getNationalId());
+        patient.setGender(patientDto.getGender());
+        patient.setEmail(patientDto.getEmail().getBytes());
+        patient.setPhoneNumber(patientDto.getPhoneNumber().getBytes());
+        patient.setSessionKey(patientDto.getSessionKey().getBytes());
+        patient.setAddress(patientDto.getAddress().getBytes());
+        // saving patient to the database
+        patientRepository.save(patient);
+        return ResponseEntity.ok("Patient has been added");
     }
 
     @GetMapping("/getbyid")
@@ -76,7 +80,7 @@ public class PatientController {
             Patient patient = patientOptional.get();
             patient.setFirstName(patientDto.getFirstName().getBytes());
             patient.setLastName(patientDto.getLastName().getBytes());
-            patient.setDateOfBirth(patientDto.getDateOfBirth());
+            //patient.setDateOfBirth(patientDto.getDateOfBirth());
             patient.setNationalId(patientDto.getNationalId());
             patient.setGender(patientDto.getGender());
             patient.setEmail(patientDto.getEmail().getBytes());
@@ -92,9 +96,10 @@ public class PatientController {
     }
 
     @GetMapping("/getall")
-    public ResponseEntity<List<Patient>> getAllPatients() {
+    public ResponseEntity<String> getAllPatients() {
         List<Patient> patients = (List<Patient>) patientRepository.findAll();
-        return ResponseEntity.ok(patients);
+        String js = Util.listToJson(patients);
+        return ResponseEntity.ok(js);
     }
 
     @DeleteMapping("/deletebyid")
