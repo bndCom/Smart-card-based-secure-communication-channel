@@ -31,6 +31,12 @@ public abstract class Session {
 	public static final byte INS_SC_DH_SIGN = (byte)0x0F;
 	public static final byte INS_CS_DH_B = (byte)0x0B;
 	public static final byte INS_SC_K = (byte)0x86;
+	public static final byte INS_CS_RSA_CARD_PUBLIC_MOD= (byte)0x01;
+	public static final byte INS_CS_RSA_CARD_PUBLIC_EXP= (byte)0x02;
+	public static final byte INS_CS_RSA_SERVER_PUBLIC_MOD= (byte)0x03;
+	public static final byte INS_CS_RSA_SERVER_PUBLIC_EXP= (byte)0x04;
+	public static final byte INS_CS_RSA_CARD_PRIVATE_EXP= (byte)0x07;
+	public static final byte INS_SC_UID = (byte)0x09;
 
 
 	// attributes
