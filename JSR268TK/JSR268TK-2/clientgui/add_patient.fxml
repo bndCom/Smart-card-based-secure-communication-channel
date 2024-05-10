@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="790.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="193.0" layoutY="29.0" prefHeight="610.0" prefWidth="514.0" style="-fx-background-color: white; -fx-background-radius: 35;">
+         <children>
+            <Label layoutX="219.0" layoutY="32.0" prefHeight="50.0" prefWidth="77.0" text="FORM" textAlignment="CENTER" textFill="#185fa1">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fill="#185fa1" glyphName="EDIT" layoutX="296.0" layoutY="69.0" size="30" text="" />
+            <Line endX="100.0" layoutX="268.0" layoutY="83.0" startX="-100.0" stroke="#185fa1" />
+            <TextField layoutX="57.0" layoutY="144.0" prefHeight="25.0" prefWidth="167.0" promptText="First Name" />
+            <FontAwesomeIconView fill="#185fa1" glyphName="USER" layoutX="30.0" layoutY="161.0" size="15" />
+            <TextField layoutX="299.0" layoutY="144.0" prefHeight="25.0" prefWidth="167.0" promptText="Last Name" />
+            <FontAwesomeIconView fill="#185fa1" glyphName="USER" layoutX="272.0" layoutY="161.0" size="15" />
+            <TextField layoutX="57.0" layoutY="203.0" prefHeight="25.0" prefWidth="167.0" promptText="Phone" />
+            <FontAwesomeIconView fill="#185fa1" glyphName="" layoutX="30.0" layoutY="220.0" size="15" />
+            <TextField layoutX="299.0" layoutY="203.0" prefHeight="25.0" prefWidth="167.0" promptText="Email" />
+            <FontAwesomeIconView fill="#185fa1" glyphName="" layoutX="270.0" layoutY="288.0" size="15" text="" />
+            <CheckBox layoutX="155.0" layoutY="273.0" mnemonicParsing="false" text="Female" textFill="#6f6a6a" />
+            <CheckBox layoutX="68.0" layoutY="273.0" mnemonicParsing="false" text="Male" textFill="#6f6a6a" />
+            <DatePicker layoutX="303.0" layoutY="269.0" prefHeight="25.0" prefWidth="167.0" promptText="Date Of Birth" />
+            <FontAwesomeIconView fill="#185fa1" glyphName="" layoutX="270.0" layoutY="222.0" size="15" text="" />
+            <FontAwesomeIconView fill="#185fa1" glyphName="" layoutX="30.0" layoutY="288.0" size="15" text="" />
+            <Button layoutX="62.0" layoutY="501.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="CANCEL" />
+            <Button layoutX="303.0" layoutY="501.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #185fa1;" text="ADD" textFill="WHITE" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
