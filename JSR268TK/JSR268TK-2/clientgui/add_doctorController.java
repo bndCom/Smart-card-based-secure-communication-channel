@@ -1,15 +1,10 @@
-package application;
+package clientgui;
 
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
-
 import javafx.scene.control.TextField;
-
 import javafx.scene.control.RadioButton;
-
 import javafx.scene.control.PasswordField;
-
 import javafx.scene.control.DatePicker;
 
 public class add_doctorController {
@@ -45,5 +40,7 @@ public class add_doctorController {
 	private RadioButton disabled;
 	@FXML
 	private TextField about;
-
+	
 }
+
+

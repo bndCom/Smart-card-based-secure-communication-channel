@@ -1,5 +1,6 @@
 package clientgui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.Iterator;
@@ -13,6 +14,9 @@ import java.util.function.Predicate;
 
 
 
+
+
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,8 +24,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
@@ -31,6 +39,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 public class adminPanelController implements Initializable {
@@ -123,12 +134,6 @@ public class adminPanelController implements Initializable {
                 };
             }
         });
-		try {
-			Main.admin.addNewPatient("khalil", "bobo", "2021-05-08", (long)28, 34, "khgmail.com", "0779", "contante");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		// getting all patients from the database
 		List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
@@ -190,5 +195,21 @@ public class adminPanelController implements Initializable {
         SortedList<PatientDto> sortedData = new SortedList<PatientDto>(filteredData);
         sortedData.comparatorProperty().bind(tableview.comparatorProperty());
         tableview.setItems(sortedData);
+    }
+    
+    // the function to be executed when the button add is clicked
+    public void addPatient(ActionEvent event) throws IOException{
+    	
+        Parent root = FXMLLoader.load(getClass().getResource("add_patient.fxml"));
+        
+        Scene scene = new Scene(root);
+        
+        Stage stage = new Stage();
+        
+        stage.initStyle(StageStyle.UNIFIED);
+        scene.setFill(Color.DARKGRAY);      
+        stage.setScene(scene);
+        stage.show();
+    	
     }
 }
