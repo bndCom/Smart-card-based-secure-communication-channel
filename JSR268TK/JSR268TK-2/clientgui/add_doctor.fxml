@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="790.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="790.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.add_doctorController">
    <children>
       <Pane layoutX="193.0" layoutY="65.0" prefHeight="677.0" prefWidth="514.0" style="-fx-background-color: linear-gradient(to right,#d9d9d9,white); -fx-background-radius: 35;">
          <children>
