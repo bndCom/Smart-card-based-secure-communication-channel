@@ -1,10 +1,10 @@
-package application;
+package clientgui;
 
 import java.time.LocalDate;
 
 public class Doctor {
-	private String ID;
-    private String lastName;
+	private Long ID;
+    private String firstName;
     private String name;
     private String tel;
     private String lastSession;

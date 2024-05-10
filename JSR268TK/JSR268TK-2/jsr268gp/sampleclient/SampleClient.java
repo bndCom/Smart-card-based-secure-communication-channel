@@ -263,11 +263,11 @@ public class SampleClient {
             	try{
             		//System.out.println(admin.addNewUser("anes", "bnd", "2021-05-08", (long)23, 1, "gmail", "123", "setif"));
             		mapList = admin.getAllPatients();
-//            		System.out.println(mapList);
-            		Iterator<Map<String, Object>> itr = mapList.iterator();
-            		while(itr.hasNext()){
-            			System.out.println((itr.next().get("nationalId")));
-            		}
+            		System.out.println(mapList);
+//            		Iterator<Map<String, Object>> itr = mapList.iterator();
+//            		while(itr.hasNext()){
+//            			System.out.println((itr.next().get("nationalId")));
+//            		}
             	}catch(ServerError e){
             		e.printError();
             	}catch(NotAuthenticatedError e){
