@@ -2,6 +2,11 @@ package com.example.demo.tmpAcces;
 
 import com.example.demo.tmpAcces.models.Doctor;
 import com.example.demo.tmpAcces.models.DoctorDto;
+import com.example.demo.tmpAcces.models.Admin;
+import com.example.demo.tmpAcces.models.AdminDto;
+import com.example.demo.tmpAcces.models.PatientDto;
+import com.example.demo.tmpAcces.models.Patient;
+
 import org.springframework.beans.factory.support.ScopeNotActiveException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,9 +17,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
-import com.example.demo.tmpAcces.models.PatientDto;
-import com.example.demo.tmpAcces.models.Patient;
+
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -106,12 +111,31 @@ public class Util{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(s ,DoctorDto.class );
     }
+    
+    public static AdminDto adminDtoToObject(String s) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(s ,AdminDto.class );
+    }
 
 
+    public static <K,V> String mapToJsonString(Map<K, V> map) {
+        // Convert map to JSON string
+        Gson gson = new Gson();
+        return gson.toJson(map);
+    }
 
 
-
-    public static String listToJson(List<Patient> list) {
+    public static String patientListToJson(List<Patient> list) {
+        Gson gson = new Gson();
+        return gson.toJson(list);
+    }
+    
+    public static String doctorListToJson(List<Doctor> list) {
+        Gson gson = new Gson();
+        return gson.toJson(list);
+    }
+    
+    public static String adminListToJson(List<Admin> list) {
         Gson gson = new Gson();
         return gson.toJson(list);
     }

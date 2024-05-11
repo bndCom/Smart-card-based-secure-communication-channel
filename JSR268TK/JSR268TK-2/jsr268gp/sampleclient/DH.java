@@ -236,4 +236,9 @@ public class DH {
 		}
 		return arr;
 	}
+	
+	// convert integer to byte array
+	public static byte[] intToBytes(int number) {
+        return ByteBuffer.allocate(Integer.BYTES).putInt(number).array();
+    }
 }

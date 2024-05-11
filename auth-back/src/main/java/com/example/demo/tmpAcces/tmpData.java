@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 @Entity
 public class tmpData {
     @Id
-    private String UID ;
+    private long UID ;
 
 
     private String A  ; // le nombre calculer
@@ -21,9 +21,14 @@ public class tmpData {
 //    private String p ;// le premier qui vas etre envoiyer par le client
 
     private int timestamp ; // pretty self explanatory
+    
+    private boolean isAdmin;
 
-
-   public void setUID (String AID){
+    public void setIsAdmin(boolean isAdmin){
+    	this.isAdmin = isAdmin;
+    }
+    
+   public void setUID (long AID){
         this.UID = AID ;
     }
 
@@ -40,7 +45,11 @@ public class tmpData {
         this.timestamp = Timestamp;
     }
 
-    public String getUID(){
+    public boolean getIsAdmin(){
+    	return this.isAdmin;
+    }
+    
+    public long getUID(){
         return UID;
     }
 

@@ -5,7 +5,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-class AesCBCPad{
+public class AesCBCPad{
     private static final String MODE2 ="AES/CBC/PKCS5Padding";
     private static final String ALGORITHM = "AES";
 

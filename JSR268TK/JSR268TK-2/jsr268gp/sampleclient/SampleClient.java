@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Date;
+
 
 
 
@@ -259,11 +261,61 @@ public class SampleClient {
             	List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
             	//map.put("patientId", 5);
 
-            	SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
+            	
+            	 long patientid = 2;
+                 String firstName = "BND2";
+                 String lastName = "notshit";
+                 String dateOfBirth = "1990-01-01";
+                 long nationalId = 123456771L;
+                 int gender = 123;
+                 String email = "john.doe@example.com";
+                 String phoneNumber = "1234567890";
+                 String address = "1234 Street, City";
+                 String url = "http://localhost:8080";
+
+                 // the doctor data for testing purposes
+                 long doctorId = 1 ;
+                 String picture = " lol ";
+                 String about = " alger + LOL " ;
+                 String hashcodepin = " pin + LOL " ;
+                 String doctorStatus = " doctor status lol ";
+                 
+                 Date date = new Date();
+                 date.getTime();
+//                 LinkedHashMap<String , Object> map21 = new LinkedHashMap<String, Object>();
+//                 map21.put("doctorId" , doctorId);
+//                 map21.put("firstName", firstName);
+//                 map21.put("lastName", lastName);
+//                 map21.put("gender", gender);
+//                 map21.put("picture", picture);
+//                 map21.put("nationalId", nationalId);
+//                 map21.put("about" ,about);
+//                 map21.put("email", email);
+//                 map21.put("phoneNumber", phoneNumber);
+//                 map21.put("address", address);
+//                 map21.put("hashedCodepin" , hashcodepin);
+//                 map21.put("cardExpiringDate", "2024-12-31");
+//                 map21.put("doctorStatus", doctorStatus);
+            	
             	try{
             		//System.out.println(admin.addNewUser("anes", "bnd", "2021-05-08", (long)23, 1, "gmail", "123", "setif"));
-            		mapList = admin.getAllPatients();
-            		System.out.println(mapList);
+            		//System.out.println(admin.addNewDoctor(canal, firstName, lastName, picture, nationalId, gender, email, phoneNumber, address, about, hashcodepin, doctorStatus));
+                	SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
+            		try{
+            			admin.auth(1234);
+            			System.out.println("Logged-in !!");
+//            			System.out.println(admin.getAllPatients());
+//            			admin.addNewAdmin(canal, "admin", "admin", "testpic", 123456L, "testEmail", "123345", "setif", "678");
+//            			System.out.println("user added!!");
+//            			System.out.println(admin.getAllPatients());
+            			
+            		}catch(ServerError e){
+            			e.printError();
+            		}catch(NotAuthenticatedError e){
+            			System.out.println("Authentication failed");
+            		}
+            		c.disconnect(true);
+            		//System.out.println(mapList);
 //            		Iterator<Map<String, Object>> itr = mapList.iterator();
 //            		while(itr.hasNext()){
 //            			System.out.println((itr.next().get("nationalId")));
@@ -291,7 +343,7 @@ public class SampleClient {
             	
                 Session admin2 = new SessionAdmin(canal, "http://localhost:8080");
                 try{
-                	System.out.println(admin2.auth());
+                	System.out.println(admin2.auth(12));
                 }catch(ServerError e){
                 	System.out.println("Error happened in the server! Error code: ");
                 	e.printError();
@@ -550,7 +602,10 @@ public class SampleClient {
             	
             	break;
             case 7 :
-                handleExit(connection) ;
+            	respApdu =APDUOps.sendApduToCard(CLA_APPLET, INS_CS_UID, (byte)0x00, (byte)0x00, canal);
+            	System.out.println(DH.byteArrayToLong(respApdu.getData()));
+        		c.disconnect(true);
+            	handleExit(connection) ;
                 break;
             
 

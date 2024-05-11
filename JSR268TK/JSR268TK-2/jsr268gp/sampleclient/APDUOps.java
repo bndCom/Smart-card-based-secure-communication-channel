@@ -25,7 +25,7 @@ public class APDUOps {
 				c = cad.connect("T=0");
 				canal = c.getBasicChannel();
 				// select the applet
-				CommandAPDU commande = new CommandAPDU(new byte[]{(byte) 0x00, (byte) 0xA4, (byte) 0x04,(byte) 0x00,(byte) 0x0F,(byte) 0xA0,(byte) 0x00,(byte) 0x00,(byte) 0x18,(byte) 0x50,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x52,(byte) 0x41,(byte) 0x44,(byte) 0x42});
+				CommandAPDU commande = new CommandAPDU(new byte[]{(byte) 0x00, (byte) 0xA4, (byte) 0x04,(byte) 0x00,(byte) 0x0F,(byte) 0xA0,(byte) 0x00,(byte) 0x00,(byte) 0x18,(byte) 0x50,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x00,(byte) 0x52,(byte) 0x41,(byte) 0x44,(byte) 0x43});
 				ResponseAPDU reponse = canal.transmit(commande);
 				
 				if(reponse.getSW() != 36864){

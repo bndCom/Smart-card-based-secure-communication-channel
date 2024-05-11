@@ -44,9 +44,10 @@ public abstract class Session {
 	protected CardChannel canal;
 	protected ResponseAPDU respApdu;
 	//protected String K;
-	protected String K = "gFn/XoAfNz0LjSnrsHc3CA=="; // this is temporary
+	protected String K = "y+l+srb0iMDOjr7EkhFgEw=="; // this is temporary
 	//protected long UID;
-	protected long UID = 99;
+	protected boolean isAdmin;
+	protected long UID = 6072375235302189817L;
 	// used variables
 	protected String data = new String("");
 	protected String hmac = new String(""); 
@@ -64,7 +65,7 @@ public abstract class Session {
 	}
 	
 	// authenticate to the remote
-	public boolean auth() throws Exception, CardAuthFailed, ServerError{
+	public boolean auth(int pin) throws Exception, CardAuthFailed, ServerError{
 		
 		if(this.canal == null){
 			throw new CardNotFound();
@@ -79,9 +80,9 @@ public abstract class Session {
     	
     	// getting card uid
     	respApdu =APDUOps.sendApduToCard(CLA_APPLET, INS_CS_UID, (byte)0x00, (byte)0x00, canal);
-    	this.UID = DH.bytesToLong(respApdu.getData());
+    	this.UID = DH.byteArrayToLong(respApdu.getData());
     	// sending auth first phase to the server
-    	data="uid="+UID+"&p="+URLEncoder.encode(b64Encoder.encodeToString(P), StandardCharsets.UTF_8.toString())+"&a="+URLEncoder.encode(b64Encoder.encodeToString(A), StandardCharsets.UTF_8.toString());
+    	data="isAdmin="+isAdmin+"&uid="+Long.toString(UID)+"&p="+URLEncoder.encode(b64Encoder.encodeToString(P), StandardCharsets.UTF_8.toString())+"&a="+URLEncoder.encode(b64Encoder.encodeToString(A), StandardCharsets.UTF_8.toString());
     	response = UtilRequest.sendRequest("POST", data, url+"/connect/phase1", "application/x-www-form-urlencoded");
     	if(response.getCode() != HttpURLConnection.HTTP_OK){
     		throw new ServerError(response.getCode());
@@ -115,17 +116,21 @@ public abstract class Session {
 //    	mp.put("UID", Base64.getEncoder().encodeToString(UID));
 //    	mp.put("sign", Base64.getEncoder().encodeToString(sign));
     	
+    	// getting K from the card
+    	respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_K, (byte)0x00, (byte)0x00, canal);
+    	byte[] tmpK = respApdu.getData();
+    	this.K = b64Encoder.encodeToString(tmpK);
+    	String pinEnc = Base64.getEncoder().encodeToString(AesCBCPad.encrypt_CBC(DH.intToBytes(pin), tmpK));
 //    	data = UtilRequest.mapToJsonString(mp);
-    	data="UID="+UID+"&sign="+URLEncoder.encode(b64Encoder.encodeToString(sign), StandardCharsets.UTF_8.toString());
+
+    	data="UID="+UID+"&sign="+URLEncoder.encode(b64Encoder.encodeToString(sign), StandardCharsets.UTF_8.toString())+"&pin="+URLEncoder.encode(pinEnc, StandardCharsets.UTF_8.toString());
     	response = UtilRequest.sendRequest("POST", data, url+"/connect/phase2", "application/x-www-form-urlencoded");
     	// check server authentication status
     	if(response.getCode() != HttpURLConnection.HTTP_OK | !response.getBody().equals("OK")){
     		throw new ServerError(response.getCode());
     	}
     	
-    	// getting K from the card
-    	respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_K, (byte)0x00, (byte)0x00, canal);
-    	this.K = b64Encoder.encodeToString(respApdu.getData());
+    	
 		return true; // auth successful
 		
 	}

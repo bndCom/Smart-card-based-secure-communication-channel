@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Random;
 
 import com.example.demo.tmpAcces.RSAOps;
 import com.example.demo.tmpAcces.Util;
@@ -14,6 +17,7 @@ import com.example.demo.tmpAcces.models.online;
 import com.example.demo.tmpAcces.repositories.PatientRepository;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.ser.std.ObjectArraySerializer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.tmpAcces.models.Doctor;
 import com.example.demo.tmpAcces.models.DoctorDto;
 import com.example.demo.tmpAcces.repositories.DoctorRepository;
-import com.example.demo.testApp.AesCBCPad ;
+import com.example.demo.tmpAcces.AesCBCPad ;
 import com.example.demo.tmpAcces.repositories.OnlineRepository;
+// importing the server public key
+import com.example.demo.tmpAcces.MainController;
+import com.example.demo.tmpAcces.DH;
 
 
 @RestController
@@ -31,9 +38,6 @@ public class DoctorController {
 
     private final  DoctorRepository doctorRepository;
     private final OnlineRepository onlineRepository;
-
-
-
 
     @Autowired
     public DoctorController(DoctorRepository doctorRepository, OnlineRepository onlineRepository) {
@@ -83,24 +87,14 @@ public class DoctorController {
             byte[] publicexponent = rsaOps.getPublicKeyExponent();
             byte[] privateKeyExponent = rsaOps.getPrivateKeyExponent();
             byte[] privateKeyModulus = rsaOps.getPublicKeyMod();
-//        String publicexponentString = Base64.getEncoder().encodeToString(publicexponent);
-//        String privateKeyExponentString = Base64.getEncoder().encodeToString(privateKeyExponent);
-//        String privateKeyMod = Base64.getEncoder().encodeToString(privateKeyModulus);
+            
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("cardPublicMod", Base64.getEncoder().encodeToString(privateKeyModulus));
+            map.put("cardPrivateExp", Base64.getEncoder().encodeToString(privateKeyExponent));
+            
+            map.put("serverPublicExp", MainController.base64publicexponent);
+            map.put("serverPublicMod", MainController.base64privatemodulus);
 
-            // creating the public key and the private key
-            //**********************************************
-
-            // key = exponent + modulus what ever the key is
-
-            byte[] privateKey = new byte[privateKeyExponent.length + privateKeyModulus.length];
-            System.arraycopy(privateKeyExponent, 0, privateKey, 0, privateKeyExponent.length);
-            System.arraycopy(privateKeyModulus, 0, privateKey, privateKeyExponent.length , privateKeyModulus.length);
-            //based on the documentation we have created the private key
-            // turn it to base64 and store it in the DB table
-
-
-            // creating the public key
-            // public key = exponent + modulus
 
             byte[] publicKey = new byte[publicexponent.length + privateKeyModulus.length];
             System.arraycopy(publicexponent, 0, publicKey, 0, publicexponent.length);
@@ -110,11 +104,16 @@ public class DoctorController {
             // encrypting with aes and then byte array to send to user side
 
             try {
-                byte[] privateKeyEncrypted = AesCBCPad.encrypt_CBC(privateKey, Base64.getDecoder().decode(AesKey));
-                String privatekeyEncryptedString = Base64.getEncoder().encodeToString(privateKeyEncrypted);
-
+                // generating the card uid
+                Random random = new Random();
+                long userCardNumber = Math.abs(random.nextLong());
+                Optional<Doctor> doctorOptional;
+                while (doctorRepository.findById(userCardNumber).isPresent()) {
+                    userCardNumber = Math.abs(random.nextLong());
+                }
+                
                 Doctor doctor = new Doctor();
-                //doctor.setDoctorId(doctorDto.getDoctorId());
+                doctor.setDoctorId(userCardNumber);
                 doctor.setFirstName(doctorDto.getFirstName());
                 doctor.setLastName(doctorDto.getLastName());
                 doctor.setGender(doctorDto.getGender());
@@ -130,14 +129,15 @@ public class DoctorController {
                 doctor.setUserPublicKey(publicKeyString);
 
                 doctorRepository.save(doctor);
-                return ResponseEntity.ok(privatekeyEncryptedString);
+                
+                // adding the card uid
+                map.put("userCardNumber", Base64.getEncoder().encodeToString(DH.longToBytes(userCardNumber)));
+                String js = Util.mapToJsonString(map);
+                return ResponseEntity.ok(Base64.getEncoder().encodeToString(Util.aesJsonToByte(js, AesKey)));
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
-            // generating the Base64
-
 
         }else {
             return ResponseEntity.status(505).build();
@@ -175,12 +175,37 @@ public class DoctorController {
             return ResponseEntity.notFound().build();
         }
     }
+    
+    @PostMapping("/getall")
+    public ResponseEntity<String> getAllDoctors(
+    		@RequestParam long uid,
+    		@RequestParam long timestamp,
+    		@RequestParam String hmac
+    		) {
+        Optional<online> OptionalData = onlineRepository.findById(uid);
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<Doctor>> getAllDoctors() {
-        List<Doctor> doctors = (List<Doctor>) doctorRepository.findAll();
-        return ResponseEntity.ok(doctors);
-    }
+        if (OptionalData.isPresent()) {
+            online authentedUser = OptionalData.get();
+            String AesKey = authentedUser.getK();
+            // once the user exists and is logged in validate the request
+    	    try{
+    		if(!Util.validateRequest(timestamp, AesKey, "", hmac)){
+        		return ResponseEntity.status(401).build();
+        	}
+    	    }catch(NoSuchAlgorithmException e){
+    		    throw new RuntimeException();
+    	    }
+                List<Doctor> doctors = (List<Doctor>) doctorRepository.findAll();
+                String js = Util.doctorListToJson(doctors);
+//        return ResponseEntity.ok(js);
+                try{
+        	        return ResponseEntity.ok(Base64.getEncoder().encodeToString(Util.aesJsonToByte(js, AesKey)));
+                }catch(Exception e){
+        	        throw new RuntimeException();
+                }
+    }else{
+            return ResponseEntity.status(505).build();
+        }}
 
     @DeleteMapping("/deletebyid")
     public ResponseEntity<String> deleteDoctor(@RequestBody DoctorDto doctorDto) {

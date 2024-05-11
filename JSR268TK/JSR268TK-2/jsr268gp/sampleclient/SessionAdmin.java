@@ -17,6 +17,7 @@ public class SessionAdmin extends Session{
 	
 	public SessionAdmin(CardChannel canal, String url){
 		super(canal, url);
+		this.isAdmin = true;
 	}
 	
 	public void getPersonalInfo() throws NotAuthenticatedError{
@@ -177,9 +178,9 @@ public class SessionAdmin extends Session{
 			throw new NotAuthenticatedError();
 		}
 		// check in case the card is not inserted
-		if(newCanal == null){
-			throw new CardNotFound();
-		}
+//		if(newCanal == null){
+//			throw new CardNotFound();
+//		}
 		// creating the map
 		if(map != null){
 			map.clear();
@@ -194,7 +195,7 @@ public class SessionAdmin extends Session{
     	map.put("phoneNumber", phoneNumber);
     	map.put("address", address);
     	map.put("hashedCodepin", hashCodePin);
-    	map.put("cardExpiringDate", null);
+    	map.put("cardExpiringDate", "2024-12-30");
     	map.put("doctorStatus", doctorStatus);
     	
 		// converting the map containing user data to json
@@ -226,21 +227,20 @@ public class SessionAdmin extends Session{
     	
     	// retreiving card keys and the card UID from the request response
     	data = new String(AesCBCPad.decrypt_CBC(b64Decoder.decode(response.getBody()), b64Decoder.decode(this.K)), StandardCharsets.UTF_8);
-    	
-    	Map<String, String> mp = UtilRequest.jsonStringToMap(data);
-    	try{
-    		// card private keys
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPublicMod")), newCanal);
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PRIVATE_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPrivateExp")), newCanal);
-    		// server public keys
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicExp")), newCanal);
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
-    		// sending the UID of the card
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
-    	
-    	}catch(Exception e){
-    		return false;
-    	}
+    	// this must be uncommented when working with card
+//    	try{
+//    		// card private keys
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPublicMod")), newCanal);
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PRIVATE_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPrivateExp")), newCanal);
+//    		// server public keys
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicExp")), newCanal);
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
+//    		// sending the UID of the card
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
+//    	
+//    	}catch(Exception e){
+//    		return false;
+//    	}
     	
     	
     	return true;
@@ -303,19 +303,20 @@ public class SessionAdmin extends Session{
     	data = new String(AesCBCPad.decrypt_CBC(b64Decoder.decode(response.getBody()), b64Decoder.decode(this.K)), StandardCharsets.UTF_8);
     	
     	Map<String, String> mp = UtilRequest.jsonStringToMap(data);
-    	try{
-    		// card private keys
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPublicMod")), newCanal);
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PRIVATE_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPrivateExp")), newCanal);
-    		// server public keys
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicExp")), newCanal);
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
-    		// sending the UID of the card
-    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
-    	
-    	}catch(Exception e){
-    		return false;
-    	}
+// this must be uncommented when working with card
+//    	try{
+//    		// card private keys
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPublicMod")), newCanal);
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PRIVATE_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPrivateExp")), newCanal);
+//    		// server public keys
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicExp")), newCanal);
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
+//    		// sending the UID of the card
+//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
+//    	
+//    	}catch(Exception e){
+//    		return false;
+//    	}
     	
     	
     	return true;

@@ -8,6 +8,6 @@ import com.example.demo.tmpAcces.tmpData;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface tmpDataRepository extends CrudRepository<tmpData, String> {
+public interface tmpDataRepository extends CrudRepository<tmpData, Long> {
 
 }

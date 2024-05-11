@@ -29,16 +29,11 @@ public class test {
 
 	public static void main(String[] args) throws Exception {
 		
-        // Sample list of objects
-        List<Employee> employeeList = Arrays.asList(
-                new Employee(1, "John Doe", 50000),
-                new Employee(2, "Jane Smith", 60000),
-                new Employee(3, "Mike Johnson", 70000)
-        );
-
-        // Convert list of objects to JSON
-        String json = convertListToJson(employeeList);
-        System.out.println(json);	
+        RSAOps pair = new RSAOps(1024);
+        System.out.println("private mod: "+Base64.getEncoder().encodeToString(pair.getPrivateKeyMod()));
+        System.out.println("private exp: "+Base64.getEncoder().encodeToString(pair.getPrivateKeyExponent()));
+        System.out.println("public mod: "+Base64.getEncoder().encodeToString(pair.getPublicKeyMod()));
+        System.out.println("public exp: "+Base64.getEncoder().encodeToString(pair.getPublicKeyExponent()));
 	}
 	public static String convertListToJson(List<Employee> list) {
         Gson gson = new Gson();

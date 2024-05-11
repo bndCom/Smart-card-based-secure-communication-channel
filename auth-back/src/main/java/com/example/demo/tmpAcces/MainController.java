@@ -19,6 +19,13 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.io.UnsupportedEncodingException;
 
+import com.example.demo.tmpAcces.repositories.OnlineRepository;
+import com.example.demo.tmpAcces.repositories.DoctorRepository;
+import com.example.demo.tmpAcces.repositories.AdminRepository;
+import com.example.demo.tmpAcces.models.online;
+import com.example.demo.tmpAcces.models.Doctor;
+import com.example.demo.tmpAcces.models.Admin;
+
 
 @Controller
 
@@ -26,10 +33,15 @@ import java.io.UnsupportedEncodingException;
 
 public class MainController{
     public static final int MODULUS_SIZE = 64;
+    // the server's rsa key pair
+    public static final String base64privatemodulus = "uVXpTTzwM5iXhM+aC5cAjDvUc/qQGJmUfCj6uY/1P8os9Lvm89RKsdIW5E13aiksQAF9LZkvWXfQpdiMlSY2vtHtnYgyF7QhFrIWhRWhpGjk9cNrXyX4f3W3uDE4YohFZfWkfUzOmeyFt09R8kSqWUBG3g2I58QzqzHiK7Rd+DM=";
+    public static final String base64privateexponent = "JJUYn+5PW1/bSJPRzEfaC9Qjc2EZ4EEwVfGgy8/mkNjPVt9gDvDwbXkSm63OzF2kJl4k30NFXVuRC6ta1HXeiCVP17in/6qUQRNQB4r8rI2Kl+k/OY2H4UwZ1XastzHSxh8oKODByu2PuJaYx0KdcCeNaQy+RKrP7986qjQR8cE=";
+    public static final String base64publicexponent = "AQAB";
+
     @Autowired
     private tmpDataRepository tmpDataRepository;
 @PostMapping(path = "/phase1") // map the first part of the request to this method e
-    public @ResponseBody Response1 begin (@RequestParam String uid, @RequestParam String p , @RequestParam String a){
+    public @ResponseBody Response1 begin (@RequestParam boolean isAdmin, @RequestParam long uid, @RequestParam String p , @RequestParam String a){
 
     byte[] G = {
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -65,9 +77,7 @@ public class MainController{
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x02};
     
-    String base64privateexponent = "CONGv75Ot9SaLtbMX18VPNPuN7N0LORewNZ2BsXHmZUX8alSNJazQP4nts2tZUxlkgGtBCWJPJaNi+zdsttmSXi8p3XSJ3psem8U2Pnz/L/DXnz/atPIsxMXTQsfUbWGRL7a6+7c6S3lTaFKRyriDbq23qQY+RzEjvnZ5B1KwQE=";
-    String base64privatemodulus = "pv7MjUneZTwJpaZmnjLVbLWnmyHAnM+ImjeyStkg1XtqLxC5Y0u7R7yHaOjSa5TC0Y8xv5mkj0AoG8X9oYxqDUoMJBzOG7dotXIQg0MaHJBxy5Hya9HJoj1YEpz1nbaYdbZ5XTrWRWSepDJzQOhjNGRWDRYyxdNjs6OTgzirlj8=";
-    String base64publicexponent = "AQAB";
+
     byte [] privatekeyexponent = Base64.getDecoder().decode(base64privateexponent);
     byte [] privatekeymodulus = Base64.getDecoder().decode(base64privatemodulus);
     byte [] publickeyexponent = Base64.getDecoder().decode(base64publicexponent);
@@ -129,6 +139,7 @@ public class MainController{
 //    DH.printByteArray(sign);
 
     tmpData entity = new tmpData() ;
+    entity.setIsAdmin(isAdmin);
     entity.setUID(uid);
     entity.setK(Base64.getEncoder().encodeToString(KAes));
     entity.setA(Base64.getEncoder().encodeToString(toBeSigned));
@@ -143,20 +154,60 @@ public class MainController{
 
 }
 
-@Autowired
-private tmpDataRepository TmpDataRepository;
-private onlineRepository OnlineRepository;
-@PostMapping(path = "/phase2")
-    public @ResponseBody String phase2(@RequestParam String sign , @RequestParam String UID){
+private final tmpDataRepository tmpdataRepository;
+private final OnlineRepository onlinerepository;
+private final DoctorRepository doctorRepository;
+private final AdminRepository adminRepository;
 
+@Autowired
+public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onlinerepository, DoctorRepository doctorRepository, AdminRepository adminRepository) {
+    this.tmpdataRepository =  tmpdataRepository;
+    this.onlinerepository = onlinerepository;
+    this.doctorRepository = doctorRepository;
+    this.adminRepository = adminRepository;
+}
+
+
+@PostMapping(path = "/phase2")
+	public @ResponseBody String phase2(@RequestParam String sign , @RequestParam long UID, @RequestParam String pin){
+	byte[] publickeyexponent = new byte[3];
+	byte[] privatekeymodulus = new byte[128];
+	
     boolean valid = false;
-    Optional<tmpData> optionalData = TmpDataRepository.findById(UID);
+    Optional<tmpData> optionalData = tmpdataRepository.findById(UID);
     if (optionalData.isPresent()) {
-        //We should declare the card public key data here
-        String base64privatemodulus = "lrg5VH5V2wZ6KkIRcTsVTCqYeNyzuHJI5MF7ZxRbTLBE/U8UBS0R83y+Z1eil25U/K9Bfw8F5WrMgx94nDh5qncU4DHyLBpBgqls7rijrM5S04tqrZ4r/ZSCS8qTTDm2zADsAZUMkChZ1uRbR5V7gA57i+hF8geStrmayi2KEI8=";
-        String base64publicexponent = "AQAB";
-        byte [] privatekeymodulus = Base64.getDecoder().decode(base64privatemodulus);
-        byte [] publickeyexponent = Base64.getDecoder().decode(base64publicexponent);
+
+        //We should get the public key of the user based on its identity ( admin or doctor)
+    	if(optionalData.get().getIsAdmin()){
+    		System.out.println("---------------- here 1: "+UID);
+    		Optional<Admin> adminOptional = adminRepository.findById(UID);
+    		if(adminOptional.isPresent()){
+    			System.out.println("----------------- here 2: ");
+    			String base64CardPublicKey = adminOptional.get().getUserPublicKey();
+    			byte[] cardPublicKey = Base64.getDecoder().decode(base64CardPublicKey);
+    			// getting the exponent and modulus separately
+    			System.arraycopy(cardPublicKey, 0, publickeyexponent, 0, 3);
+    			System.arraycopy(cardPublicKey, 3, privatekeymodulus, 0, 128);
+    			
+    		}else{
+    			return "Error not found";
+    		}
+    	}else{ // this means that the user is doctor not admin
+    		System.out.println("doctor here -----------------");
+    		Optional<Doctor> doctorOptional = doctorRepository.findById(UID);
+    		if(doctorOptional.isPresent()){
+    			String base64CardPublicKey = doctorOptional.get().getUserPublicKey();
+    			byte[] cardPublicKey = Base64.getDecoder().decode(base64CardPublicKey);
+    			// getting the exponent and modulus separately
+    			System.arraycopy(cardPublicKey, 0, publickeyexponent, 0, 3);
+    			System.arraycopy(cardPublicKey, 3, privatekeymodulus, 0, 128);
+    			
+    		}else{
+    			return "Error not found";
+    		}
+    	}
+//        byte [] privatekeymodulus = Base64.getDecoder().decode(base64privatemodulus);
+//        byte [] publickeyexponent = Base64.getDecoder().decode(base64publicexponent);
 
         //getting the Symetric key K
         tmpData data = optionalData.get();
@@ -195,16 +246,18 @@ private onlineRepository OnlineRepository;
 
         valid = Arrays.equals(SignDecryFinal , toverify);
         
-//        if (valid == true) {
-//			online Online = new online();
-//			Online.setK(Kaes.toString());
-//			Online.setUID(UID);
-//			Online.setTimestamp(1);
-//			OnlineRepository.save(Online);
-//            return "OK";
-        if(valid){
-        	return "OK";
-    	} else {
+        if (valid == true) {
+			online Online = new online();
+			Online.setK(Base64.getEncoder().encodeToString(Kaes));
+			Online.setUID(UID);
+			Online.setTimestamp(1);
+			try{
+				onlinerepository.save(Online);
+			}catch(Exception e){
+			}
+            return "OK";
+        }
+        else {
             return "Authentification Denied";
         }
    } 
@@ -213,11 +266,20 @@ private onlineRepository OnlineRepository;
     }
     
 }
-
-@GetMapping(path="/hi")
-    public @ResponseBody String hello(){
-        return "hello";
-
+@Autowired
+OnlineRepository onlinerePository;
+@PostMapping (path="/hi")
+    public @ResponseBody String hello(@RequestParam long uid , @RequestParam long timestamp , @RequestParam String Kaes){
+    online Online = new online();
+    Online.setK(Kaes);
+    Online.setTimestamp(timestamp);
+    Online.setUID(uid);
+    try{
+    	onlinerePository.save(Online);
+    }catch(Exception e){
+    	return e.getMessage();
+    }
+    return "Saved";
     }
 
     @GetMapping(path="/fuckoff")

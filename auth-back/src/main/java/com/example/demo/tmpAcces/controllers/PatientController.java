@@ -245,7 +245,7 @@ public class PatientController {
     		    throw new RuntimeException();
     	    }
                  List<Patient> patients = (List<Patient>) patientRepository.findAll();
-                String js = Util.listToJson(patients);
+                String js = Util.patientListToJson(patients);
 //        return ResponseEntity.ok(js);
                 try{
         	        return ResponseEntity.ok(Base64.getEncoder().encodeToString(Util.aesJsonToByte(js, AesKey)));
@@ -255,32 +255,6 @@ public class PatientController {
     }else{
             return ResponseEntity.status(505).build();
         }}
-
-
-//    @PostMapping("/getall")
-//    public ResponseEntity<String> getAllPatients(
-//            @RequestParam long uid,
-//            @RequestParam long timestamp,
-//            @RequestParam String hmac
-//    ) {
-//
-//        try{
-//            if(!Util.validateRequest(timestamp, "gFn/XoAfNz0LjSnrsHc3CA==", "", hmac)){
-//                return ResponseEntity.status(401).build();
-//            }
-//        }catch(NoSuchAlgorithmException e){
-//            throw new RuntimeException();
-//        }
-//        List<Patient> patients = (List<Patient>) patientRepository.findAll();
-//        String js = Util.listToJson(patients);
-////        return ResponseEntity.ok(js);
-//        try{
-//            return ResponseEntity.ok(Base64.getEncoder().encodeToString(Util.aesJsonToByte(js, "gFn/XoAfNz0LjSnrsHc3CA==")));
-//        }catch(Exception e){
-//            throw new RuntimeException();
-//        }
-//    }
-
 
     @DeleteMapping("/deletebyid")
     public ResponseEntity<String> deletePatient(

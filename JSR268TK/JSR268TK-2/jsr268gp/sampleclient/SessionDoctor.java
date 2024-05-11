@@ -13,6 +13,7 @@ public class SessionDoctor extends Session{
 	
 	public SessionDoctor(CardChannel canal, String url){
 		super(canal, url);
+		this.isAdmin = false;
 	}
 	
 	public void getPersonalInfo() throws NotAuthenticatedError{
