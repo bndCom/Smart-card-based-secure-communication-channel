@@ -1,5 +1,7 @@
 package com.example.demo.tmpAcces;
 
+import com.example.demo.tmpAcces.models.Doctor;
+import com.example.demo.tmpAcces.models.DoctorDto;
 import org.springframework.beans.factory.support.ScopeNotActiveException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,7 +75,42 @@ public class Util{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(s ,PatientDto.class );
     }
-    
+
+    public static String patientToJson(Patient o) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(o);
+
+    }
+
+    public static Patient patientToObject(String s) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(s ,Patient.class );
+    }
+
+    public static String doctorToJson(Doctor o) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(o);
+
+    }
+    public static Doctor doctorToObject(String s) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(s ,Doctor.class );
+    }
+
+    public static String doctorDtoToJson(DoctorDto o) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(o);
+
+    }
+    public static DoctorDto doctorDtoToObject(String s) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(s ,DoctorDto.class );
+    }
+
+
+
+
+
     public static String listToJson(List<Patient> list) {
         Gson gson = new Gson();
         return gson.toJson(list);

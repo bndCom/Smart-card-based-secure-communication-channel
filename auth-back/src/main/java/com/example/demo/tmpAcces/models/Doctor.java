@@ -1,5 +1,5 @@
 package com.example.demo.tmpAcces.models;
-import java.util.Date;
+import java.sql.Date;
 
 import jakarta.persistence.*;
 //import javax.persistence.Column;
