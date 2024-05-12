@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="730.0" prefWidth="1009.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.adminPanelController">
+<AnchorPane prefHeight="730.0" prefWidth="1009.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.doctors_recordsController">
    <children>
       <VBox layoutX="152.0" layoutY="131.0" prefHeight="433.0" prefWidth="836.0">
          <children>
@@ -46,7 +46,7 @@
                   </TextField>
                </children>
             </HBox>
-            <Button fx:id="addBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 20;" text="Add" textFill="#185fa1">
+            <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addDoctor" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 20;" text="Add" textFill="#185fa1">
                <HBox.margin>
                   <Insets left="435.0" top="15.0" />
                </HBox.margin>

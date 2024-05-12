@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.DoctorCodePinCorrectController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.AdminCodePinCorrectController">
    <children>
       <Text fill="#185fa1" layoutX="226.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Welcome" textAlignment="CENTER" wrappingWidth="166.92205810546875">
          <font>
@@ -18,13 +18,13 @@
             <Font name="Product Sans Bold" size="22.0" />
          </font>
       </Button>
-      <Text fill="#185fa1" layoutX="147.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="To Doctor WorkSpace" textAlignment="CENTER" wrappingWidth="327.92205810546875">
+      <Text fill="#185fa1" layoutX="147.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="To Admin WorkSpace" textAlignment="CENTER" wrappingWidth="327.92205810546875">
          <font>
             <Font name="Product Sans Bold" size="31.0" />
          </font>
       </Text>
-      <ImageView fx:id="doctorPicture" fitHeight="250" fitWidth="250" layoutX="175.0" layoutY="125.0" />
-      <Text fx:id="DoctorName" layoutX="196.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="doctorName" text="Name" textAlignment="CENTER" wrappingWidth="209.84375">
+      <ImageView fx:id="adminPicture" fitHeight="250" fitWidth="250" layoutX="175.0" layoutY="125.0" />
+      <Text fx:id="adminName" layoutX="196.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="doctorName" text="Name" textAlignment="CENTER" wrappingWidth="209.84375">
          <font>
             <Font name="Product Sans Bold" size="24.0" />
          </font>

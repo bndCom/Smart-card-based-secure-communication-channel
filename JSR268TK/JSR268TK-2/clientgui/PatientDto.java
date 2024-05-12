@@ -1,6 +1,5 @@
-package clientgui;
 
-import java.sql.Date;
+package clientgui;
 
 public class PatientDto {
     private Long patientId;

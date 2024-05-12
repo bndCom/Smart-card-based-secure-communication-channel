@@ -12,7 +12,7 @@ public class HomePage2Controller {
 	@FXML
     private void handleAdminAction(ActionEvent event) {
         try {
-            // Load the new FXML file
+            // Load the admin page
             Parent secondView = FXMLLoader.load(getClass().getResource("admin-home-page.fxml"));
             Scene secondScene = new Scene(secondView);
 
@@ -31,7 +31,7 @@ public class HomePage2Controller {
 	@FXML
     private void handleDoctorAction(ActionEvent event) {
         try {
-            // Load the new FXML file
+            // Load the doctor page
             Parent secondView = FXMLLoader.load(getClass().getResource("doctor-home-page.fxml"));
             Scene secondScene = new Scene(secondView);
 
@@ -50,7 +50,7 @@ public class HomePage2Controller {
 	@FXML
     private void handleHomeAction(ActionEvent event) {
         try {
-            // Load the new FXML file
+            // Load the first side
             Parent secondView = FXMLLoader.load(getClass().getResource("homePage1.fxml"));
             Scene secondScene = new Scene(secondView);
 
@@ -61,6 +61,7 @@ public class HomePage2Controller {
             window.setScene(secondScene);
             window.setTitle("Home Page");
             window.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

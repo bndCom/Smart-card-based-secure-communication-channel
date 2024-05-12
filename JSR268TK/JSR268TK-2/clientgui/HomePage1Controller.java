@@ -13,7 +13,7 @@ public class HomePage1Controller{
 	 @FXML
 	    private void handleGetStartedAction(ActionEvent event) {
 	        try {
-	            // Load the new FXML file
+	            // Load the Second side
 	            Parent secondView = FXMLLoader.load(getClass().getResource("homePage2.fxml"));
 	            Scene secondScene = new Scene(secondView);
 	            

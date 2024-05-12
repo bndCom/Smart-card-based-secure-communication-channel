@@ -2,13 +2,14 @@ package clientgui;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.event.ActionEvent;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.DatePicker;
 import javafx.scene.paint.Color;
@@ -33,13 +34,17 @@ public class add_patientController {
 	@FXML
 	private RadioButton male;
 	@FXML
+	private ToggleGroup gender;
+	@FXML
 	private RadioButton female;
 	@FXML
 	private TextField adresse;
 	@FXML
 	private TextField nationalID;
+	@FXML
+	private TextField picture;
 
-	public void addPatient(ActionEvent event) throws IOException{
+public void addPatient(ActionEvent event) throws IOException{
 		
 		int gender = male.isSelected() ? 1 : 2;
 		// getting the date
@@ -87,5 +92,4 @@ public class add_patientController {
         stage.setScene(scene);
         stage.show();
 	}
-	
 }

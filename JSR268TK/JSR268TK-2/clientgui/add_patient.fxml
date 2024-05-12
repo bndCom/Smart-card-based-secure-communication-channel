@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="790.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.add_patientController">
+<AnchorPane prefHeight="698.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.add_patientController">
    <children>
-      <Pane layoutX="193.0" layoutY="65.0" prefHeight="610.0" prefWidth="514.0" style="-fx-background-color: linear-gradient(to right,#d9d9d9,white); -fx-background-radius: 35;">
+      <Pane layoutX="193.0" layoutY="65.0" prefHeight="568.0" prefWidth="514.0" style="-fx-background-color: linear-gradient(to right,#d9d9d9,white); -fx-background-radius: 35;">
          <children>
             <Label layoutX="219.0" layoutY="32.0" prefHeight="50.0" prefWidth="77.0" text="FORM" textAlignment="CENTER" textFill="#185fa1">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <FontAwesomeIconView fill="#185fa1" glyphName="EDIT" layoutX="296.0" layoutY="69.0" size="30" text="ï�„" />
             <Line endX="100.0" layoutX="268.0" layoutY="83.0" startX="-100.0" stroke="#185fa1" />
             <TextField fx:id="firstName" layoutX="57.0" layoutY="144.0" prefHeight="25.0" prefWidth="167.0" promptText="First Name" />
-            <FontAwesomeIconView fill="#185fa1" glyphName="USER" layoutX="30.0" layoutY="161.0" size="15" text="ï€‡" />
             <TextField fx:id="lastName" layoutX="299.0" layoutY="144.0" prefHeight="25.0" prefWidth="167.0" promptText="Last Name" />
-            <FontAwesomeIconView fill="#185fa1" glyphName="USER" layoutX="272.0" layoutY="161.0" size="15" />
             <TextField fx:id="phone" layoutX="57.0" layoutY="203.0" prefHeight="25.0" prefWidth="167.0" promptText="Phone" />
             <TextField fx:id="email" layoutX="299.0" layoutY="203.0" prefHeight="25.0" prefWidth="167.0" promptText="Email" />
-            <FontAwesomeIconView fill="#185fa1" glyphName="" layoutX="270.0" layoutY="299.0" size="15" text="ï„½" />
             <DatePicker fx:id="dateOfBirth" layoutX="303.0" layoutY="280.0" prefHeight="25.0" prefWidth="167.0" promptText="Date Of Birth" />
-            <Button fx:id="cancel" layoutX="62.0" layoutY="501.0" mnemonicParsing="false" onAction="#cancelForm" prefHeight="25.0" prefWidth="150.0" style="-fx-background-radius: 20;" text="CANCEL" />
-            <Button fx:id="add" layoutX="303.0" layoutY="501.0" mnemonicParsing="false" onAction="#addPatient" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #185fa1; -fx-background-radius: 20;" text="ADD" textFill="WHITE" />
+            <Button fx:id="cancel" layoutX="62.0" layoutY="475.0" mnemonicParsing="false" onAction="#cancelForm" prefHeight="25.0" prefWidth="150.0" style="-fx-background-radius: 20;" text="CANCEL" />
+            <Button fx:id="add" layoutX="303.0" layoutY="475.0" mnemonicParsing="false" onAction="#addPatient" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #185fa1; -fx-background-radius: 20;" text="ADD" textFill="WHITE" />
             <SVGPath content="M0 2C0 0.895313 0.783398 0 1.75 0H12.25C13.2152 0 14 0.895313 14 2V10C14 11.1031 13.2152 12 12.25 12H1.75C0.783398 12 0 11.1031 0 10V2ZM1.3125 2V2.69063L6.0293 7.11563C6.59258 7.64688 7.40742 7.64688 7.9707 7.11563L12.6875 2.69063V1.97187C12.6875 1.725 12.4906 1.47187 12.25 1.47187H1.75C1.50828 1.47187 1.3125 1.725 1.3125 1.97187V2ZM1.3125 4.63125V10C1.3125 10.275 1.50828 10.5 1.75 10.5H12.25C12.4906 10.5 12.6875 10.275 12.6875 10V4.63125L8.80469 8.275C7.75469 9.25937 6.24531 9.25937 5.1707 8.275L1.3125 4.63125Z" fill="#185fa1" layoutX="269.0" layoutY="210.0" />
-            <FontAwesomeIconView fill="#185fa1" glyphName="USER" layoutX="30.0" layoutY="299.0" size="15" text="ï€‡" />
-            <RadioButton fx:id="male" layoutX="57.0" layoutY="285.0" mnemonicParsing="false" text="Male" />
-            <RadioButton fx:id="female" layoutX="153.0" layoutY="284.0" mnemonicParsing="false" text="Female" />
+            <RadioButton fx:id="male" layoutX="57.0" layoutY="285.0" mnemonicParsing="false" text="Male">
+               <toggleGroup>
+                  <ToggleGroup fx:id="gender" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="female" layoutX="153.0" layoutY="284.0" mnemonicParsing="false" text="Female" toggleGroup="$gender" />
             <SVGPath content="M14.0161 8.55769L8.59676 13.9423C8.01612 13.2692 4.33871 9.32692 2.5 14.7115C2.5 14.7115 2.69354 17.5 6.66128 17.5C9.46773 17.5 12.371 14.1346 14.4032 12.2115C16.1451 10.5769 17.5 8.46153 17.5 6.53845C17.5 2.59614 14.7903 2.5 14.7903 2.5C8.59678 4.61539 14.0161 8.55769 14.0161 8.55769Z&quot; fill=&quot;black&quot;/&gt;M14.0161 8.55769L8.59676 13.9423C8.01612 13.2692 4.33871 9.32692 2.5 14.7115C2.5 14.7115 2.69354 17.5 6.66128 17.5C9.46773 17.5 12.371 14.1346 14.4032 12.2115C16.1451 10.5769 17.5 8.46153 17.5 6.53845C17.5 2.59614 14.7903 2.5 14.7903 2.5C8.59678 4.61539 14.0161 8.55769 14.0161 8.55769Z" layoutX="56.0" layoutY="-3.0" />
             <SVGPath content="M14.0161 8.55769L8.59676 13.9423C8.01612 13.2692 4.33871 9.32692 2.5 14.7115C2.5 14.7115 2.69354 17.5 6.66128 17.5C9.46773 17.5 12.371 14.1346 14.4032 12.2115C16.1451 10.5769 17.5 8.46153 17.5 6.53845C17.5 2.59614 14.7903 2.5 14.7903 2.5C8.59678 4.61539 14.0161 8.55769 14.0161 8.55769" fill="#185fa1" layoutX="25.0" layoutY="205.0" />
-            <TextField fx:id="adresse" layoutX="298.0" layoutY="365.0" prefHeight="25.0" prefWidth="167.0" promptText="Adresse" />
+            <TextField fx:id="adresse" layoutX="298.0" layoutY="365.0" prefHeight="25.0" prefWidth="175.0" promptText="Adresse" />
             <SVGPath content="M17.5834 5.45942L17.6086 5.47884C18.056 5.82349 18.3334 6.35696 18.3334 6.94297V16.3232C18.3334 17.8934 17.0725 19.1666 15.5 19.1666H4.50002C2.92752 19.1666 1.66669 17.8934 1.66669 16.3232V6.94297C1.66669 6.35696 1.94409 5.82349 2.39139 5.47884L2.41581 5.46002L8.90716 1.18338C9.55119 0.716761 10.4144 0.716541 11.0586 1.18273L17.5834 5.45942ZM8.33335 10.8333V17.4999H6.66669V10.6666C6.66669 9.83968 7.33978 9.16659 8.16669 9.16659H11.8334C12.6603 9.16659 13.3334 9.83968 13.3334 10.6666V17.4999H11.6667V10.8333H8.33335Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="266.0" layoutY="367.0" />
-            <FontAwesomeIconView fill="#185fa1" glyphName="USER" layoutX="30.0" layoutY="382.0" size="15" text="ï€‡" />
-            <TextField fx:id="nationalID" layoutX="54.0" layoutY="365.0" prefHeight="25.0" prefWidth="167.0" promptText="National ID" />
+            <TextField fx:id="nationalID" layoutX="56.0" layoutY="365.0" prefHeight="25.0" prefWidth="167.0" promptText="National ID" />
+            <SVGPath content="M10 18.3333C5.39763 18.3333 1.66667 14.6024 1.66667 9.99999C1.66667 5.39762 5.39763 1.66666 10 1.66666C14.6024 1.66666 18.3333 5.39762 18.3333 9.99999C18.3333 14.6024 14.6024 18.3333 10 18.3333ZM10.5893 6.0774L13.9226 9.41073C14.248 9.73617 14.248 10.2638 13.9226 10.5892L10.5893 13.9226C10.2638 14.248 9.73619 14.248 9.41075 13.9226C9.08531 13.5971 9.08531 13.0695 9.41075 12.7441L11.3215 10.8333H6.66667C6.20643 10.8333 5.83334 10.4602 5.83334 9.99999C5.83334 9.53975 6.20643 9.16666 6.66667 9.16666H11.3215L9.41075 7.25591C9.08531 6.93048 9.08531 6.40284 9.41075 6.0774C9.73619 5.75196 10.2638 5.75196 10.5893 6.0774Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="24.0" layoutY="146.0" />
+            <SVGPath content="M7 6H17C20.3137 6 23 8.68629 23 12C23 15.3137 20.3137 18 17 18H7C3.68629 18 1 15.3137 1 12C1 8.68629 3.68629 6 7 6ZM10 12C10 13.6569 8.65685 15 7 15C5.34315 15 4 13.6569 4 12C4 10.3431 5.34315 9 7 9C8.65685 9 10 10.3431 10 12Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="25.0" layoutY="281.0" />
+            <SVGPath content="M12.5 0C10.7741 0 9.375 1.39911 9.375 3.125H5.625C4.24429 3.125 3.125 4.24429 3.125 5.625V21.4583C3.125 22.839 4.24429 23.9583 5.625 23.9583H19.375C20.7557 23.9583 21.875 22.839 21.875 21.4583V5.625C21.875 4.24429 20.7557 3.125 19.375 3.125H15.625C15.625 1.39911 14.2259 0 12.5 0ZM11.4583 3.125C11.4583 2.5497 11.9247 2.08333 12.5 2.08333C13.0753 2.08333 13.5417 2.5497 13.5417 3.125C13.5417 3.7003 13.0753 4.16667 12.5 4.16667C11.9247 4.16667 11.4583 3.7003 11.4583 3.125ZM6.25 10.4167C6.25 9.84137 6.71637 9.375 7.29167 9.375H17.7083C18.2836 9.375 18.75 9.84137 18.75 10.4167C18.75 10.992 18.2836 11.4583 17.7083 11.4583H7.29167C6.71637 11.4583 6.25 10.992 6.25 10.4167ZM6.25 13.5417C6.25 12.9664 6.71637 12.5 7.29167 12.5H17.7083C18.2836 12.5 18.75 12.9664 18.75 13.5417C18.75 14.117 18.2836 14.5833 17.7083 14.5833H7.29167C6.71637 14.5833 6.25 14.117 6.25 13.5417ZM6.25 16.6667C6.25 16.0914 6.71637 15.625 7.29167 15.625H13.5417C14.117 15.625 14.5833 16.0914 14.5833 16.6667C14.5833 17.242 14.117 17.7083 13.5417 17.7083H7.29167C6.71637 17.7083 6.25 17.242 6.25 16.6667Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="300.0" layoutY="45.0" />
+            <SVGPath content="M10 18.3333C5.39763 18.3333 1.66667 14.6024 1.66667 9.99999C1.66667 5.39762 5.39763 1.66666 10 1.66666C14.6024 1.66666 18.3333 5.39762 18.3333 9.99999C18.3333 14.6024 14.6024 18.3333 10 18.3333ZM10.5893 6.0774L13.9226 9.41073C14.248 9.73617 14.248 10.2638 13.9226 10.5892L10.5893 13.9226C10.2638 14.248 9.73619 14.248 9.41075 13.9226C9.08531 13.5971 9.08531 13.0695 9.41075 12.7441L11.3215 10.8333H6.66667C6.20643 10.8333 5.83334 10.4602 5.83334 9.99999C5.83334 9.53975 6.20643 9.16666 6.66667 9.16666H11.3215L9.41075 7.25591C9.08531 6.93048 9.08531 6.40284 9.41075 6.0774C9.73619 5.75196 10.2638 5.75196 10.5893 6.0774Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="265.0" layoutY="146.0" />
+            <SVGPath content="M10 18.3333C5.39763 18.3333 1.66667 14.6024 1.66667 9.99999C1.66667 5.39762 5.39763 1.66666 10 1.66666C14.6024 1.66666 18.3333 5.39762 18.3333 9.99999C18.3333 14.6024 14.6024 18.3333 10 18.3333ZM10.5893 6.0774L13.9226 9.41073C14.248 9.73617 14.248 10.2638 13.9226 10.5892L10.5893 13.9226C10.2638 14.248 9.73619 14.248 9.41075 13.9226C9.08531 13.5971 9.08531 13.0695 9.41075 12.7441L11.3215 10.8333H6.66667C6.20643 10.8333 5.83334 10.4602 5.83334 9.99999C5.83334 9.53975 6.20643 9.16666 6.66667 9.16666H11.3215L9.41075 7.25591C9.08531 6.93048 9.08531 6.40284 9.41075 6.0774C9.73619 5.75196 10.2638 5.75196 10.5893 6.0774Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="265.0" layoutY="283.0" />
+            <SVGPath content="M10 18.3333C5.39763 18.3333 1.66667 14.6024 1.66667 9.99999C1.66667 5.39762 5.39763 1.66666 10 1.66666C14.6024 1.66666 18.3333 5.39762 18.3333 9.99999C18.3333 14.6024 14.6024 18.3333 10 18.3333ZM10.5893 6.0774L13.9226 9.41073C14.248 9.73617 14.248 10.2638 13.9226 10.5892L10.5893 13.9226C10.2638 14.248 9.73619 14.248 9.41075 13.9226C9.08531 13.5971 9.08531 13.0695 9.41075 12.7441L11.3215 10.8333H6.66667C6.20643 10.8333 5.83334 10.4602 5.83334 9.99999C5.83334 9.53975 6.20643 9.16666 6.66667 9.16666H11.3215L9.41075 7.25591C9.08531 6.93048 9.08531 6.40284 9.41075 6.0774C9.73619 5.75196 10.2638 5.75196 10.5893 6.0774Z" fill="#185fa1" fillRule="EVEN_ODD" layoutX="26.0" layoutY="366.0" />
          </children>
       </Pane>
       <SVGPath content="M6.25 7C6.25 3.83579 8.83579 1.25 12 1.25C15.1642 1.25 17.75 3.83579 17.75 7V8.5C17.75 11.6642 15.1642 14.25 12 14.25C8.83579 14.25 6.25 11.6642 6.25 8.5V7Z&quot; fill=&quot;black&quot;/&gt;M6.25 7C6.25 3.83579 8.83579 1.25 12 1.25C15.1642 1.25 17.75 3.83579 17.75 7V8.5C17.75 11.6642 15.1642 14.25 12 14.25C8.83579 14.25 6.25 11.6642 6.25 8.5V7Z" fillRule="EVEN_ODD" layoutX="794.0" layoutY="28.0" />

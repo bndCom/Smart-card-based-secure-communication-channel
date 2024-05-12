@@ -1,6 +1,6 @@
 .buttons {
     -fx-background-color: transparent;
-    -fx-background-radius: 24;
+    -fx-background-radius: 14;
     -fx-cursor: hand;
     -fx-padding: 10px 20px;
     -fx-transition: all 0.3s;
@@ -26,7 +26,7 @@
 }
 .GoBackToHome {
 	-fx-background-color: transparent;
-	-fx-background-radius: 18;
+	-fx-background-radius: 14;
 	-fx-font-size: 32;
 }
 
@@ -64,7 +64,7 @@
 }
 .admin-button {
 	-fx-background-color: #185FA1;
-    -fx-background-radius: 24;
+    -fx-background-radius: 14;
     -fx-text-fill: white;
     -fx-font-size: 24px;
     -fx-font-family: "Product Sans Bold";
@@ -80,7 +80,7 @@
 }
 .doctor-button {
 	-fx-background-color: #185FA1;
-    -fx-background-radius: 24;
+    -fx-background-radius: 14;
     -fx-text-fill: white;
     -fx-font-size: 24px;
     -fx-font-family: "Product Sans Bold";
@@ -107,7 +107,7 @@
 
 .auth-button {
     -fx-background-color: #185FA1;
-    -fx-background-radius: 24;
+    -fx-background-radius: 14;
     -fx-text-fill: white;
     -fx-font-size: 30px; /* Define font size */
     -fx-font-family: "Product Sans Bold";
@@ -116,7 +116,7 @@
 
 .cancel-button {
     -fx-background-color: #185FA1;
-    -fx-background-radius: 24;
+    -fx-background-radius: 14;
     -fx-text-fill: white;
     -fx-font-size: 24px; /* Define font size */
     -fx-font-family: "Product Sans Bold";
@@ -133,7 +133,7 @@
 
 .next-button {
     -fx-background-color: #185FA1;
-    -fx-background-radius: 24;
+    -fx-background-radius: 14; 
     -fx-text-fill: white;
     -fx-font-size: 24px; /* Define font size */
     -fx-font-family: "Product Sans Bold";
@@ -145,5 +145,123 @@
 
 .next-button:pressed {
     -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
+.arrow-left {
+    -fx-shape: "M10 0 L0 5 L10 10 Z";
+}
+
+.arrow-right {
+    -fx-shape: "M0 0 L10 5 L0 10 Z";
+}
+.arrow-left:hover {
+    -fx-cursor: hand;
+}
+
+.arrow-right:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.pin-digit {
+    -fx-alignment: center;
+    -fx-border-color: black;
+    -fx-background-color : transparent ;
+    -fx-background-radius : 50% ;
+    -fx-border-radius : 50% ;
+}
+
+.circular-image {
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-min-width: 100px; /* Adjust as needed */
+    -fx-min-height: 100px; /* Adjust as needed */
+}
+
+.doctorName {
+	-fx-font-family: "Product Sans Bold";
+	-fx-font-weight: bold;
+	-fx-font-size : 16px;
+}
+
+
+.default-color0.chart-bar {
+	-fx-bar-fill : blue ;
+}
+.default-color1.chart-bar {
+	-fx-bar-fill : red ;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: transparent;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 14; 
+    -fx-text-fill: white;
+    -fx-font-size: 18px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+    -fx-font-weight : bold ;
+}
+.dash-button {
+    -fx-background-radius: 14; 
+    -fx-font-size: 18px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+    -fx-font-weight : bold ;
+}
+.patients-button {
+    -fx-background-radius: 14; 
+    -fx-font-size: 18px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+    -fx-font-weight : bold ;
+}
+.history-button {
+    -fx-background-radius: 14; 
+    -fx-font-size: 18px; /* Define font size */
+    -fx-font-family: "Product Sans Bold";
+    -fx-font-weight : bold ;
+}
+
+.menu-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.menu-button:pressed {
+    -fx-opacity: 0.6;
+    -fx-cursor: hand;
+}
+.dash-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.dash-button:pressed {
+    -fx-opacity: 0.6;
+    -fx-cursor: hand;
+}    
+.patients-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.patients-button:pressed {
+    -fx-opacity: 0.6;
+    -fx-cursor: hand;
+}
+
+.history-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+.history-button:pressed {
+    -fx-opacity: 0.6;
     -fx-cursor: hand;
 }
