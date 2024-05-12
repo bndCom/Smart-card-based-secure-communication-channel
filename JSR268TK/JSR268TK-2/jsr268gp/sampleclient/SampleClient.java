@@ -31,6 +31,10 @@ import java.util.Date;
 
 
 
+
+
+
+
 import javafx.util.Pair;
 
 import javax.smartcardio.ATR;
@@ -277,7 +281,7 @@ public class SampleClient {
                  long doctorId = 1 ;
                  String picture = " lol ";
                  String about = " alger + LOL " ;
-                 String hashcodepin = " pin + LOL " ;
+                 String hashcodepin = "1234" ;
                  String doctorStatus = " doctor status lol ";
                  
                  Date date = new Date();
@@ -302,12 +306,31 @@ public class SampleClient {
             		//System.out.println(admin.addNewDoctor(canal, firstName, lastName, picture, nationalId, gender, email, phoneNumber, address, about, hashcodepin, doctorStatus));
                 	SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
             		try{
-            			admin.auth(1234);
-            			System.out.println("Logged-in !!");
+            			//admin.auth(1234);
+            			//System.out.println("Logged-in !!");
+//            			System.out.println("all admins");
+//            			System.out.println(admin.getAllAdmins());
+            			//System.out.println(admin.auth("1234"));
+            			System.out.println(admin.addNewAdmin(canal, "admin", "admin", "---", 11121L, "email.test", "0779", "alger", "1234"));
+//            			System.out.println("admin added!!");
+//            			System.out.println("all admins after");
+//            			System.out.println(admin.getAllAdmins());
+            			
+//            			System.out.println("all patients");
 //            			System.out.println(admin.getAllPatients());
-//            			admin.addNewAdmin(canal, "admin", "admin", "testpic", 123456L, "testEmail", "123345", "setif", "678");
-//            			System.out.println("user added!!");
+//            			admin.addNewPatient("patient", "patient", "2004-12-23", 849L, 1, "testEmail", "4359", "place");
+//            			System.out.println("patient added!!");
+//            			System.out.println("all patients after");
 //            			System.out.println(admin.getAllPatients());
+//            			
+//            			System.out.println("all doctors");
+//            			System.out.println(admin.getAllDoctors());
+//            			admin.addNewDoctor(canal, firstName, lastName, picture, 982364591L, gender, email, phoneNumber, address, about, hashcodepin, doctorStatus);
+//            			System.out.println("all doctors after");
+//            			System.out.println(admin.getAllDoctors());
+//            			admin.deleteDoctor(239145929426790677L);//,  firstName, lastName, picture, 982364587L, gender, email, phoneNumber, address, about, hashcodepin, doctorStatus);
+//            			System.out.println("all doctors after");
+//            			System.out.println(admin.getAllDoctors());
             			
             		}catch(ServerError e){
             			e.printError();
@@ -343,7 +366,7 @@ public class SampleClient {
             	
                 Session admin2 = new SessionAdmin(canal, "http://localhost:8080");
                 try{
-                	System.out.println(admin2.auth(12));
+                	System.out.println(admin2.auth("1234"));
                 }catch(ServerError e){
                 	System.out.println("Error happened in the server! Error code: ");
                 	e.printError();
@@ -602,9 +625,11 @@ public class SampleClient {
             	
             	break;
             case 7 :
+            	
             	respApdu =APDUOps.sendApduToCard(CLA_APPLET, INS_CS_UID, (byte)0x00, (byte)0x00, canal);
+            	System.out.println(respApdu);
             	System.out.println(DH.byteArrayToLong(respApdu.getData()));
-        		c.disconnect(true);
+            	c.disconnect(true);
             	handleExit(connection) ;
                 break;
             

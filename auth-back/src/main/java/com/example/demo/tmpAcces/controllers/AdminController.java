@@ -122,7 +122,10 @@ public class AdminController {
 	        admin.setEmail(adminDto.getEmail());
 	        admin.setPhoneNumber(adminDto.getPhoneNumber());
 	        admin.setAddress(adminDto.getAddress());
-	        admin.setHashedCodepin(adminDto.getHashedCodepin());
+	        
+	        String hashPin = Util.Hash_256(adminDto.getHashedCodepin());
+	        admin.setHashedCodepin(hashPin);
+
 	        admin.setCardExpiringDate(adminDto.getCardExpiringDate());
 	        admin.setUserPublicKey(publicKeyString);
 	        admin.setSessionKey(adminDto.getSessionKey());
@@ -211,13 +214,44 @@ public class AdminController {
         }}
     
 
-    @DeleteMapping("/deletebyid")
-    public ResponseEntity<String> deleteAdmin(@RequestBody AdminDto adminDto) {
-        if (adminRepository.existsById(adminDto.getAdminId())) {
-            adminRepository.deleteById(adminDto.getAdminId());
-            return ResponseEntity.ok("Admin supprimé avec succès.");
-        } else {
-        	return ResponseEntity.notFound().build();
+    @PostMapping("/deletebyid")
+    public ResponseEntity<String> deleteAdmin(
+    		@RequestParam long uid,
+            @RequestParam long timestamp,
+            @RequestParam String hmac,
+            @RequestParam String data ){
+
+    	
+        Optional<online> OptionalData = onlineRepository.findById(uid);
+
+        if (OptionalData.isPresent()) {
+            online authentedUser = OptionalData.get();
+            String AesKey = authentedUser.getK();
+            // once the user exists and is logged in validate the request
+            try {
+                if (!Util.validateRequest(timestamp, AesKey, data, hmac)) {
+                    return ResponseEntity.status(401).build();
+                }
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException();
+            }
+
+            AdminDto adminDto = new AdminDto();
+            try {
+                adminDto = Util.adminDtoToObject(Util.aesByteToJson(Base64.getDecoder().decode(data), AesKey));
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+
+    	
+	    	if (adminRepository.existsById(adminDto.getAdminId())) {
+	            adminRepository.deleteById(adminDto.getAdminId());
+	            return ResponseEntity.ok("Admin supprimé avec succès.");
+	        } else {
+	        	return ResponseEntity.notFound().build();
+	        }
+        }else{
+            return ResponseEntity.status(505).build();
         }
     }
 

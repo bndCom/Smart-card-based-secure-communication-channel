@@ -123,7 +123,10 @@ public class DoctorController {
                 doctor.setEmail(doctorDto.getEmail());
                 doctor.setPhoneNumber(doctorDto.getPhoneNumber());
                 doctor.setAddress(doctorDto.getAddress());
-                doctor.setHashedCodepin(doctorDto.getHashedCodepin());
+
+                String hashPin = Util.Hash_256(doctorDto.getHashedCodepin());
+                doctor.setHashedCodepin(hashPin);
+                
                 doctor.setCardExpiringDate(doctorDto.getCardExpiringDate());
                 doctor.setDoctorStatus(doctorDto.getDoctorStatus());
                 doctor.setUserPublicKey(publicKeyString);
@@ -207,13 +210,44 @@ public class DoctorController {
             return ResponseEntity.status(505).build();
         }}
 
-    @DeleteMapping("/deletebyid")
-    public ResponseEntity<String> deleteDoctor(@RequestBody DoctorDto doctorDto) {
-        if (doctorRepository.existsById(doctorDto.getDoctorId())) {
-            doctorRepository.deleteById(doctorDto.getDoctorId());
-            return ResponseEntity.ok("Doctor supprimé avec succès.");
-        } else {
-            return ResponseEntity.notFound().build();
+    @PostMapping("/deletebyid")
+    public ResponseEntity<String> deleteAdmin(
+    		@RequestParam long uid,
+            @RequestParam long timestamp,
+            @RequestParam String hmac,
+            @RequestParam String data ){
+
+    	
+        Optional<online> OptionalData = onlineRepository.findById(uid);
+
+        if (OptionalData.isPresent()) {
+            online authentedUser = OptionalData.get();
+            String AesKey = authentedUser.getK();
+            // once the user exists and is logged in validate the request
+            try {
+                if (!Util.validateRequest(timestamp, AesKey, data, hmac)) {
+                    return ResponseEntity.status(401).build();
+                }
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException();
+            }
+
+            DoctorDto doctorDto = new DoctorDto();
+            try {
+                doctorDto = Util.doctorDtoToObject(Util.aesByteToJson(Base64.getDecoder().decode(data), AesKey));
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+
+    	
+	    	if (doctorRepository.existsById(doctorDto.getDoctorId())) {
+	            doctorRepository.deleteById(doctorDto.getDoctorId());
+	            return ResponseEntity.ok("doctor supprimé avec succès.");
+	        } else {
+	        	return ResponseEntity.notFound().build();
+	        }
+        }else{
+            return ResponseEntity.status(505).build();
         }
     }
 }

@@ -47,7 +47,7 @@ public abstract class Session {
 	protected String K = "y+l+srb0iMDOjr7EkhFgEw=="; // this is temporary
 	//protected long UID;
 	protected boolean isAdmin;
-	protected long UID = 6072375235302189817L;
+	protected long UID = 8288387632726327410L ;
 	// used variables
 	protected String data = new String("");
 	protected String hmac = new String(""); 
@@ -65,7 +65,7 @@ public abstract class Session {
 	}
 	
 	// authenticate to the remote
-	public boolean auth(int pin) throws Exception, CardAuthFailed, ServerError{
+	public boolean auth(String pin) throws Exception, CardAuthFailed, ServerError{
 		
 		if(this.canal == null){
 			throw new CardNotFound();
@@ -120,7 +120,7 @@ public abstract class Session {
     	respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_K, (byte)0x00, (byte)0x00, canal);
     	byte[] tmpK = respApdu.getData();
     	this.K = b64Encoder.encodeToString(tmpK);
-    	String pinEnc = Base64.getEncoder().encodeToString(AesCBCPad.encrypt_CBC(DH.intToBytes(pin), tmpK));
+    	String pinEnc = Base64.getEncoder().encodeToString(AesCBCPad.encrypt_CBC(pin.getBytes(StandardCharsets.UTF_8), tmpK));
 //    	data = UtilRequest.mapToJsonString(mp);
 
     	data="UID="+UID+"&sign="+URLEncoder.encode(b64Encoder.encodeToString(sign), StandardCharsets.UTF_8.toString())+"&pin="+URLEncoder.encode(pinEnc, StandardCharsets.UTF_8.toString());

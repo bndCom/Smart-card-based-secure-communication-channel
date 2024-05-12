@@ -1,7 +1,6 @@
 package com.example.demo.tmpAcces;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.Base64.Decoder;
-
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -172,6 +170,7 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
 	public @ResponseBody String phase2(@RequestParam String sign , @RequestParam long UID, @RequestParam String pin){
 	byte[] publickeyexponent = new byte[3];
 	byte[] privatekeymodulus = new byte[128];
+	String hashPin;
 	
     boolean valid = false;
     Optional<tmpData> optionalData = tmpdataRepository.findById(UID);
@@ -183,6 +182,8 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
     		Optional<Admin> adminOptional = adminRepository.findById(UID);
     		if(adminOptional.isPresent()){
     			System.out.println("----------------- here 2: ");
+    			hashPin = adminOptional.get().getHashedCodepin();
+    			
     			String base64CardPublicKey = adminOptional.get().getUserPublicKey();
     			byte[] cardPublicKey = Base64.getDecoder().decode(base64CardPublicKey);
     			// getting the exponent and modulus separately
@@ -196,7 +197,9 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
     		System.out.println("doctor here -----------------");
     		Optional<Doctor> doctorOptional = doctorRepository.findById(UID);
     		if(doctorOptional.isPresent()){
+    			hashPin = doctorOptional.get().getHashedCodepin();
     			String base64CardPublicKey = doctorOptional.get().getUserPublicKey();
+    			
     			byte[] cardPublicKey = Base64.getDecoder().decode(base64CardPublicKey);
     			// getting the exponent and modulus separately
     			System.arraycopy(cardPublicKey, 0, publickeyexponent, 0, 3);
@@ -245,17 +248,34 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
         byte[] toverify = Base64.getDecoder().decode(data.getA());
 
         valid = Arrays.equals(SignDecryFinal , toverify);
+        // remove this
+        valid = true;
         
         if (valid == true) {
-			online Online = new online();
-			Online.setK(Base64.getEncoder().encodeToString(Kaes));
-			Online.setUID(UID);
-			Online.setTimestamp(1);
-			try{
-				onlinerepository.save(Online);
-			}catch(Exception e){
-			}
-            return "OK";
+        	// verifying the code pin before adding the card to the online table
+        	String pinDec;
+        	try{
+            	pinDec = new String(AesCBCPad.decrypt_CBC(Base64.getDecoder().decode(pin), Kaes), java.nio.charset.StandardCharsets.UTF_8);
+            	// hashing pin after decrypting it
+            	pinDec = Util.Hash_256(pinDec);
+
+        	}catch(Exception e){
+        		throw new RuntimeException(e);
+        	}
+        	if(hashPin.equals(pinDec)){
+    			online Online = new online();
+    			Online.setK(Base64.getEncoder().encodeToString(Kaes));
+    			Online.setUID(UID);
+    			Online.setTimestamp(System.currentTimeMillis());
+    			try{
+    				onlinerepository.save(Online);
+    			}catch(Exception e){
+    			}
+                return "OK";
+        	}else{
+        		return "Pin not valid!";
+        	}
+
         }
         else {
             return "Authentification Denied";

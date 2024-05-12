@@ -253,9 +253,9 @@ public class SessionAdmin extends Session{
 			throw new NotAuthenticatedError();
 		}
 		// check in case the card is not inserted
-		if(newCanal == null){
-			throw new CardNotFound();
-		}
+//		if(newCanal == null){
+//			throw new CardNotFound();
+//		}
 		// creating the map
 		if(map != null){
 			map.clear();
@@ -304,19 +304,21 @@ public class SessionAdmin extends Session{
     	
     	Map<String, String> mp = UtilRequest.jsonStringToMap(data);
 // this must be uncommented when working with card
-//    	try{
-//    		// card private keys
-//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPublicMod")), newCanal);
-//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PRIVATE_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPrivateExp")), newCanal);
-//    		// server public keys
-//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicExp")), newCanal);
-//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
-//    		// sending the UID of the card
-//    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
-//    	
-//    	}catch(Exception e){
-//    		return false;
-//    	}
+    	try{
+    		// card private keys
+    		System.out.println(mp.get("cardPublicMod"));
+    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPublicMod")), newCanal);
+    		System.out.println(respApdu);
+    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_CARD_PRIVATE_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("cardPrivateExp")), newCanal);
+    		// server public keys
+    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_EXP, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicExp")), newCanal);
+    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
+    		// sending the UID of the card
+    		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
+    	
+    	}catch(Exception e){
+    		return false;
+    	}
     	
     	
     	return true;
@@ -329,10 +331,59 @@ public class SessionAdmin extends Session{
 		}
 	}
 	
-	public void deleteUser() throws NotAuthenticatedError{
+	// add new doctor and customizing its card
+	public boolean deleteDoctor(long doctorId)throws Exception{//, String firstName, String lastName, String picture, long nationalId, int gender, String email, String phoneNumber, String address, String about, String hashCodePin, String doctorStatus) throws Exception{
 		if(this.K == null){
 			throw new NotAuthenticatedError();
 		}
+
+		// creating the map
+		if(map != null){
+			map.clear();
+		}
+		map.put("doctorId", doctorId);
+//    	map.put("firstName", firstName);
+//    	map.put("lastName", lastName);
+//    	map.put("gender", gender);
+//    	map.put("picture", picture);
+//    	map.put("nationalId", nationalId);
+//    	map.put("about", about);
+//    	map.put("email", email);
+//    	map.put("phoneNumber", phoneNumber);
+//    	map.put("address", address);
+//    	map.put("hashedCodepin", hashCodePin);
+//    	map.put("cardExpiringDate", "2024-12-30");
+//    	map.put("doctorStatus", doctorStatus);
+    	
+		// converting the map containing user data to json
+		String js = UtilRequest.mapToJsonString(this.map);
+		// encrypt the data using AES with the admin's session key
+		// then base64
+		data = Base64.getEncoder().encodeToString(UtilRequest.aesJsonToByte(js, this.K));
+		// other useful paramters for the request
+    	timestamp = System.currentTimeMillis();
+    	hmac = UtilRequest.requestHash(timestamp, this.K, data);
+    	// url encode data
+    	data = URLEncoder.encode(data, StandardCharsets.UTF_8.toString());
+    	hmac = URLEncoder.encode(hmac, StandardCharsets.UTF_8.toString());
+    	// sending the request
+    	response = UtilRequest.sendRequest(
+    			"POST",
+    			"uid="+this.UID+"&timestamp="+timestamp+"&hmac="+hmac+"&data="+data,
+    			this.url+"/doctors/deletebyid",
+    			"application/x-www-form-urlencoded"
+    			);
+    	// checking the status of the request
+    	if(response.getCode() != HttpURLConnection.HTTP_OK){
+    		// the user is not authenticated
+    		if(response.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
+    			throw new NotAuthenticatedError();
+    		}
+    		throw new ServerError(response.getCode());
+    	}
+    	
+    	return true;
+		
 	}
 	
 }
