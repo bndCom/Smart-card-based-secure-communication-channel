@@ -225,6 +225,7 @@ public class AdminDashBoardController {
 		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
+
 	
 	private void updateButtons (double width) {
 		

@@ -11,7 +11,6 @@ import java.util.function.Predicate;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,92 +30,93 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
-import java.sql.Date;
+public class patientsRecordsController {
+	@FXML
+	private TableView tableview;
+	@FXML
+	private TableColumn ID;
+	@FXML
+	private TableColumn LastName;
+	@FXML
+	private TableColumn Name;
+	@FXML
+	private TableColumn tel;
+	@FXML
+	private TableColumn LastSession;
+	@FXML
+	private TableColumn Record;
+	@FXML
+	private TableColumn tools;
+	@FXML
+	private TextField filterField;
+	@FXML
+	private Button addBtn;
+	@FXML
+	private Label AdminName;
+	@FXML
+	private AnchorPane anchorPane;
+	@FXML
+	private Button menuButton;
+	@FXML
+	private SVGPath menuIcon;
+	@FXML
+	private Button dashBoardButton,historyButton;
+	@FXML
+	private SVGPath dashBoardIcon;
+	@FXML
+	private Button patientsButton;
+	@FXML
+	private SVGPath patientsIcon;
+	@FXML
+	private SVGPath historyIcon;
 
-public class doctors_recordsController implements Initializable {
-    @FXML
-    private TableView<DoctorDto> tableview;
-    @FXML
-    private TableColumn<DoctorDto,String> ID;
-    @FXML
-    private TableColumn<DoctorDto,String>  LastName;
-    @FXML
-    private TableColumn<DoctorDto,String>  Name;
-    @FXML
-    private TableColumn<DoctorDto,String>  tel;
-    @FXML
-    private TableColumn<DoctorDto,String>  LastSession;
-    @FXML
-    private TableColumn<DoctorDto,String>  Record;
-    @FXML
-    private TableColumn<DoctorDto,Void>  tools;
-    @FXML
-    private TextField filterField;
-    @FXML
-    private Button addBtn;
-    @FXML
-    private Label AdminName;
-    @FXML
-    private Button menuButton;
-    @FXML
-    private Button dashBoardButton;
-    @FXML
-    private Button patientsButton;
-    @FXML
-    private Button doctorsButton;
-    @FXML
-    private AnchorPane anchorPane ;
-    @FXML
-    private SVGPath menuIcon , dashBoardIcon , doctorsIcon , patientsIcon ;
-    private Timeline animation;
+	private Timeline animation;
 
-    private ObservableList<DoctorDto> dataList = FXCollections.observableArrayList();
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ID.setCellValueFactory(new PropertyValueFactory<DoctorDto, String>("doctorId"));
-        LastName.setCellValueFactory(new PropertyValueFactory<DoctorDto, String>("lastName"));
-        Name.setCellValueFactory(new PropertyValueFactory<DoctorDto, String>("firstName"));
-        tel.setCellValueFactory(new PropertyValueFactory<DoctorDto, String>("phoneNumber"));
-        LastSession.setCellValueFactory(new PropertyValueFactory<DoctorDto, String>("email"));
-        Record.setCellValueFactory(new PropertyValueFactory<DoctorDto, String>("address"));
-        tools.setCellValueFactory(new PropertyValueFactory<DoctorDto, Void>("tools"));
+	private ObservableList<PatientDto> dataList = FXCollections.observableArrayList();
+	public void initialize(URL url, ResourceBundle resourceBundle) {
+        ID.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("patientId"));
+        LastName.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("lastName"));
+        Name.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("firstName"));
+        tel.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("phoneNumber"));
+        LastSession.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("email"));
+        Record.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("address"));
+        tools.setCellValueFactory(new PropertyValueFactory<PatientDto, Void>("tools"));
 
         // Custom cell factory for the tools column
-        tools.setCellFactory(new Callback<TableColumn<DoctorDto, Void>, TableCell<DoctorDto, Void>>() {
-            public TableCell<DoctorDto, Void> call(TableColumn<DoctorDto, Void> column) {
-                return new TableCell<DoctorDto, Void>() {
+        tools.setCellFactory(new Callback<TableColumn<PatientDto, Void>, TableCell<PatientDto, Void>>() {
+            public TableCell<PatientDto, Void> call(TableColumn<PatientDto, Void> column) {
+                return new TableCell<PatientDto, Void>() {
                     final Button btn1 = new Button("show");
                     final Button btn2 = new Button("delete");
                     final Button btn3 = new Button("edit");
-
+                    
                     {
                         btn1.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                                DoctorDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto doctor = getTableView().getItems().get(getIndex());
                             }
                         });
                         btn2.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                                DoctorDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto doctor = getTableView().getItems().get(getIndex());
                             }
                         });
                         btn3.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                                DoctorDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto doctor = getTableView().getItems().get(getIndex());
                             }
                         });
                     }
-
+                    
                     @Override
                     protected void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -136,45 +136,46 @@ public class doctors_recordsController implements Initializable {
                 };
             }
         });
-
-        // getting all patients from the database
-        List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
-        try {
-            mapList = Main.admin.getAllDoctors();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        Iterator<Map<String, Object>> itr = mapList.iterator();
-        while(itr.hasNext()){
-            // constructing the object from the received json
-            DoctorDto doctor = new DoctorDto();
-            Map<String, Object> mp = itr.next();
-            doctor.setDoctorId(Util.doubleToLong((Double)mp.get("doctorId")));
-            doctor.setFirstName((String)mp.get("firstName"));
-            doctor.setLastName((String)mp.get("lastName"));
-            doctor.setGender(Util.doubleToInt((Double)mp.get("gender")));
-            doctor.setEmail((String)mp.get("email"));
-            doctor.setPhoneNumber((String)mp.get("phoneNumber"));
-            doctor.setAddress((String)mp.get("address"));
-            // adding the doctor to the table view
-            dataList.add(doctor);
-        }
+		
+		// getting all patients from the database
+		List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
+		try {
+			mapList = Main.admin.getAllPatients();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Iterator<Map<String, Object>> itr = mapList.iterator();
+		while(itr.hasNext()){
+			// constructing the object from the received json
+			PatientDto patient = new PatientDto();
+			Map<String, Object> mp = itr.next();
+			patient.setPatientId(Util.doubleToLong((Double)mp.get("patientId")));
+			patient.setFirstName((String)mp.get("firstName"));
+			patient.setLastName((String)mp.get("lastName"));
+			patient.setDateOfBirth((String)mp.get("dateOfBirth"));
+			patient.setNationalId(Util.doubleToLong((Double)mp.get("nationalId")));
+			patient.setGender(Util.doubleToInt((Double)mp.get("gender")));
+			patient.setEmail((String)mp.get("email"));
+			patient.setPhoneNumber((String)mp.get("phoneNumber"));
+			patient.setAddress((String)mp.get("address"));
+			// adding the patient to the table view
+			dataList.add(patient);
+		}
 
         // Setting up filtering
-        final FilteredList<DoctorDto> filteredData = new FilteredList<DoctorDto>(dataList);
+        final FilteredList<PatientDto> filteredData = new FilteredList<PatientDto>(dataList);
         filterField.textProperty().addListener(new ChangeListener<String>() {
             public void changed(ObservableValue<? extends String> observable, String oldValue, final String newValue) {
-                filteredData.setPredicate(new Predicate<DoctorDto>() {
-                    public boolean test(DoctorDto doctor) {
+                filteredData.setPredicate(new Predicate<PatientDto>() {
+                    public boolean test(PatientDto patient) {
                         if (newValue == null || newValue.isEmpty()) {
                             return true;
                         }
 
                         String lowerCaseFilter = newValue.toLowerCase();
-                        String doctorFirstName = doctor.getFirstName().toLowerCase();
-                        String doctorLastName = doctor.getLastName().toLowerCase();
+                        String doctorFirstName = patient.getFirstName().toLowerCase();
+                        String doctorLastName = patient.getLastName().toLowerCase();
 
                         return doctorFirstName.contains(lowerCaseFilter) ||
                                 doctorLastName.contains(lowerCaseFilter);
@@ -186,15 +187,15 @@ public class doctors_recordsController implements Initializable {
             }
         });
 
-        SortedList<DoctorDto> sortedData = new SortedList<DoctorDto>(filteredData);
+        SortedList<PatientDto> sortedData = new SortedList<PatientDto>(filteredData);
         sortedData.comparatorProperty().bind(tableview.comparatorProperty());
         tableview.setItems(sortedData);
     }
-
+    
     // the function to be executed when the button add is clicked
-    public void addDoctor(ActionEvent event) throws IOException{
-
-        Parent secondView = FXMLLoader.load(getClass().getResource("add_doctor.fxml"));
+    public void addPatient(ActionEvent event) throws IOException{
+    	
+        Parent secondView = FXMLLoader.load(getClass().getResource("add_patient_doctor.fxml"));
         Scene secondScene = new Scene(secondView);
 
         // Get the current stage (window) using the event's source
@@ -203,11 +204,11 @@ public class doctors_recordsController implements Initializable {
         // Set the new scene on the current stage
         window.setScene(secondScene);
         window.show();
-
-
+    	
     }
+ // Event Listener on Button[#menuButton].onAction
     @FXML
-	private void handleMenuButtonAction() {
+	private void handleMenuButtonAction(ActionEvent event) {
 		
 		animation = new Timeline(
                 new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
@@ -234,7 +235,7 @@ public class doctors_recordsController implements Initializable {
 		// load dashboard fxml file
 		try {
             // Load the first side
-            Parent secondView = FXMLLoader.load(getClass().getResource("AdminDashBoardController.fxml"));
+            Parent secondView = FXMLLoader.load(getClass().getResource("doctor-page-dashboard.fxml"));
             Scene secondScene = new Scene(secondView);
 
             // Get the current stage (window) using the event's source
@@ -251,8 +252,8 @@ public class doctors_recordsController implements Initializable {
 		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
 		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
-		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
+		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	@FXML
 	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
@@ -261,11 +262,11 @@ public class doctors_recordsController implements Initializable {
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
 		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
-		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
+		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
 		
 		 if (event.getEventType().equals(ActionEvent.ACTION)) {
-	            Parent secondView = FXMLLoader.load(getClass().getResource("admin-panel.fxml"));
+	            Parent secondView = FXMLLoader.load(getClass().getResource("patients-records.fxml"));
 	            Scene secondScene = new Scene(secondView);
 
 	            // Get the current stage (window) using the event's source
@@ -278,30 +279,19 @@ public class doctors_recordsController implements Initializable {
 		
 	}
 	@FXML
-	private void handleDoctrsButtonAction(ActionEvent event) throws IOException {
-		// load doctors fxml file
-		 if (event.getEventType().equals(ActionEvent.ACTION)) {
-	            Parent secondView = FXMLLoader.load(getClass().getResource("doctors_records.fxml"));
-	            Scene secondScene = new Scene(secondView);
-
-	            // Get the current stage (window) using the event's source
-	            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-	            // Set the new scene on the current stage
-	            window.setScene(secondScene);
-	            window.show();
-		 }
-		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
-		doctorsIcon.setStyle("-fx-fill :  #185FA1 ;");
+	private void handleHistoryButtonAction(ActionEvent event) {
+		historyButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		historyIcon.setStyle("-fx-fill :  #185FA1 ;");
 		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
 		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	
-
 	
-	private void updateButtons (double width) {
+	
+	
+private void updateButtons (double width) {
 		
 		if (width != 210){
 			menuButton.setPrefWidth(60);
@@ -313,9 +303,9 @@ public class doctors_recordsController implements Initializable {
     		patientsButton.setPrefWidth(60);
     		patientsButton.setTextAlignment(TextAlignment.LEFT);
     		patientsButton.setText("");
-    		doctorsButton.setPrefWidth(60);
-    		doctorsButton.setTextAlignment(TextAlignment.LEFT);
-    		doctorsButton.setText("");
+    		historyButton.setPrefWidth(60);
+    		historyButton.setTextAlignment(TextAlignment.LEFT);
+    		historyButton.setText("");
     		return ;
 		}
 		menuButton.setPrefWidth(210);
@@ -327,9 +317,9 @@ public class doctors_recordsController implements Initializable {
 		patientsButton.setPrefWidth(210);
 		patientsButton.setTextAlignment(TextAlignment.LEFT);
 		patientsButton.setText("   Patients");
-		doctorsButton.setPrefWidth(210);
-		doctorsButton.setTextAlignment(TextAlignment.LEFT);
-		doctorsButton.setText("   Doctors");
+		historyButton.setPrefWidth(210);
+		historyButton.setTextAlignment(TextAlignment.LEFT);
+		historyButton.setText("   Doctors");
 		
 	}
-    }
+}

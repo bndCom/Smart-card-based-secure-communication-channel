@@ -18,6 +18,9 @@ import javafx.scene.Scene;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
+import jsr268gp.sampleclient.CardAuthFailed;
+import jsr268gp.sampleclient.CardNotFound;
+import jsr268gp.sampleclient.ServerError;
 
 public class AdminCodePinController {
 
@@ -113,7 +116,7 @@ public class AdminCodePinController {
 
 
     @FXML
-    private void handleVerifyButton(ActionEvent event) {
+    private void handleVerifyButton(ActionEvent event) throws Exception {
         String pin = digit1.getText() + digit2.getText() + digit3.getText() + digit4.getText();
 
         if (pin.length() < 4) {
@@ -124,18 +127,10 @@ public class AdminCodePinController {
             // hash pin code
         	// send to server
         	// get response
-        	if (!pin.equals("1234")){
-        		attempts -= 1; 
-        		if (attempts > 0 ) {
-        			dynamicText.setText("Wrong PassCode" + "\nAttempts Left:" + attempts);
-                    dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
-                    return ;
-        		}
-        		dynamicText.setText("3 wrong attempts" + "\nCard is currently blocked");
-                dynamicText.setStyle("-fx-fill: #d80000; ");
-                parent.getChildren().remove(verifyButton);
-        	}
-        	else {
+        	boolean auth = false;
+        	try{
+        		// launching the authentication
+        		auth = Main.admin.auth(pin);
         		try {
     	            // Load the code pin accepted scene
     	            Parent secondView = FXMLLoader.load(getClass().getResource("code-pin-correct.fxml"));
@@ -150,8 +145,33 @@ public class AdminCodePinController {
     	        } catch (Exception e) {
     	            e.printStackTrace();
     	        }
+        		
         		StageManager.closeAllStages();
+        		
+        	}catch(CardNotFound e){
+    			dynamicText.setText("Card not found");
+    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+    			parent.getChildren().remove(verifyButton);
+
+//        		attempts -= 1; 
+//        		if (attempts > 0 ) {
+//        			dynamicText.setText("Wrong PassCode" + "\nAttempts Left:" + attempts);
+//                    dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+//                    return ;
+//        		}
+//        		dynamicText.setText("3 wrong attempts" + "\nCard is currently blocked");
+//                dynamicText.setStyle("-fx-fill: #d80000; ");
+//                parent.getChildren().remove(verifyButton);
+        	}catch(ServerError e){
+    			dynamicText.setText("Server Error");
+    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+    			parent.getChildren().remove(verifyButton);
+        	}catch(CardAuthFailed e){
+    			dynamicText.setText("Card couldn't authenticate the server");
+    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+    			parent.getChildren().remove(verifyButton);
         	}
+        	
         }
     }
     
@@ -180,6 +200,7 @@ public class AdminCodePinController {
             	else {
             		try {
         	            // Load the code pin accepted scene
+            			
         	            Parent secondView = FXMLLoader.load(getClass().getResource("admin-code-pin-correct.fxml"));
         	            Scene secondScene = new Scene(secondView);
         	            

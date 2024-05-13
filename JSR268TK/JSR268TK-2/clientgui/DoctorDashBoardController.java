@@ -1,5 +1,7 @@
 package clientgui;
 
+import java.io.IOException;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -189,7 +191,7 @@ public class DoctorDashBoardController {
 		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	@FXML
-	private void handlePatientsButtonAction() {
+	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
 		// load patients fxml file
 		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
@@ -197,10 +199,22 @@ public class DoctorDashBoardController {
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
 		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
 		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
+		 if (event.getEventType().equals(ActionEvent.ACTION)) {
+	            Parent secondView = FXMLLoader.load(getClass().getResource("patients-records.fxml"));
+	            Scene secondScene = new Scene(secondView);
+
+	            // Get the current stage (window) using the event's source
+	            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+	            // Set the new scene on the current stage
+	            window.setScene(secondScene);
+	            window.show();
+		 }
+		
 		
 	}
 	@FXML
-	private void handleHistoryButtonAction() {
+	private void handleHistoryButtonAction(ActionEvent event) {
 		// load history fxml file
 		historyButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
 		historyIcon.setStyle("-fx-fill :  #185FA1 ;");

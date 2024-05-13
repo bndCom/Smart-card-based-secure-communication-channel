@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -80,16 +81,16 @@ public void addPatient(ActionEvent event) throws IOException{
 		}	
 	}
 	
+    @FXML
 	public void cancelForm(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("admin-panel.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        Stage stage = new Stage();
-        
-        stage.initStyle(StageStyle.UNIFIED);
-        scene.setFill(Color.DARKGRAY);      
-        stage.setScene(scene);
-        stage.show();
+        Parent secondView = FXMLLoader.load(getClass().getResource("admin-panel.fxml"));
+        Scene secondScene = new Scene(secondView);
+
+        // Get the current stage (window) using the event's source
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        // Set the new scene on the current stage
+        window.setScene(secondScene);
+        window.show();
 	}
 }
