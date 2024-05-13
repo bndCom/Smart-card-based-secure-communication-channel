@@ -2,7 +2,6 @@ package clientgui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,77 +9,78 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-
-
-
-
-
-
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ListChangeListener;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
-public class adminPanelController implements Initializable {
-    @FXML
-    private TableView<PatientDto>  tableview;
-    @FXML
-    private TableColumn<PatientDto,String> ID; // Assuming Doctor has an ID property
-    @FXML
-    private TableColumn<PatientDto,String>  LastName;
-    @FXML
-    private TableColumn<PatientDto,String>  Name;
-    @FXML
-    private TableColumn<PatientDto,String>  tel;
-    @FXML
-    private TableColumn<PatientDto,String>  LastSession;
-    @FXML
-    private TableColumn<PatientDto,String>  Record;
-    @FXML
-    private TableColumn<PatientDto, Void>  tools; // Added for tools column
-    @FXML
-    private TextField filterField;
-    @FXML
-    private Button addBtn;
-    @FXML
-    private Label adminName;
-    @FXML
-    private Button Menu;
-    @FXML
-    private Button Doctors;
-    @FXML
-    private Button Dashboard;
-    @FXML
-    private Button History;
-    
-    private ObservableList<PatientDto> dataList = FXCollections.observableArrayList();
-    @FXML
-    private Label AdminName;
+public class adminPanelController implements Initializable{
+	@FXML
+	private TableView<PatientDto> tableview;
+	@FXML
+	private TableColumn<PatientDto,String> ID;
+	@FXML
+	private TableColumn<PatientDto,String>  LastName;
+	@FXML
+	private TableColumn<PatientDto,String>  Name;
+	@FXML
+	private TableColumn<PatientDto,String>  tel;
+	@FXML
+	private TableColumn<PatientDto,String>  LastSession;
+	@FXML
+	private TableColumn<PatientDto,String>  Record;
+	@FXML
+	private TableColumn<PatientDto,Void>  tools;
+	@FXML
+	private TextField filterField;
+	@FXML
+	private Button addBtn;
+	@FXML
+	private Label AdminName;
+	@FXML
+	private Button menuButton;
+	@FXML
+	private Button dashBoardButton;
+	@FXML
+	private Button patientsButton;
+	@FXML
+	private Button doctorsButton;
+	@FXML
+	private AnchorPane anchorPane ;
+	@FXML
+	private SVGPath menuIcon , dashBoardIcon , doctorsIcon , patientsIcon ;
+	private Timeline animation;
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+	private ObservableList<PatientDto> dataList = FXCollections.observableArrayList();
+	public void initialize(URL url, ResourceBundle resourceBundle) {
         ID.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("patientId"));
         LastName.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("lastName"));
         Name.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("firstName"));
@@ -100,17 +100,17 @@ public class adminPanelController implements Initializable {
                     {
                         btn1.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                            	PatientDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto patient = getTableView().getItems().get(getIndex());
                             }
                         });
                         btn2.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                            	PatientDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto patient = getTableView().getItems().get(getIndex());
                             }
                         });
                         btn3.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                            	PatientDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto patient = getTableView().getItems().get(getIndex());
                             }
                         });
                     }
@@ -143,13 +143,6 @@ public class adminPanelController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        // Creating some sample Doctor objects and adding them to the dataList
-//        Doctor doctor1 = new Doctor("1", "Doe", "John", "123456789", "2024-05-08", "Record 1");
-//        Doctor doctor2 = new Doctor("2", "Smith", "Alice", "987654321", "2024-05-09", "Record 2");
-//        Doctor doctor3 = new Doctor("3", "Johnson", "Michael", "555555555", "2024-05-10", "Record 3");
-//        Doctor doctor4 = new Doctor("4", "Williams", "Emily", "111111111", "2024-05-11", "Record 4");
-//        Doctor doctor5 = new Doctor("5", "Brown", "David", "222222222", "2024-05-12", "Record 5");
-//        Doctor doctor6 = new Doctor("6", "Jones", "Jessica", "333333333", "2024-05-13", "Record 6");
 		Iterator<Map<String, Object>> itr = mapList.iterator();
 		while(itr.hasNext()){
 			// constructing the object from the received json
@@ -159,7 +152,7 @@ public class adminPanelController implements Initializable {
 			patient.setFirstName((String)mp.get("firstName"));
 			patient.setLastName((String)mp.get("lastName"));
 			patient.setDateOfBirth((String)mp.get("dateOfBirth"));
-			patient.setNationalId(Util.doubleToLong((Double)mp.get("nationalId")));
+			//patient.setNationalId(Util.doubleToLong((Double)mp.get("nationalId")));
 			patient.setGender(Util.doubleToInt((Double)mp.get("gender")));
 			patient.setEmail((String)mp.get("email"));
 			patient.setPhoneNumber((String)mp.get("phoneNumber"));
@@ -200,16 +193,139 @@ public class adminPanelController implements Initializable {
     // the function to be executed when the button add is clicked
     public void addPatient(ActionEvent event) throws IOException{
     	
-        Parent root = FXMLLoader.load(getClass().getResource("add_patient.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        Stage stage = new Stage();
-        
-        stage.initStyle(StageStyle.UNIFIED);
-        scene.setFill(Color.DARKGRAY);      
-        stage.setScene(scene);
-        stage.show();
+        Parent secondView = FXMLLoader.load(getClass().getResource("add_patient.fxml"));
+        Scene secondScene = new Scene(secondView);
+
+        // Get the current stage (window) using the event's source
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        // Set the new scene on the current stage
+        window.setScene(secondScene);
+        window.show();
     	
     }
+	// Event Listener on Button[#menuButton].onAction
+    @FXML
+	private void handleMenuButtonAction(ActionEvent event) {
+		
+		animation = new Timeline(
+                new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent event) {
+                        double targetWidth = 60;
+                    	if (anchorPane.getPrefWidth() == 210) {
+                    		anchorPane.setPrefWidth(targetWidth);  
+                    		updateButtons(targetWidth);
+                    		return; 
+                		}
+                    	targetWidth = 210;
+                		anchorPane.setPrefWidth(targetWidth);
+                		anchorPane.toFront();
+                		updateButtons(targetWidth);
+
+                    }
+                }),
+                new KeyFrame(Duration.millis(200))
+        );
+		animation.playFromStart();
+	}
+	@FXML
+	private void handledashBoardButtonAction(ActionEvent event) {
+		// load dashboard fxml file
+		try {
+            // Load the first side
+            Parent secondView = FXMLLoader.load(getClass().getResource("AdminDashBoardController.fxml"));
+            Scene secondScene = new Scene(secondView);
+
+            // Get the current stage (window) using the event's source
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the current stage
+            window.setScene(secondScene);
+            window.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
+		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
+	}
+	@FXML
+	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
+		// load patients fxml file
+		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
+		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
+		
+		 if (event.getEventType().equals(ActionEvent.ACTION)) {
+	            Parent secondView = FXMLLoader.load(getClass().getResource("admin-panel.fxml"));
+	            Scene secondScene = new Scene(secondView);
+
+	            // Get the current stage (window) using the event's source
+	            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+	            // Set the new scene on the current stage
+	            window.setScene(secondScene);
+	            window.show();
+		 }
+		
+	}
+	@FXML
+	private void handleDoctrsButtonAction(ActionEvent event) throws IOException {
+		// load doctors fxml file
+		 if (event.getEventType().equals(ActionEvent.ACTION)) {
+	            Parent secondView = FXMLLoader.load(getClass().getResource("doctors_records.fxml"));
+	            Scene secondScene = new Scene(secondView);
+
+	            // Get the current stage (window) using the event's source
+	            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+	            // Set the new scene on the current stage
+	            window.setScene(secondScene);
+	            window.show();
+		 }
+		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		doctorsIcon.setStyle("-fx-fill :  #185FA1 ;");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
+		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
+		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
+		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
+	}
+private void updateButtons (double width) {
+		
+		if (width != 210){
+			menuButton.setPrefWidth(60);
+    		menuButton.setTextAlignment(TextAlignment.LEFT);
+    		menuButton.setText("");
+    		dashBoardButton.setPrefWidth(60);
+    		dashBoardButton.setTextAlignment(TextAlignment.LEFT);
+    		dashBoardButton.setText("");
+    		patientsButton.setPrefWidth(60);
+    		patientsButton.setTextAlignment(TextAlignment.LEFT);
+    		patientsButton.setText("");
+    		doctorsButton.setPrefWidth(60);
+    		doctorsButton.setTextAlignment(TextAlignment.LEFT);
+    		doctorsButton.setText("");
+    		return ;
+		}
+		menuButton.setPrefWidth(210);
+		menuButton.setTextAlignment(TextAlignment.LEFT);
+		menuButton.setText("   Menu");
+		dashBoardButton.setPrefWidth(210);
+		dashBoardButton.setTextAlignment(TextAlignment.LEFT);
+		dashBoardButton.setText("   Statistics");
+		patientsButton.setPrefWidth(210);
+		patientsButton.setTextAlignment(TextAlignment.LEFT);
+		patientsButton.setText("   Patients");
+		doctorsButton.setPrefWidth(210);
+		doctorsButton.setTextAlignment(TextAlignment.LEFT);
+		doctorsButton.setText("   Doctors");
+		
+	}
 }

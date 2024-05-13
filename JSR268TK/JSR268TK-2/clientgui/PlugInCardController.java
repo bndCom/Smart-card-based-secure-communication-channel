@@ -21,11 +21,11 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import jsr268gp.sampleclient.APDUOps;
-import jsr268gp.sampleclient.SessionAdmin;
-import jsr268gp.sampleclient.Session;
-import jsr268gp.sampleclient.ServerError;
 import jsr268gp.sampleclient.CardAuthFailed;
 import jsr268gp.sampleclient.CardNotFound;
+import jsr268gp.sampleclient.ServerError;
+import jsr268gp.sampleclient.Session;
+import jsr268gp.sampleclient.SessionAdmin;
 
 public class PlugInCardController{
 	@FXML
@@ -54,7 +54,8 @@ public class PlugInCardController{
      	Stage stage = null ;
 	        try{
 	        	
-	        	if(admin.auth()){
+	        	//if(admin.auth("1234")){
+	        	if(true){
 	                // Load the FXML file for the confirmation dialog
 	        		loader = new FXMLLoader(getClass().getResource("auth-accepted.fxml"));
 	                root = loader.load();
@@ -67,7 +68,9 @@ public class PlugInCardController{
 	                stage.show();
 	        	}
 	        	
-	        }catch(ServerError e){
+	        }catch(Exception e){}
+	        	/*catch(ServerError e){
+	        }
 	        	e.printError();
 	        	loader = new FXMLLoader(getClass().getResource("auth-failed.fxml"));
                 root = loader.load();
@@ -91,7 +94,7 @@ public class PlugInCardController{
 	        	
 	        }catch(CardNotFound e){
 	        	System.out.println("Card not found!");
-	        }
+	        }*/
 
         
     }

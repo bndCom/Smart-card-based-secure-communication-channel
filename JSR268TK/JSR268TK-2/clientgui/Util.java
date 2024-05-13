@@ -3,7 +3,7 @@ package clientgui;
 public class Util {
 	public static Long doubleToLong(Double num){
 		String s = num.toString();
-		return Long.parseLong(s.substring(0, s.length() - 2));
+		return Long.parseLong(s.replace(".","").substring(0, s.length() - 2));
 	}
 	
 	public static Integer doubleToInt(Double num){

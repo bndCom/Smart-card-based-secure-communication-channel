@@ -15,6 +15,12 @@ public class PatientDto {
 	public PatientDto() {
 
 	}
+	
+	public PatientDto(Long patientId) {
+		super();
+		this.patientId = patientId;
+	}
+
 	public Long getPatientId() {
 		return patientId;
 	}
