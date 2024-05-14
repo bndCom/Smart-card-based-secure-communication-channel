@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.DoctorCodePinController">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom, #CAD2F7 0%, #B8C2F7 3.01%, #D4D9F7 27%, #C5CDF7 48.5%, #E4E7FA 72.5%, #AEB5EB 100%);" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientgui.DoctorCodePinController">
     <children>
-        <Text layoutX="230.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Enter Passcode" textAlignment="CENTER">
+        <Text fill="#185f9f" layoutX="464.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="PIN " textAlignment="CENTER">
             <font>
-                <Font name="Product Sans Bold" size="18.0" />
+                <Font size="36.0" />
             </font>
         </Text>
-        <HBox layoutX="199.0" layoutY="259.0" spacing="10">
-            <TextField fx:id="digit1" prefHeight="40.0" prefWidth="40" styleClass="pin-digit" />
-            <TextField fx:id="digit2" prefHeight="40.0" prefWidth="40" styleClass="pin-digit" />
-            <TextField fx:id="digit3" prefHeight="40.0" prefWidth="40" styleClass="pin-digit" />
-            <TextField fx:id="digit4" prefHeight="40.0" prefWidth="40" styleClass="pin-digit" />
-
-        </HBox>
-        <Button fx:id="verifyButton" layoutX="244.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleVerifyButton" style="-fx-background-color: #185fa1; -fx-background-radius: 24; -fx-font-weight: bold;" styleClass="next-button" text="Verify" textFill="WHITE">
+        <Button fx:id="verifyButton" layoutX="395.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleVerifyButton" prefHeight="65.0" prefWidth="258.0" style="-fx-background-color: #185fa1; -fx-background-radius: 24; -fx-font-weight: bold;" text="Verify" textFill="WHITE">
             <font>
-                <Font name="Product Sans Bold" size="27.0" />
+                <Font size="27.0" />
             </font>
+         <styleClass>
+            <String fx:value="next-button" />
+            <String fx:value="getStarted" />
+         </styleClass>
         </Button>
-      <Text fx:id="dynamicText" fill="#185fa1" layoutX="184.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attempts left: 3" textAlignment="CENTER" wrappingWidth="220.0">
+      <Text fill="#185f9f" layoutX="428.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your code" textAlignment="CENTER">
          <font>
-            <Font name="Product Sans Bold" size="14.0" />
+            <Font name="Symbol" size="26.0" />
          </font>
       </Text>
+      <SVGPath content="M10.2083 10.2084C10.2083 6.18002 13.4717 2.91669 17.5 2.91669C21.5283 2.91669 24.7917 6.18002 24.7917 10.2084V14.5834H25.375C26.6583 14.5834 27.7083 15.6334 27.7083 16.9167V27.125C27.7083 29.05 26.1333 30.625 24.2083 30.625H10.7917C8.86667 30.625 7.29167 29.05 7.29167 27.125V16.9167C7.29167 15.6334 8.34167 14.5834 9.625 14.5834H10.2083V10.2084ZM21.875 10.2084V14.5834H13.125V10.2084C13.125 7.79085 15.0825 5.83335 17.5 5.83335C19.9175 5.83335 21.875 7.79085 21.875 10.2084ZM17.5 17.8646C16.0905 17.8646 14.9479 19.0072 14.9479 20.4167C14.9479 21.4347 15.544 22.3136 16.4062 22.7232V26.25C16.4062 26.8541 16.8959 27.3438 17.5 27.3438C18.1041 27.3438 18.5937 26.8541 18.5937 26.25V22.7232C19.456 22.3136 20.0521 21.4347 20.0521 20.4167C20.0521 19.0072 18.9095 17.8646 17.5 17.8646Z" fill="#185f9f" fillRule="EVEN_ODD" layoutX="537.0" layoutY="134.0" />
+      <Text fx:id="dynamicText" fill="#185f9f" layoutX="301.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attempts left: 3" textAlignment="CENTER" wrappingWidth="446.73046875">
+         <font>
+            <Font name="Symbol" size="21.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="pin" layoutX="407.0" layoutY="264.0" onAction="#handleVerifyButton" prefHeight="48.0" prefWidth="221.0" promptText="ex: 1234" style="-fx-background-radius: 30;">
+         <font>
+            <Font name="Symbol" size="18.0" />
+         </font>
+      </PasswordField>
+      <SVGPath content="M24.5118 12.1548C23.861 11.5039 22.8057 11.5039 22.1548 12.1548C21.5039 12.8057 21.5039 13.8609 22.1548 14.5118L25.9763 18.3333H9.99998C9.07951 18.3333 8.33331 19.0795 8.33331 20C8.33331 20.9204 9.07951 21.6666 9.99998 21.6666H25.9763L22.1548 25.4881C21.5039 26.139 21.5039 27.1943 22.1548 27.8451C22.8057 28.496 23.861 28.496 24.5118 27.8451L31.1785 21.1785C31.8294 20.5276 31.8294 19.4723 31.1785 18.8214L24.5118 12.1548Z" fill="#185f9f" layoutX="353.0" layoutY="267.0" />
     </children>
 </AnchorPane>

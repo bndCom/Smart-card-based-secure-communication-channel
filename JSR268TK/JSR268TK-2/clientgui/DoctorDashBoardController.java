@@ -43,9 +43,9 @@ public class DoctorDashBoardController {
 	@FXML
 	private PieChart patientsGenderPieChart ;    
 	@FXML
-	private Button menuButton , dashBoardButton , patientsButton , historyButton ;
+	private Button menuButton , dashBoardButton , patientsButton ;
 	@FXML
-	private SVGPath menuIcon , dashBoardIcon , patientsIcon , historyIcon ;
+	private SVGPath menuIcon , dashBoardIcon , patientsIcon ;
 	@FXML
 	private AnchorPane anchorPane ;
 	@FXML
@@ -62,10 +62,10 @@ public class DoctorDashBoardController {
 	private Timeline animation;
 	
 	@FXML
-	private void initialize() {
+	private void initialize() throws Exception {
 		
 		// assign doctorName and picture and add them
-		doctorName.setText("Dr. Mohcen Mokhati");
+		doctorName.setText("");
 		Image dynamicImage = getDynamicImageFromBackend(); // Method to get image from backend
         doctorPicture.setPreserveRatio(false); // Set preserveRatio to false
         doctorPicture.setImage(dynamicImage);
@@ -77,30 +77,31 @@ public class DoctorDashBoardController {
         // Create a Circle clip
         Circle clip = new Circle(centerX, centerY, radius);
         doctorPicture.setClip(clip);
-        // get number of patients
-        patientsNumber.setText("1200");
+        int n = Main.doctor.getAllPatients().size();
+        // patientsNumber.setText(Integer.toString(n));
         // get number of sessions of the doctor
-        sessionsNumber.setText("14678");
+        
+        //sessionsNumber.setText("XXXX");
         // get number of sessions today
-        sessionsNumberToday.setText("124");
+        //sessionsNumberToday.setText("XXXX");
         
         // do the barchart
 		patientsGenderDuringWeekBarChart.setTitle("Men and women sessions 5 days");
        
  
         series1.setName("male");       
-        series1.getData().add(new XYChart.Data("5-11-2024", 5));
-        series1.getData().add(new XYChart.Data("6-11-2024", 15));
-        series1.getData().add(new XYChart.Data("7-11-2024", 12));
-        series1.getData().add(new XYChart.Data("8-11-2024", 0));
-        series1.getData().add(new XYChart.Data("9-11-2024", 2));
+        series1.getData().add(new XYChart.Data("XXXX", 5));
+        series1.getData().add(new XYChart.Data("XXXX", 15));
+        series1.getData().add(new XYChart.Data("XXXX", 12));
+        series1.getData().add(new XYChart.Data("XXXX", 0));
+        series1.getData().add(new XYChart.Data("XXXX", 2));
          
         series2.setName("female");
-        series2.getData().add(new XYChart.Data("5-11-2024", 8));
-        series2.getData().add(new XYChart.Data("6-11-2024", 1));
-        series2.getData().add(new XYChart.Data("7-11-2024", 43));
-        series2.getData().add(new XYChart.Data("8-11-2024", 25));
-        series2.getData().add(new XYChart.Data("9-11-2024", 35));
+        series2.getData().add(new XYChart.Data("XXXX", 8));
+        series2.getData().add(new XYChart.Data("XXXX", 1));
+        series2.getData().add(new XYChart.Data("XXXX", 43));
+        series2.getData().add(new XYChart.Data("XXXX", 25));
+        series2.getData().add(new XYChart.Data("XXXX", 35));
 
         patientsGenderDuringWeekBarChart.getData().addAll(series1, series2);
         
@@ -109,11 +110,11 @@ public class DoctorDashBoardController {
         XYChart.Series series = new XYChart.Series();
         series.setName("Patients through the year");
         //populating the series with data
-        series.getData().add(new XYChart.Data("5-11-2024", 13));
-        series.getData().add(new XYChart.Data("6-11-2024", 16));
-        series.getData().add(new XYChart.Data("7-11-2024", 55));
-        series.getData().add(new XYChart.Data("8-11-2024", 25));
-        series.getData().add(new XYChart.Data("9-11-2024", 37));
+        series.getData().add(new XYChart.Data("XXXX", 13));
+        series.getData().add(new XYChart.Data("XXXX", 16));
+        series.getData().add(new XYChart.Data("XXXX", 55));
+        series.getData().add(new XYChart.Data("XXXX", 25));
+        series.getData().add(new XYChart.Data("XXXX", 37));
         patientsDuringWeekLineChart.setTitle("Patients number last 5 days");
         patientsDuringWeekLineChart.getData().add(series);
         // do the pieChart
@@ -187,8 +188,6 @@ public class DoctorDashBoardController {
 		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
 		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
-		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	@FXML
 	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
@@ -197,8 +196,6 @@ public class DoctorDashBoardController {
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
 		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
-		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
 		 if (event.getEventType().equals(ActionEvent.ACTION)) {
 	            Parent secondView = FXMLLoader.load(getClass().getResource("patients-records.fxml"));
 	            Scene secondScene = new Scene(secondView);
@@ -213,17 +210,7 @@ public class DoctorDashBoardController {
 		
 		
 	}
-	@FXML
-	private void handleHistoryButtonAction(ActionEvent event) {
-		// load history fxml file
-		historyButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
-		historyIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
-		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
-		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-	}
-	
+
 	private void updateButtons (double width) {
 		
 		if (width != 210){
@@ -236,9 +223,6 @@ public class DoctorDashBoardController {
     		patientsButton.setPrefWidth(60);
     		patientsButton.setTextAlignment(TextAlignment.LEFT);
     		patientsButton.setText("");
-    		historyButton.setPrefWidth(60);
-    		historyButton.setTextAlignment(TextAlignment.LEFT);
-    		historyButton.setText("");
     		return ;
 		}
 		menuButton.setPrefWidth(210);
@@ -250,9 +234,6 @@ public class DoctorDashBoardController {
 		patientsButton.setPrefWidth(210);
 		patientsButton.setTextAlignment(TextAlignment.LEFT);
 		patientsButton.setText("   Patients");
-		historyButton.setPrefWidth(210);
-		historyButton.setTextAlignment(TextAlignment.LEFT);
-		historyButton.setText("   History");
 		
 	}
 }

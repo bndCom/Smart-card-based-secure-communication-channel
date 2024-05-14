@@ -1,6 +1,9 @@
 package clientgui;
 
 import java.io.IOException;
+
+import javafx.scene.paint.Color;
+
 import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,10 +14,13 @@ import java.util.function.Predicate;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.animation.KeyFrame;
@@ -30,58 +36,58 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import jsr268gp.sampleclient.CardNotFound;
+import jsr268gp.sampleclient.NotAuthenticatedError;
+import jsr268gp.sampleclient.ServerError;
 
-public class patientsRecordsController {
+public class patientsRecordsController implements Initializable{
 	@FXML
-	private TableView tableview;
+	private TableView<PatientDto> tableview;
 	@FXML
-	private TableColumn ID;
+	private TableColumn<PatientDto,String> ID;
 	@FXML
-	private TableColumn LastName;
+	private TableColumn<PatientDto,String>  LastName;
 	@FXML
-	private TableColumn Name;
+	private TableColumn<PatientDto,String>  Name;
 	@FXML
-	private TableColumn tel;
+	private TableColumn<PatientDto,String>  tel;
 	@FXML
-	private TableColumn LastSession;
+	private TableColumn<PatientDto,String>  LastSession;
 	@FXML
-	private TableColumn Record;
+	private TableColumn<PatientDto,String>  Record;
 	@FXML
-	private TableColumn tools;
+	private TableColumn<PatientDto,Void>  tools;
 	@FXML
 	private TextField filterField;
 	@FXML
-	private Button addBtn;
-	@FXML
 	private Label AdminName;
-	@FXML
-	private AnchorPane anchorPane;
 	@FXML
 	private Button menuButton;
 	@FXML
-	private SVGPath menuIcon;
-	@FXML
-	private Button dashBoardButton,historyButton;
-	@FXML
-	private SVGPath dashBoardIcon;
+	private Button dashBoardButton;
 	@FXML
 	private Button patientsButton;
 	@FXML
-	private SVGPath patientsIcon;
+	private Button historyButton;
 	@FXML
-	private SVGPath historyIcon;
-
+	private AnchorPane anchorPane ;
+	@FXML
+	private SVGPath menuIcon , dashBoardIcon , doctorsIcon , patientsIcon ;
 	private Timeline animation;
 
 	private ObservableList<PatientDto> dataList = FXCollections.observableArrayList();
+ 
 	public void initialize(URL url, ResourceBundle resourceBundle) {
         ID.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("patientId"));
         LastName.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("lastName"));
@@ -102,17 +108,17 @@ public class patientsRecordsController {
                     {
                         btn1.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                            	PatientDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto patient = getTableView().getItems().get(getIndex());
                             }
                         });
                         btn2.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                            	PatientDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto patient = getTableView().getItems().get(getIndex());
                             }
                         });
                         btn3.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
                             public void handle(javafx.event.ActionEvent event) {
-                            	PatientDto doctor = getTableView().getItems().get(getIndex());
+                            	PatientDto patient = getTableView().getItems().get(getIndex());
                             }
                         });
                     }
@@ -125,9 +131,9 @@ public class patientsRecordsController {
                             setGraphic(null);
                             setText(null);
                         } else {
-                            btn1.getStyleClass().add("btn-tool");
-                            btn2.getStyleClass().add("btn-tool");
-                            btn3.getStyleClass().add("btn-tool");
+                            btn1.getStyleClass().addAll("btn-tool","getStarted");
+                            btn2.getStyleClass().addAll("btn-tool","getStarted");
+                            btn3.getStyleClass().addAll("btn-tool","getStarted");
                             HBox buttonsContainer = new HBox(btn1, btn2, btn3);
                             buttonsContainer.setSpacing(10);
                             setGraphic(buttonsContainer);
@@ -140,7 +146,11 @@ public class patientsRecordsController {
 		// getting all patients from the database
 		List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
 		try {
-			mapList = Main.admin.getAllPatients();
+			mapList = Main.doctor.getAllPatients();
+		} catch (NotAuthenticatedError e) {
+			Util.showAlert("Error","Permission denied");
+		}catch (ServerError e){
+			Util.showAlert("Error","Server error");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -154,7 +164,7 @@ public class patientsRecordsController {
 			patient.setFirstName((String)mp.get("firstName"));
 			patient.setLastName((String)mp.get("lastName"));
 			patient.setDateOfBirth((String)mp.get("dateOfBirth"));
-			patient.setNationalId(Util.doubleToLong((Double)mp.get("nationalId")));
+			//patient.setNationalId(Util.doubleToLong((Double)mp.get("nationalId")));
 			patient.setGender(Util.doubleToInt((Double)mp.get("gender")));
 			patient.setEmail((String)mp.get("email"));
 			patient.setPhoneNumber((String)mp.get("phoneNumber"));
@@ -191,22 +201,11 @@ public class patientsRecordsController {
         sortedData.comparatorProperty().bind(tableview.comparatorProperty());
         tableview.setItems(sortedData);
     }
-    
-    // the function to be executed when the button add is clicked
-    public void addPatient(ActionEvent event) throws IOException{
-    	
-        Parent secondView = FXMLLoader.load(getClass().getResource("add_patient_doctor.fxml"));
-        Scene secondScene = new Scene(secondView);
-
-        // Get the current stage (window) using the event's source
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-        // Set the new scene on the current stage
-        window.setScene(secondScene);
-        window.show();
-    	
-    }
- // Event Listener on Button[#menuButton].onAction
+	@FXML
+	private void handleHistoryButtonAction(ActionEvent event){
+		
+	}
+	// Event Listener on Button[#menuButton].onAction
     @FXML
 	private void handleMenuButtonAction(ActionEvent event) {
 		
@@ -252,19 +251,16 @@ public class patientsRecordsController {
 		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
 		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
-		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
+		
 	}
 	@FXML
 	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
 		// load patients fxml file
-		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:white; ");
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: #185FA1; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		historyButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
-		historyIcon.setStyle("-fx-fill :  #ffffff; ;");
-		
+	
 		 if (event.getEventType().equals(ActionEvent.ACTION)) {
 	            Parent secondView = FXMLLoader.load(getClass().getResource("patients-records.fxml"));
 	            Scene secondScene = new Scene(secondView);
@@ -278,19 +274,6 @@ public class patientsRecordsController {
 		 }
 		
 	}
-	@FXML
-	private void handleHistoryButtonAction(ActionEvent event) {
-		historyButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
-		historyIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
-		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
-		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-	}
-	
-	
-	
-	
 private void updateButtons (double width) {
 		
 		if (width != 210){
@@ -303,9 +286,6 @@ private void updateButtons (double width) {
     		patientsButton.setPrefWidth(60);
     		patientsButton.setTextAlignment(TextAlignment.LEFT);
     		patientsButton.setText("");
-    		historyButton.setPrefWidth(60);
-    		historyButton.setTextAlignment(TextAlignment.LEFT);
-    		historyButton.setText("");
     		return ;
 		}
 		menuButton.setPrefWidth(210);
@@ -317,9 +297,6 @@ private void updateButtons (double width) {
 		patientsButton.setPrefWidth(210);
 		patientsButton.setTextAlignment(TextAlignment.LEFT);
 		patientsButton.setText("   Patients");
-		historyButton.setPrefWidth(210);
-		historyButton.setTextAlignment(TextAlignment.LEFT);
-		historyButton.setText("   Doctors");
-		
+
 	}
 }

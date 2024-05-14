@@ -25,6 +25,15 @@
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
+.getStartedAdd {
+
+}
+
+.getStartedAdd:hover {
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
 .GoBackToHome {
 	-fx-background-color: transparent;
 	-fx-background-radius: 18;
@@ -179,8 +188,9 @@
 }
 .btn-tool{
 	-fx-font-size: 13px;
+	-fx-font-family: "Symbol";
 	-fx-text-fill:#D9D9D9;
 	-fx-alignment: center;
 	-fx-background-color:#185F9F;
-	-fx-background-radius:15;
+	-fx-background-radius:12;
 }
