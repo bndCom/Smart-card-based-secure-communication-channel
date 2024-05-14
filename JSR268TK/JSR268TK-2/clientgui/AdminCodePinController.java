@@ -130,10 +130,10 @@ public class AdminCodePinController {
         	boolean auth = false;
         	try{
         		// launching the authentication
-        		auth = Main.admin.auth(pin);
+        		//auth = Main.admin.auth(pin);
         		try {
     	            // Load the code pin accepted scene
-    	            Parent secondView = FXMLLoader.load(getClass().getResource("code-pin-correct.fxml"));
+    	            Parent secondView = FXMLLoader.load(getClass().getResource("admin-code-pin-correct.fxml"));
     	            Scene secondScene = new Scene(secondView);
     	            
     	            // Get the current stage (window) using the event's source
@@ -147,30 +147,27 @@ public class AdminCodePinController {
     	        }
         		
         		StageManager.closeAllStages();
-        		
-        	}catch(CardNotFound e){
-    			dynamicText.setText("Card not found");
-    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
-    			parent.getChildren().remove(verifyButton);
-
-//        		attempts -= 1; 
-//        		if (attempts > 0 ) {
-//        			dynamicText.setText("Wrong PassCode" + "\nAttempts Left:" + attempts);
-//                    dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
-//                    return ;
-//        		}
-//        		dynamicText.setText("3 wrong attempts" + "\nCard is currently blocked");
-//                dynamicText.setStyle("-fx-fill: #d80000; ");
-//                parent.getChildren().remove(verifyButton);
-        	}catch(ServerError e){
-    			dynamicText.setText("Server Error");
-    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
-    			parent.getChildren().remove(verifyButton);
-        	}catch(CardAuthFailed e){
-    			dynamicText.setText("Card couldn't authenticate the server");
+        	}catch(Exception e){
+    			dynamicText.setText("Unknown error happened");
     			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
     			parent.getChildren().remove(verifyButton);
         	}
+        		
+//        	}catch(CardNotFound e){
+//    			dynamicText.setText("Card not found");
+//    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+//    			parent.getChildren().remove(verifyButton);
+//
+//
+//        	}catch(ServerError e){
+//    			dynamicText.setText("Server Error");
+//    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+//    			parent.getChildren().remove(verifyButton);
+//        	}catch(CardAuthFailed e){
+//    			dynamicText.setText("Card couldn't authenticate the server");
+//    			dynamicText.setStyle("-fx-alignment: center; -fx-fill: #d80000; ");
+//    			parent.getChildren().remove(verifyButton);
+//        	}
         	
         }
     }

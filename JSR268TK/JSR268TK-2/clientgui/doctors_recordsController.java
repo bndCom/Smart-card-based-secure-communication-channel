@@ -151,7 +151,20 @@ public class doctors_recordsController implements Initializable {
             // constructing the object from the received json
             DoctorDto doctor = new DoctorDto();
             Map<String, Object> mp = itr.next();
-            doctor.setDoctorId(Util.doubleToLong((Double)mp.get("doctorId")));
+            Object value = mp.get("doctorId");
+            long doctorId;
+
+            if (value instanceof Double) {
+                // If the value is a Double, convert it to a String first, then parse it to long
+                doctorId = (long) Double.parseDouble(Double.toString((Double) value));
+            } else if (value instanceof String) {
+                // If the value is already a String, parse it directly to long
+                doctorId = Long.parseLong((String) value);
+            } else {
+                // Handle other types or null values
+                throw new IllegalArgumentException("Invalid type for doctorId");
+            }
+            doctor.setDoctorId(doctorId);
             doctor.setFirstName((String)mp.get("firstName"));
             doctor.setLastName((String)mp.get("lastName"));
             doctor.setGender(Util.doubleToInt((Double)mp.get("gender")));
