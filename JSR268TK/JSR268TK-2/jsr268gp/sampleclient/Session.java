@@ -43,11 +43,9 @@ public abstract class Session {
 	protected String url;
 	protected CardChannel canal;
 	protected ResponseAPDU respApdu;
-	//protected String K;
-	protected String K = "y+l+srb0iMDOjr7EkhFgEw=="; // this is temporary
-	//protected long UID;
+	protected String K;
+	protected long UID;
 	protected boolean isAdmin;
-	protected long UID = 8288387632726327410L ;
 	// used variables
 	protected String data = new String("");
 	protected String hmac = new String(""); 
@@ -61,7 +59,7 @@ public abstract class Session {
 	public Session(CardChannel canal, String url){
 		this.url = url;
 		this.canal = canal;
-		//this.K = null; --- change this
+		this.K = null;
 	}
 	
 	// authenticate to the remote
@@ -110,19 +108,13 @@ public abstract class Session {
 
     	// sending the signature to the server
     	sign = respApdu.getData();
-    	//sign[0] = (byte)0x77;
-//    	mp.clear();
-//    	mp.put("step", "2");
-//    	mp.put("UID", Base64.getEncoder().encodeToString(UID));
-//    	mp.put("sign", Base64.getEncoder().encodeToString(sign));
     	
     	// getting K from the card
     	respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_K, (byte)0x00, (byte)0x00, canal);
     	byte[] tmpK = respApdu.getData();
     	this.K = b64Encoder.encodeToString(tmpK);
     	String pinEnc = Base64.getEncoder().encodeToString(AesCBCPad.encrypt_CBC(pin.getBytes(StandardCharsets.UTF_8), tmpK));
-//    	data = UtilRequest.mapToJsonString(mp);
-
+    	
     	data="UID="+UID+"&sign="+URLEncoder.encode(b64Encoder.encodeToString(sign), StandardCharsets.UTF_8.toString())+"&pin="+URLEncoder.encode(pinEnc, StandardCharsets.UTF_8.toString());
     	response = UtilRequest.sendRequest("POST", data, url+"/connect/phase2", "application/x-www-form-urlencoded");
     	// check server authentication status

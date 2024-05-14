@@ -42,7 +42,6 @@ public class AdminCodePinController {
     @SuppressWarnings("unused")
 	@FXML
     void handleVerifyButton(ActionEvent event) throws IOException {
-    	if(pin.getText().equals("1234")) nextStage(event);
         if (pin.getText().length() < 4) {
             dynamicText.setText("Invalid PassCode" + "\nYou have to Enter 4 digits");
             dynamicText.setStyle("fx-alignment: center; -fx-fill: #d80000;");

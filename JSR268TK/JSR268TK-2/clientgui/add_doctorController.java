@@ -29,6 +29,7 @@ import jsr268gp.sampleclient.APDUOps;
 import jsr268gp.sampleclient.CardNotFound;
 import jsr268gp.sampleclient.NotAuthenticatedError;
 import jsr268gp.sampleclient.ServerError;
+import jsr268gp.sampleclient.UnknownClientError;
 
 public class add_doctorController {
 
@@ -119,6 +120,8 @@ public class add_doctorController {
             Util.showAlert("Error", "Permission denied");
         } catch (ServerError e) {
             Util.showAlert("Error", "Server error");
+        } catch(UnknownClientError e){
+        	Util.showAlert("Error", "Unknown client error");
         }
     }
 

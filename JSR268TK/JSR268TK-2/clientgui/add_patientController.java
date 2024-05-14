@@ -24,6 +24,7 @@ import javafx.stage.StageStyle;
 import jsr268gp.sampleclient.CardNotFound;
 import jsr268gp.sampleclient.NotAuthenticatedError;
 import jsr268gp.sampleclient.ServerError;
+import jsr268gp.sampleclient.UnknownClientError;
 
 public class add_patientController {
 	@FXML
@@ -82,6 +83,8 @@ public void addPatient(ActionEvent event) throws NumberFormatException, Exceptio
 			Util.showAlert("Error", "Permission denied");
 		}catch (ServerError e){
 			Util.showAlert("Error", "Server error");
+		}catch(UnknownClientError e){
+			Util.showAlert("Error", "Unknown client error");
 		}
         Parent secondView = FXMLLoader.load(getClass().getResource("admin-panel.fxml"));
         Scene secondScene = new Scene(secondView);

@@ -30,7 +30,7 @@ import com.example.demo.tmpAcces.models.Admin;
 @RequestMapping(path ="/connect")
 
 public class MainController{
-    public static final int MODULUS_SIZE = 64;
+    public static final int MODULUS_SIZE = 128;
     // the server's rsa key pair
     public static final String base64privatemodulus = "uVXpTTzwM5iXhM+aC5cAjDvUc/qQGJmUfCj6uY/1P8os9Lvm89RKsdIW5E13aiksQAF9LZkvWXfQpdiMlSY2vtHtnYgyF7QhFrIWhRWhpGjk9cNrXyX4f3W3uDE4YohFZfWkfUzOmeyFt09R8kSqWUBG3g2I58QzqzHiK7Rd+DM=";
     public static final String base64privateexponent = "JJUYn+5PW1/bSJPRzEfaC9Qjc2EZ4EEwVfGgy8/mkNjPVt9gDvDwbXkSm63OzF2kJl4k30NFXVuRC6ta1HXeiCVP17in/6qUQRNQB4r8rI2Kl+k/OY2H4UwZ1XastzHSxh8oKODByu2PuJaYx0KdcCeNaQy+RKrP7986qjQR8cE=";
@@ -178,10 +178,8 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
 
         //We should get the public key of the user based on its identity ( admin or doctor)
     	if(optionalData.get().getIsAdmin()){
-    		System.out.println("---------------- here 1: "+UID);
     		Optional<Admin> adminOptional = adminRepository.findById(UID);
     		if(adminOptional.isPresent()){
-    			System.out.println("----------------- here 2: ");
     			hashPin = adminOptional.get().getHashedCodepin();
     			
     			String base64CardPublicKey = adminOptional.get().getUserPublicKey();
@@ -194,7 +192,6 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
     			return "Error not found";
     		}
     	}else{ // this means that the user is doctor not admin
-    		System.out.println("doctor here -----------------");
     		Optional<Doctor> doctorOptional = doctorRepository.findById(UID);
     		if(doctorOptional.isPresent()){
     			hashPin = doctorOptional.get().getHashedCodepin();
@@ -248,8 +245,6 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
         byte[] toverify = Base64.getDecoder().decode(data.getA());
 
         valid = Arrays.equals(SignDecryFinal , toverify);
-        // remove this
-        valid = true;
         
         if (valid == true) {
         	// verifying the code pin before adding the card to the online table
@@ -286,25 +281,5 @@ public MainController(tmpDataRepository tmpdataRepository, OnlineRepository onli
     }
     
 }
-@Autowired
-OnlineRepository onlinerePository;
-@PostMapping (path="/hi")
-    public @ResponseBody String hello(@RequestParam long uid , @RequestParam long timestamp , @RequestParam String Kaes){
-    online Online = new online();
-    Online.setK(Kaes);
-    Online.setTimestamp(timestamp);
-    Online.setUID(uid);
-    try{
-    	onlinerePository.save(Online);
-    }catch(Exception e){
-    	return e.getMessage();
-    }
-    return "Saved";
-    }
 
-    @GetMapping(path="/fuckoff")
-    public @ResponseBody String foff(){
-        return "fuckoff";
-
-    }
 }

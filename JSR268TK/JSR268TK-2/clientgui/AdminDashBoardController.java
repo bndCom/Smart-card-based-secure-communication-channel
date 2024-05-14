@@ -31,6 +31,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jsr268gp.sampleclient.NotAuthenticatedError;
+import jsr268gp.sampleclient.ServerError;
 
 public class AdminDashBoardController {
 	
@@ -79,12 +81,21 @@ public class AdminDashBoardController {
         // Create a Circle clip
         Circle clip = new Circle(centerX, centerY, radius);
         adminPicture.setClip(clip);
-        n = Main.admin.getAllPatients().size();
-        patientsNumber.setText(Integer.toString(n)); 
-        
-        // get number of sessions of the doctor
-        n = Main.admin.getAllAdmins().size();
-        adminsNumber.setText(Integer.toString(n));
+        try{
+            n = Main.admin.getAllPatients().size();
+            patientsNumber.setText(Integer.toString(n)); 
+            
+            // get number of sessions of the doctor
+            n = Main.admin.getAllAdmins().size();
+            adminsNumber.setText(Integer.toString(n));
+        }catch(NotAuthenticatedError e){
+        	Util.showAlert("Error", "Permission denied");
+        	return;
+        }catch(ServerError e){
+        	Util.showAlert("Error", "Server Error");
+        	return;
+        }
+
         // get number of sessions today
         doctorsNumber.setText("XXXX");
         

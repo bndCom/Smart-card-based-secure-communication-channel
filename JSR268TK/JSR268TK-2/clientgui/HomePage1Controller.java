@@ -46,29 +46,35 @@ public class HomePage1Controller{
 	    }
 
 	    @FXML
-	    void toFigma(ActionEvent event) {
+	    void toFigma(ActionEvent event) throws URISyntaxException {
 	    	try {
                 Desktop.getDesktop().browse(new URI("https://www.figma.com/design/vVZcwllrL2ZSFykBbeuoOD/app_UI?node-id=3-2"));
-            } catch (IOException | URISyntaxException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
+            } catch(URISyntaxException e){
+            	e.printStackTrace();
             }
 	    }
 
 	    @FXML
-	    void toGithub(ActionEvent event) {
+	    void toGithub(ActionEvent event) throws URISyntaxException {
 	    	try {
                 Desktop.getDesktop().browse(new URI("https://github.com/bndCom/Smart-card-based-secure-communication-channel.git"));
-            } catch (IOException | URISyntaxException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
+            }catch(URISyntaxException e){
+            	e.printStackTrace();
             }
 	    }
 
 	    @FXML
-	    void toLinkedin(ActionEvent event) {
+	    void toLinkedin(ActionEvent event) throws URISyntaxException {
 	    	try {
                 Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/mahdi-ali-59b08829b"));
-            } catch (IOException | URISyntaxException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
+            } catch(URISyntaxException e){
+            	e.printStackTrace();
             }
 	    }
 

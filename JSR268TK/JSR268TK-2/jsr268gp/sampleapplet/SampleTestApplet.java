@@ -1,9 +1,6 @@
 package jsr268gp.sampleapplet;
 
 import javacard.framework.*;
-import javacard.security.*;
-import javacardx.crypto.*;
-import javacard.security.Signature;
 
 public class SampleTestApplet extends Applet {
 
@@ -15,36 +12,19 @@ public class SampleTestApplet extends Applet {
 	public static final byte INS_CS_RSA_CARD_PUBLIC_EXP= (byte)0x02;
 	public static final byte INS_CS_RSA_SERVER_PUBLIC_MOD= (byte)0x03;
 	public static final byte INS_CS_RSA_SERVER_PUBLIC_EXP= (byte)0x04;
-	public static final byte INS_CS_RSA_CARD_PRIVATE_P= (byte)0x05;
-	public static final byte INS_CS_RSA_CARD_PRIVATE_Q= (byte)0x06;
 	public static final byte INS_CS_RSA_CARD_PRIVATE_EXP= (byte)0x07;
 	public static final byte INS_SC_RSA_CARD_PUBLIC_MOD= (byte)0x08;
 	public static final byte INS_SC_UID = (byte)0x09;
 	public static final byte INS_CS_DH_PUBLIC_KEY = (byte)0x12;
 	public static final byte INS_CS_DH_B = (byte)0x0B;
-	public static final byte INS_CS_MODPOW = (byte) 0x10;
 	public static final byte INS_CS_UID =(byte) 0x11;
-	public static final byte DH_KEY_LENGTH = (byte)0x80;
 	public static final byte INS_CS_DH_SIGN = (byte)0x0D;
 	public static final byte INS_SC_SIGN_STATUS = (byte)0x0E;
 	public static final byte INS_SC_DH_SIGN = (byte)0x0F;
 	public static final byte INS_TEST = (byte)0x68;
-	public static final byte INS_TEST2 = (byte)0x67;
-	public static final byte INS_TEST3 = (byte)0x66;
-	public static final byte INS_SC_N = (byte)0x98;
-	public static final byte INS_CS_A = (byte)0x97;
-	public static final byte INS_CS_DH_K = (byte)0x96;
-	public static final byte INS_SC_DH_K = (byte)0x95;
-	public static final byte INS_GET_SERVER_PUB_MOD = (byte)0x94;
-	public static final byte INS_GET_SERVER_PUB_EXP = (byte)0x93;
-	public static final byte INS_GET_CARD_PUB_MOD = (byte)0x92;
-	public static final byte INS_GET_CARD_PUB_EXP = (byte)0x91;
-	public static final byte INS_CS_ENC_AES = (byte)0x90;
-	public static final byte INS_CS_DEC_AES = (byte)0x89;
-	public static final byte INS_TEST_K = (byte)0x88;
-	public static final byte INS_TEST_SIGN = (byte)0x87;
 	public static final byte INS_SC_K = (byte)0x86;
-	public static final byte INS_CS_HASH=(byte)0x99;
+	
+
 	private  byte[] P=new byte[MODULUS_SIZE];
 	private  byte[] n=new byte[MODULUS_SIZE];
 	private byte[] K =new byte[MODULUS_SIZE];

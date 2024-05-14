@@ -63,9 +63,9 @@ public class adminPanelController implements Initializable{
 	@FXML
 	private TableColumn<PatientDto,String>  tel;
 	@FXML
-	private TableColumn<PatientDto,String>  LastSession;
+	private TableColumn<PatientDto,String>  Email;
 	@FXML
-	private TableColumn<PatientDto,String>  Record;
+	private TableColumn<PatientDto,String>  Address;
 	@FXML
 	private TableColumn<PatientDto,Void>  tools;
 	@FXML
@@ -95,8 +95,8 @@ public class adminPanelController implements Initializable{
         LastName.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("lastName"));
         Name.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("firstName"));
         tel.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("phoneNumber"));
-        LastSession.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("email"));
-        Record.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("address"));
+        Email.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("email"));
+        Address.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("address"));
         tools.setCellValueFactory(new PropertyValueFactory<PatientDto, Void>("tools"));
 
         // Custom cell factory for the tools column
