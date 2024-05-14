@@ -1,6 +1,9 @@
 package clientgui;
 
 import java.io.IOException;
+
+import javafx.scene.paint.Color;
+
 import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.animation.KeyFrame;
@@ -36,11 +41,15 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import jsr268gp.sampleclient.CardNotFound;
+import jsr268gp.sampleclient.NotAuthenticatedError;
+import jsr268gp.sampleclient.ServerError;
 
 public class adminPanelController implements Initializable{
 	@FXML
@@ -80,6 +89,7 @@ public class adminPanelController implements Initializable{
 	private Timeline animation;
 
 	private ObservableList<PatientDto> dataList = FXCollections.observableArrayList();
+ 
 	public void initialize(URL url, ResourceBundle resourceBundle) {
         ID.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("patientId"));
         LastName.setCellValueFactory(new PropertyValueFactory<PatientDto, String>("lastName"));
@@ -123,9 +133,9 @@ public class adminPanelController implements Initializable{
                             setGraphic(null);
                             setText(null);
                         } else {
-                            btn1.getStyleClass().add("btn-tool");
-                            btn2.getStyleClass().add("btn-tool");
-                            btn3.getStyleClass().add("btn-tool");
+                            btn1.getStyleClass().addAll("btn-tool","getStarted");
+                            btn2.getStyleClass().addAll("btn-tool","getStarted");
+                            btn3.getStyleClass().addAll("btn-tool","getStarted");
                             HBox buttonsContainer = new HBox(btn1, btn2, btn3);
                             buttonsContainer.setSpacing(10);
                             setGraphic(buttonsContainer);
@@ -139,6 +149,10 @@ public class adminPanelController implements Initializable{
 		List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
 		try {
 			mapList = Main.admin.getAllPatients();
+		} catch (NotAuthenticatedError e) {
+			Util.showAlert("Error","Permission denied");
+		}catch (ServerError e){
+			Util.showAlert("Error","Server error");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -246,21 +260,21 @@ public class adminPanelController implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	@FXML
 	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
 		// load patients fxml file
-		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
 		
 		 if (event.getEventType().equals(ActionEvent.ACTION)) {
@@ -290,12 +304,12 @@ public class adminPanelController implements Initializable{
 	            window.setScene(secondScene);
 	            window.show();
 		 }
-		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
-		doctorsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
-		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
-		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
+			doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill: black; ");
+			doctorsIcon.setStyle("-fx-fill :  #185FA1 ;");
+			dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: black; ");
+			dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
+			patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: black; ");
+			patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 private void updateButtons (double width) {
 		

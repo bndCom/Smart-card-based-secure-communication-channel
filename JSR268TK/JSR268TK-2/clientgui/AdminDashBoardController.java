@@ -63,10 +63,9 @@ public class AdminDashBoardController {
 	private Timeline animation;
 	
 	@FXML
-	private void initialize() {
+	private void initialize() throws Exception {
 		
 		// assign doctorName and picture and add them
-		adminName.setText("Dr. Mohcen Mokhati");
 		Image dynamicImage = getDynamicImageFromBackend(); // Method to get image from backend
         adminPicture.setPreserveRatio(false); // Set preserveRatio to false
         adminPicture.setImage(dynamicImage);
@@ -75,15 +74,19 @@ public class AdminDashBoardController {
         double centerX = adminPicture.getFitWidth() / 2.0;
         double centerY = adminPicture.getFitHeight() / 2.0;
 
+        
+        int n ;
         // Create a Circle clip
         Circle clip = new Circle(centerX, centerY, radius);
         adminPicture.setClip(clip);
-        // get number of patients
-        patientsNumber.setText("1200");
+        n = Main.admin.getAllPatients().size();
+        patientsNumber.setText(Integer.toString(n)); 
+        
         // get number of sessions of the doctor
-        adminsNumber.setText("14678");
+        n = Main.admin.getAllAdmins().size();
+        adminsNumber.setText(Integer.toString(n));
         // get number of sessions today
-        doctorsNumber.setText("124");
+        doctorsNumber.setText("XXXX");
         
         // do the barchart
 		patientsGenderDuringWeekBarChart.setTitle("Men and women sessions 5 days");
@@ -91,18 +94,18 @@ public class AdminDashBoardController {
        
  
         series1.setName("male");       
-        series1.getData().add(new XYChart.Data("5-11-2024", 5));
-        series1.getData().add(new XYChart.Data("6-11-2024", 15));
-        series1.getData().add(new XYChart.Data("7-11-2024", 12));
-        series1.getData().add(new XYChart.Data("8-11-2024", 3));
-        series1.getData().add(new XYChart.Data("9-11-2024", 2));
+        series1.getData().add(new XYChart.Data("XXXX", 5));
+        series1.getData().add(new XYChart.Data("XXXX", 15));
+        series1.getData().add(new XYChart.Data("XXXX", 12));
+        series1.getData().add(new XYChart.Data("XXXX", 3));
+        series1.getData().add(new XYChart.Data("XXXX", 2));
          
         series2.setName("female");
-        series2.getData().add(new XYChart.Data("5-11-2024", 8));
-        series2.getData().add(new XYChart.Data("6-11-2024", 1));
-        series2.getData().add(new XYChart.Data("7-11-2024", 43));
-        series2.getData().add(new XYChart.Data("8-11-2024", 25));
-        series2.getData().add(new XYChart.Data("9-11-2024", 35));
+        series2.getData().add(new XYChart.Data("XXXX", 8));
+        series2.getData().add(new XYChart.Data("XXXX", 1));
+        series2.getData().add(new XYChart.Data("XXXX", 43));
+        series2.getData().add(new XYChart.Data("XXXX", 25));
+        series2.getData().add(new XYChart.Data("XXXX", 35));
 
         patientsGenderDuringWeekBarChart.getData().addAll(series1, series2);
         
@@ -111,11 +114,11 @@ public class AdminDashBoardController {
         XYChart.Series series = new XYChart.Series();
         series.setName("Patients through the year");
         //populating the series with data
-        series.getData().add(new XYChart.Data("5-11-2024", 13));
-        series.getData().add(new XYChart.Data("6-11-2024", 16));
-        series.getData().add(new XYChart.Data("7-11-2024", 55));
-        series.getData().add(new XYChart.Data("8-11-2024", 25));
-        series.getData().add(new XYChart.Data("9-11-2024", 37));
+        series.getData().add(new XYChart.Data("XXXX", 13));
+        series.getData().add(new XYChart.Data("XXXX", 16));
+        series.getData().add(new XYChart.Data("XXXX", 55));
+        series.getData().add(new XYChart.Data("XXXX", 25));
+        series.getData().add(new XYChart.Data("XXXX", 37));
         patientsDuringWeekLineChart.setTitle("Patients number last 5 days");
         patientsDuringWeekLineChart.getData().add(series);
         // do the pieChart
@@ -174,21 +177,21 @@ public class AdminDashBoardController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	@FXML
 	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
 		// load patients fxml file
-		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill:black; ");
 		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
 		
 		 if (event.getEventType().equals(ActionEvent.ACTION)) {
@@ -218,11 +221,11 @@ public class AdminDashBoardController {
 	            window.setScene(secondScene);
 	            window.show();
 		 }
-		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:balck; ");
 		doctorsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
+		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: black; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 

@@ -40,9 +40,13 @@ public class HandleAdminAuthentification{
 	    Task<Void> connectionToCardAndReader = new Task<Void>() {
 	        @Override
 	        protected Void call() throws Exception {
-	        	// function that will check if reader and card are connected
-	            return null;
+	            
+	            @SuppressWarnings("unused")
+				boolean flag = false;
+	                flag = Util.isCardInserted() && Util.isCardReaderConnected();
+	             return null;
 	        }
+
 
 	        @Override
 	        protected void succeeded()  {
@@ -55,7 +59,7 @@ public class HandleAdminAuthentification{
 					root = loader.load();
 					// Create a new stage for the confirmation dialog
 		            Stage stage = new Stage();
-		            stage.setScene(new Scene(root, 600, 500));
+		            stage.setScene(new Scene(root));
 		            stage.setResizable(false); 
 		            stage.show();
 		            // Get the scene from the parent node
@@ -74,6 +78,33 @@ public class HandleAdminAuthentification{
 
 	            
 	        }
+	        
+	        @Override
+	        protected void failed()  {
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource("card-auth-failed.fxml"));
+	            Parent root = null;
+				try {
+					root = loader.load();
+					// Create a new stage for the confirmation dialog
+		            Stage stage = new Stage();
+		            stage.setScene(new Scene(root));
+		            stage.setResizable(false); 
+		            stage.show();
+		            // Get the scene from the parent node
+		            Scene scene = anchorPane.getScene();
+		            if (scene != null) {
+		                // Close the Scene if it's not null
+		                Stage stageToClose = (Stage) scene.getWindow();
+		                stageToClose.close();
+		            }
+
+		            
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	        
 	    };
 
 

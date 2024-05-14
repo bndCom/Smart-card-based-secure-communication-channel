@@ -47,15 +47,13 @@ public class PlugInCardController{
  		cadPair = APDUOps.connectAndSelect(cad);
  		CardChannel canal = cadPair.getKey();
      	c = cadPair.getValue();
-        // Close the current window
-		 Session admin = new SessionAdmin(canal, "http://localhost:8080");
-		 FXMLLoader loader = null;
+        FXMLLoader loader = null;
      	Parent root = null;
      	Stage stage = null ;
 	        try{
 	        	
 	        	//if(admin.auth("1234")){
-	        	if(true){
+	        	
 	                // Load the FXML file for the confirmation dialog
 	        		loader = new FXMLLoader(getClass().getResource("auth-accepted.fxml"));
 	                root = loader.load();
@@ -66,7 +64,7 @@ public class PlugInCardController{
 	                stage.setResizable(false); 
 
 	                stage.show();
-	        	}
+	        	
 	        	
 	        }catch(Exception e){}
 	        	/*catch(ServerError e){
