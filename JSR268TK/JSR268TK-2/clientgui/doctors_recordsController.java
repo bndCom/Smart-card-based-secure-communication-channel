@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.animation.KeyFrame;
@@ -36,6 +38,7 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -43,6 +46,10 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.sql.Date;
+
+import jsr268gp.sampleclient.CardNotFound;
+import jsr268gp.sampleclient.NotAuthenticatedError;
+import jsr268gp.sampleclient.ServerError;
 
 public class doctors_recordsController implements Initializable {
     @FXML
@@ -141,30 +148,54 @@ public class doctors_recordsController implements Initializable {
         List<Map<String, Object>> mapList = new LinkedList<Map<String, Object>>();
         try {
             mapList = Main.admin.getAllDoctors();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } catch (CardNotFound e){
+			Alert alert  = new Alert(AlertType.ERROR);
+			alert.setTitle("Alert");
+			alert.setHeaderText("Error");
+			alert.setContentText("Card not inserted");
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.setStyle("-fx-background-color: lightblue");
+			dialogPane.setHeaderText("-fx-font-size: 18px");
+			dialogPane.setContentText("-fx-font-size: 14px");
+			alert.showAndWait();
+		} catch (NotAuthenticatedError e) {
+			Alert alert  = new Alert(AlertType.ERROR);
+			alert.setTitle("Alert");
+			alert.setHeaderText("Error");
+			alert.setContentText("Permission denied");
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.setStyle("-fx-background-color: lightblue");
+			dialogPane.setHeaderText("-fx-font-size: 18px");
+			dialogPane.setContentText("-fx-font-size: 14px");
+			alert.showAndWait();
+		}catch (ServerError e){
+			Alert alert  = new Alert(AlertType.ERROR);
+			alert.setTitle("Alert");
+			alert.setHeaderText("Error");
+			alert.setContentText("Server Error");
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.setStyle("-fx-background-color: lightblue");
+			dialogPane.setHeaderText("-fx-font-size: 18px");
+			dialogPane.setContentText("-fx-font-size: 14px");
+			alert.showAndWait();
+		}catch (Exception e){
+			Alert alert  = new Alert(AlertType.ERROR);
+			alert.setTitle("Alert");
+			alert.setHeaderText("Error");
+			alert.setContentText("Unknown Error");
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.setStyle("-fx-background-color: lightblue");
+			dialogPane.setHeaderText("-fx-font-size: 18px");
+			dialogPane.setContentText("-fx-font-size: 14px");
+			alert.showAndWait();
+		}
 
         Iterator<Map<String, Object>> itr = mapList.iterator();
         while(itr.hasNext()){
             // constructing the object from the received json
             DoctorDto doctor = new DoctorDto();
             Map<String, Object> mp = itr.next();
-            Object value = mp.get("doctorId");
-            long doctorId;
-
-            if (value instanceof Double) {
-                // If the value is a Double, convert it to a String first, then parse it to long
-                doctorId = (long) Double.parseDouble(Double.toString((Double) value));
-            } else if (value instanceof String) {
-                // If the value is already a String, parse it directly to long
-                doctorId = Long.parseLong((String) value);
-            } else {
-                // Handle other types or null values
-                throw new IllegalArgumentException("Invalid type for doctorId");
-            }
-            doctor.setDoctorId(doctorId);
+            doctor.setDoctorId(Util.doubleToLong((Double)mp.get("doctorId")));
             doctor.setFirstName((String)mp.get("firstName"));
             doctor.setLastName((String)mp.get("lastName"));
             doctor.setGender(Util.doubleToInt((Double)mp.get("gender")));
@@ -260,21 +291,21 @@ public class doctors_recordsController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		dashBoardButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #185FA1 ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		patientsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	@FXML
 	private void handlePatientsButtonAction(ActionEvent event) throws IOException {
 		// load patients fxml file
-		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		patientsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		patientsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill: white; ");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1    ; -fx-text-fill:black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: white; ");
+		doctorsButton.setStyle("-fx-background-color : #185FA1   ;  -fx-text-fill: black; ");
 		doctorsIcon.setStyle("-fx-fill :  #ffffff; ;");
 		
 		 if (event.getEventType().equals(ActionEvent.ACTION)) {
@@ -304,11 +335,11 @@ public class doctors_recordsController implements Initializable {
 	            window.setScene(secondScene);
 	            window.show();
 		 }
-		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:#185FA1; ");
+		doctorsButton.setStyle("-fx-background-color : #ffffff; -fx-text-fill:black; ");
 		doctorsIcon.setStyle("-fx-fill :  #185FA1 ;");
-		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
+		dashBoardButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: black; ");
 		dashBoardIcon.setStyle("-fx-fill :  #ffffff; ;");
-		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: white; ");
+		patientsButton.setStyle("-fx-background-color : #185FA1  ;   -fx-text-fill: black; ");
 		patientsIcon.setStyle("-fx-fill :  #ffffff; ;");
 	}
 	

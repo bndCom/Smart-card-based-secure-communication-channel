@@ -28,7 +28,7 @@ public class DoctorHomePageController {
         // Load the FXML file for the confirmation dialog
         FXMLLoader loader = new FXMLLoader(getClass().getResource("doctor-authentification.fxml"));
         Parent root = loader.load();
-        Scene newScene = new Scene(root,600,500);
+        Scene newScene = new Scene(root);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         // Set the new scene on the current stage
         window.setScene(newScene);
