@@ -1,8 +1,10 @@
 package clientgui;
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -43,7 +45,7 @@ public class HandleAdminAuthentification{
 	            
 	            @SuppressWarnings("unused")
 				boolean flag = false;
-	                flag = Util.isCardInserted() && Util.isCardReaderConnected();
+	                flag = Util.isCardInserted();
 	             return null;
 	        }
 
@@ -81,28 +83,29 @@ public class HandleAdminAuthentification{
 	        
 	        @Override
 	        protected void failed()  {
-	            FXMLLoader loader = new FXMLLoader(getClass().getResource("card-auth-failed.fxml"));
-	            Parent root = null;
-				try {
-					root = loader.load();
-					// Create a new stage for the confirmation dialog
-		            Stage stage = new Stage();
-		            stage.setScene(new Scene(root));
-		            stage.setResizable(false); 
-		            stage.show();
-		            // Get the scene from the parent node
-		            Scene scene = anchorPane.getScene();
-		            if (scene != null) {
-		                // Close the Scene if it's not null
-		                Stage stageToClose = (Stage) scene.getWindow();
-		                stageToClose.close();
-		            }
-
-		            
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	        	Util.showAlert("Auth Error", "Couldn't authenticate");
+//	            FXMLLoader loader = new FXMLLoader(getClass().getResource("card-auth-failed.fxml"));
+//	            Parent root = null;
+//				try {
+//					root = loader.load();
+//					// Create a new stage for the confirmation dialog
+//		            Stage stage = new Stage();
+//		            stage.setScene(new Scene(root));
+//		            stage.setResizable(false); 
+//		            stage.show();
+//		            // Get the scene from the parent node
+//		            Scene scene = anchorPane.getScene();
+//		            if (scene != null) {
+//		                // Close the Scene if it's not null
+//		                Stage stageToClose = (Stage) scene.getWindow();
+//		                stageToClose.close();
+//		            }
+//
+//		            
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 	        }
 	        
 	    };
@@ -110,6 +113,26 @@ public class HandleAdminAuthentification{
 
 	    new Thread(connectionToCardAndReader).start();
 	}
+	
+    @FXML
+    void onBack(ActionEvent event) throws Exception {
+    	try{
+            // Load the Second side
+            Parent secondView = FXMLLoader.load(getClass().getResource("homePage2.fxml"));
+            Scene secondScene = new Scene(secondView);
+            
+            // Get the current stage (window) using the event's source
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the current stage
+            window.setScene(secondScene);
+            window.setTitle("Login");
+            window.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	
+    }
 
 
 	

@@ -22,6 +22,8 @@ import jsr268gp.sampleclient.APDUOps;
 import jsr268gp.sampleclient.CardAuthFailed;
 import jsr268gp.sampleclient.CardNotFound;
 import jsr268gp.sampleclient.ServerError;
+import jsr268gp.sampleclient.SessionAdmin;
+import jsr268gp.sampleclient.SessionDoctor;
 
 public class DoctorCodePinController {
 
@@ -48,10 +50,11 @@ public class DoctorCodePinController {
             return;
         }else{
     		// connecting to the card
-    		Pair <CardChannel, Card> cadPair = null;
-     		cadPair = APDUOps.connectAndSelect(Main.cad);
-     		Main.canal = cadPair.getKey();
-         	Main.c = cadPair.getValue();
+//    		Pair <CardChannel, Card> cadPair = null;
+//     		cadPair = APDUOps.connectAndSelect(Main.cad);
+//     		Main.canal = cadPair.getKey();
+//         	Main.c = cadPair.getValue();
+         	Main.doctor = new SessionDoctor(Main.canal, "http://localhost:8080");
          	boolean auth = false;
          	try{
 				auth = Main.doctor.auth(pin.getText());
@@ -132,6 +135,26 @@ public class DoctorCodePinController {
 		window.setScene(secondScene);
 		window.show();
 	}
+	
+    @FXML
+    void onBack(ActionEvent event) throws Exception {
+    	try{
+            // Load the Second side
+            Parent secondView = FXMLLoader.load(getClass().getResource("homePage2.fxml"));
+            Scene secondScene = new Scene(secondView);
+            
+            // Get the current stage (window) using the event's source
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the current stage
+            window.setScene(secondScene);
+            window.setTitle("Login");
+            window.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	
+    }
 
     
 }

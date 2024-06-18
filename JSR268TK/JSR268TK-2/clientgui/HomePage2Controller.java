@@ -7,11 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jsr268gp.sampleclient.SessionAdmin;
+import jsr268gp.sampleclient.SessionDoctor;
 
 public class HomePage2Controller {
 	@FXML
     private void handleAdminAction(ActionEvent event) {
         try {
+        	// tmp code in the absence of the card
+//        	Main.admin = new SessionAdmin(Main.canal, "http://localhost:8080");
+//        	Parent secondView = FXMLLoader.load(getClass().getResource("AdminDashBoardController.fxml"));
             // Load the admin page
             Parent secondView = FXMLLoader.load(getClass().getResource("admin-home-page.fxml"));
             Scene secondScene = new Scene(secondView);
@@ -31,7 +36,10 @@ public class HomePage2Controller {
 	@FXML
     private void handleDoctorAction(ActionEvent event) {
         try {
-            // Load the doctor page
+        	// tmp code in the absence of the card
+//        	Main.doctor = new SessionDoctor(Main.canal, "http://localhost:8080");
+//        	Parent secondView = FXMLLoader.load(getClass().getResource("doctor-page-dashboard.fxml"));
+        	// Load the doctor page
             Parent secondView = FXMLLoader.load(getClass().getResource("doctor-home-page.fxml"));
             Scene secondScene = new Scene(secondView);
 

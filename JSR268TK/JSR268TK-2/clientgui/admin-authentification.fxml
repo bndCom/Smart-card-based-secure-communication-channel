@@ -24,5 +24,6 @@
             <String fx:value="getStarted" />
          </styleClass>
       </Button>
+      <Button layoutX="59.0" layoutY="48.0" mnemonicParsing="false" onAction="#onBack" styleClass="logout-button" stylesheets="@style.css" text="Back" />
    </children>
 </AnchorPane>

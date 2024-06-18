@@ -17,8 +17,8 @@ public class Main extends Application {
 	public static CardChannel canal;
 	public static CardTerminal cad = null;
 	public static Card c = null;
-	public static SessionAdmin admin = new SessionAdmin(canal, "http://localhost:8080");
-	public static SessionDoctor doctor = new SessionDoctor(canal, "http://localhost:8080");
+	public static SessionAdmin admin;// = new SessionAdmin(canal, "http://localhost:8080");
+	public static SessionDoctor doctor;// = new SessionDoctor(canal, "http://localhost:8080");
     @Override
     public void start(Stage primaryStage) throws Exception {
     	

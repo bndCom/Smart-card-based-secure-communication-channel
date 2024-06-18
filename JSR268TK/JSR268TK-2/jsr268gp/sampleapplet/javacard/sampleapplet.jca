@@ -1,5 +1,5 @@
 // converted by version 1.3
-// on Mon May 13 12:46:56 WAT 2024
+// on Wed Jun 12 20:46:52 WAT 2024
 
 .package jsr268gp/sampleapplet {
 	.aid 0xA0:0x0:0x0:0x18:0x50:0x0:0x0:0x0:0x0:0x0:0x0:0x52:0x41:0x44:0x52;
@@ -42,122 +42,128 @@
 		// 11
 		instanceFieldRef byte[] SampleTestApplet/cardPrivateKeyExp;
 		// 12
-		instanceFieldRef byte[] SampleTestApplet/cardUID;
+		instanceFieldRef byte[] SampleTestApplet/tmpp;
 		// 13
-		instanceFieldRef byte[] SampleTestApplet/signEnc;
+		instanceFieldRef byte[] SampleTestApplet/hashb;
 		// 14
-		instanceFieldRef byte[] SampleTestApplet/signDec;
+		instanceFieldRef byte[] SampleTestApplet/out;
 		// 15
-		instanceFieldRef AES SampleTestApplet/AESIns;
+		instanceFieldRef byte[] SampleTestApplet/cardUID;
 		// 16
-		instanceFieldRef byte[] SampleTestApplet/AB;
+		instanceFieldRef byte[] SampleTestApplet/signEnc;
 		// 17
-		instanceFieldRef boolean SampleTestApplet/isVerified;
+		instanceFieldRef byte[] SampleTestApplet/signDec;
 		// 18
-		staticMethodRef 0.0.0()V;		// java/lang/Object.<init>()V
+		instanceFieldRef AES SampleTestApplet/AESIns;
 		// 19
-		staticMethodRef 1.1.0(BZ)Ljavacardx/crypto/Cipher;;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
-			.descriptor	Ljavacardx/crypto/Cipher;	1.1;
-
+		instanceFieldRef byte[] SampleTestApplet/AB;
 		// 20
-		staticMethodRef 2.13.0(BSZ)Ljavacard/security/Key;;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-			.descriptor	Ljavacard/security/Key;	2.0;
-
+		instanceFieldRef boolean SampleTestApplet/isVerified;
 		// 21
-		classRef SampleTestApplet;
-		// 22
-		staticMethodRef SampleTestApplet/<init>()V;
-		// 23
-		virtualMethodRef 3.3.1()V;		// register()V
-		// 24
-		virtualMethodRef 3.10.1()[B;		// getBuffer()[B
-		// 25
-		virtualMethodRef 3.3.3()Z;		// selectingApplet()Z
-		// 26
-		staticMethodRef 3.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
-		// 27
-		staticMethodRef UtilAPDU/receiveFromClient(Ljavacard/framework/APDU;)[B;
-			.descriptor	Ljavacard/framework/APDU;	3.10;
-
-		// 28
-		staticMethodRef Utils/generateRandomNumber()[B;
-		// 29
-		staticFieldRef byte[] SampleTestApplet/G;
-		// 30
-		staticMethodRef jcDH/modPowRSA([B[B[B)[B;
-		// 31
-		staticMethodRef UtilAPDU/sendToClient(Ljavacard/framework/APDU;[B)V;
-			.descriptor	Ljavacard/framework/APDU;	3.10;
-
-		// 32
-		staticMethodRef Utils/masqueFunction([B)[B;
-		// 33
 		virtualMethodRef 1.1.4(Ljavacard/security/Key;B[BSS)V;		// init(Ljavacard/security/Key;B[BSS)V
 			.descriptor	Ljavacard/security/Key;	2.0;
 
-		// 34
-		classRef AES;
-		// 35
-		staticMethodRef AES/<init>()V;
-		// 36
+		// 22
 		virtualMethodRef 1.1.1([BSS[BS)S;		// doFinal([BSS[BS)S
-		// 37
-		virtualMethodRef AES/keySetUp([B)V;
-		// 38
-		virtualMethodRef AES/AesDecrypt([B[BS)V;
-		// 39
-		staticMethodRef Utils/concat([B[B)[B;
-		// 40
+		// 23
 		staticMethodRef 3.3.0()V;		// javacard/framework/Applet.<init>()V
-		// 41
+		// 24
+		classRef SampleTestApplet;
+		// 25
+		staticMethodRef SampleTestApplet/<init>()V;
+		// 26
+		virtualMethodRef 3.3.1()V;		// register()V
+		// 27
+		virtualMethodRef 3.10.1()[B;		// getBuffer()[B
+		// 28
+		virtualMethodRef 3.3.3()Z;		// selectingApplet()Z
+		// 29
+		staticMethodRef 3.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
+		// 30
+		staticMethodRef UtilAPDU/receiveFromClient(Ljavacard/framework/APDU;)[B;
+			.descriptor	Ljavacard/framework/APDU;	3.10;
+
+		// 31
+		staticMethodRef Utils/generateRandomNumber()[B;
+		// 32
+		staticFieldRef byte[] SampleTestApplet/G;
+		// 33
+		staticMethodRef jcDH/modPowRSA([B[B[B)[B;
+		// 34
+		staticMethodRef UtilAPDU/sendToClient(Ljavacard/framework/APDU;[B)V;
+			.descriptor	Ljavacard/framework/APDU;	3.10;
+
+		// 35
+		staticMethodRef Utils/masqueFunction([B)[B;
+		// 36
 		classRef 2.20;		// javacard/security/AESKey
+		// 37
+		classRef AES;
+		// 38
+		staticMethodRef AES/<init>()V;
+		// 39
+		staticMethodRef 0.0.0()V;		// java/lang/Object.<init>()V
+		// 40
+		virtualMethodRef AES/keySetUp([B)V;
+		// 41
+		virtualMethodRef AES/AesDecrypt([B[BS)V;
 		// 42
-		staticMethodRef jcDH/verifySignRSA([B[B[B[B)Z;
+		staticMethodRef Utils/concat([B[B)[B;
 		// 43
-		staticMethodRef jcDH/hash([B)[B;
+		staticMethodRef 1.1.0(BZ)Ljavacardx/crypto/Cipher;;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+			.descriptor	Ljavacardx/crypto/Cipher;	1.1;
+
 		// 44
-		staticMethodRef 3.16.2([BS[BSS)S;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+		staticMethodRef 2.13.0(BSZ)Ljavacard/security/Key;;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+			.descriptor	Ljavacard/security/Key;	2.0;
+
 		// 45
-		staticMethodRef jcDH/signRSA([B[B[B)[B;
+		staticMethodRef jcDH/verifySignRSA([B[B[B[B)Z;
 		// 46
-		virtualMethodRef AES/AesEncryption([B[BS)V;
+		staticMethodRef jcDH/hash([B)[B;
 		// 47
-		staticFieldRef byte[] SampleTestApplet/SUCCESS;
+		staticMethodRef 3.16.2([BS[BSS)S;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 		// 48
-		staticFieldRef byte[] SampleTestApplet/FAIL;
+		staticMethodRef jcDH/signRSA([B[B[B)[B;
 		// 49
-		virtualMethodRef 3.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		virtualMethodRef AES/AesEncryption([B[BS)V;
 		// 50
-		virtualMethodRef 3.10.6()S;		// setIncomingAndReceive()S
+		staticFieldRef byte[] SampleTestApplet/SUCCESS;
 		// 51
-		staticMethodRef 3.16.0([BS[BSS)B;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+		staticFieldRef byte[] SampleTestApplet/FAIL;
 		// 52
-		classRef 2.12;		// javacard/security/CryptoException
+		virtualMethodRef 3.10.8(SS)V;		// setOutgoingAndSend(SS)V
 		// 53
+		virtualMethodRef 3.10.6()S;		// setIncomingAndReceive()S
+		// 54
+		staticMethodRef 3.16.0([BS[BSS)B;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+		// 55
+		classRef 2.12;		// javacard/security/CryptoException
+		// 56
 		staticMethodRef 2.14.0(B)Ljavacard/security/RandomData;;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
 			.descriptor	Ljavacard/security/RandomData;	2.14;
 
-		// 54
-		virtualMethodRef 2.14.1([BSS)V;		// generateData([BSS)V
-		// 55
-		virtualMethodRef 2.12.1()S;		// getReason()S
-		// 56
-		classRef 2.9;		// javacard/security/RSAPublicKey
 		// 57
-		classRef 2.8;		// javacard/security/RSAPrivateKey
+		virtualMethodRef 2.14.1([BSS)V;		// generateData([BSS)V
 		// 58
+		virtualMethodRef 2.12.1()S;		// getReason()S
+		// 59
+		classRef 2.9;		// javacard/security/RSAPublicKey
+		// 60
+		classRef 2.8;		// javacard/security/RSAPrivateKey
+		// 61
 		virtualMethodRef 1.1.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
 			.descriptor	Ljavacard/security/Key;	2.0;
 
-		// 59
+		// 62
 		staticMethodRef 2.11.0(BZ)Ljavacard/security/MessageDigest;;		// javacard/security/MessageDigest.getInstance(BZ)Ljavacard/security/MessageDigest;
 			.descriptor	Ljavacard/security/MessageDigest;	2.11;
 
-		// 60
+		// 63
 		virtualMethodRef 2.11.4()V;		// reset()V
-		// 61
+		// 64
 		virtualMethodRef 2.11.1([BSS[BS)S;		// doFinal([BSS[BS)S
-		// 62
+		// 65
 		staticMethodRef Utils/areEqual([B[B)Z;
 	}
 
@@ -184,7 +190,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 18;		// java/lang/Object.<init>()V
+					invokespecial 39;		// java/lang/Object.<init>()V
 					aload_0;
 					bspush 16;
 					newarray 11;
@@ -200,17 +206,17 @@
 					bspush 15;
 					sspush 128;
 					sconst_0;
-					invokestatic 20;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-					checkcast 0 41;		// T_CLASSORINTERFACE javacard/security/AESKey
+					invokestatic 44;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 36;		// T_CLASSORINTERFACE javacard/security/AESKey
 					putfield_a 1;		// reference jsr268gp/sampleapplet/AES.aesKey
 					getfield_a_this 1;		// reference jsr268gp/sampleapplet/AES.aesKey
 					aload_1;
 					sconst_0;
-					invokeinterface 3 41 4;		// javacard/security/AESKey
+					invokeinterface 3 36 4;		// javacard/security/AESKey
 					aload_0;
 					bspush 13;
 					sconst_0;
-					invokestatic 19;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					invokestatic 43;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 					putfield_a 2;		// reference jsr268gp/sampleapplet/AES.cipher
 					sconst_0;
 					sstore_2;
@@ -236,14 +242,14 @@
 					getfield_a_this 0;		// reference jsr268gp/sampleapplet/AES.IV
 					sconst_0;
 					bspush 16;
-					invokevirtual 33;		// init(Ljavacard/security/Key;B[BSS)V
+					invokevirtual 21;		// init(Ljavacard/security/Key;B[BSS)V
 					getfield_a_this 2;		// reference jsr268gp/sampleapplet/AES.cipher
 					aload_2;
 					sconst_0;
 					sload_3;
 					aload_1;
 					sconst_0;
-					invokevirtual 36;		// doFinal([BSS[BS)S
+					invokevirtual 22;		// doFinal([BSS[BS)S
 					pop;
 					return;
 		}
@@ -258,14 +264,14 @@
 					getfield_a_this 0;		// reference jsr268gp/sampleapplet/AES.IV
 					sconst_0;
 					bspush 16;
-					invokevirtual 33;		// init(Ljavacard/security/Key;B[BSS)V
+					invokevirtual 21;		// init(Ljavacard/security/Key;B[BSS)V
 					getfield_a_this 2;		// reference jsr268gp/sampleapplet/AES.cipher
 					aload_1;
 					sconst_0;
 					sload_3;
 					aload_2;
 					sconst_0;
-					invokevirtual 36;		// doFinal([BSS[BS)S
+					invokevirtual 22;		// doFinal([BSS[BS)S
 					pop;
 					return;
 		}
@@ -285,11 +291,14 @@
 			private byte[] serverPublicKeyMod 7;		// [B
 			private byte[] serverPublicKeyExp 8;		// [B
 			private byte[] cardPrivateKeyExp 9;		// [B
-			private byte[] cardUID 10;		// [B
-			private byte[] signEnc 11;		// [B
-			private byte[] signDec 12;		// [B
-			 AES AESIns 13;		// Ljsr268gp/sampleapplet/AES;
-			private boolean isVerified 14;		// Z
+			private byte[] tmpp 10;		// [B
+			private byte[] hashb 11;		// [B
+			private byte[] out 12;		// [B
+			private byte[] cardUID 13;		// [B
+			private byte[] signEnc 14;		// [B
+			private byte[] signDec 15;		// [B
+			 AES AESIns 16;		// Ljsr268gp/sampleapplet/AES;
+			private boolean isVerified 17;		// Z
 			public static final short MODULUS_SIZE = 128;		// S
 			public static final short HASH_SIZE = 32;		// S
 			public static final short AES_KEY_SIZE = 16;		// S
@@ -298,36 +307,17 @@
 			public static final byte INS_CS_RSA_CARD_PUBLIC_EXP = 2;		// B
 			public static final byte INS_CS_RSA_SERVER_PUBLIC_MOD = 3;		// B
 			public static final byte INS_CS_RSA_SERVER_PUBLIC_EXP = 4;		// B
-			public static final byte INS_CS_RSA_CARD_PRIVATE_P = 5;		// B
-			public static final byte INS_CS_RSA_CARD_PRIVATE_Q = 6;		// B
 			public static final byte INS_CS_RSA_CARD_PRIVATE_EXP = 7;		// B
 			public static final byte INS_SC_RSA_CARD_PUBLIC_MOD = 8;		// B
 			public static final byte INS_SC_UID = 9;		// B
 			public static final byte INS_CS_DH_PUBLIC_KEY = 18;		// B
 			public static final byte INS_CS_DH_B = 11;		// B
-			public static final byte INS_CS_MODPOW = 16;		// B
 			public static final byte INS_CS_UID = 17;		// B
-			public static final byte DH_KEY_LENGTH = -128;		// B
 			public static final byte INS_CS_DH_SIGN = 13;		// B
 			public static final byte INS_SC_SIGN_STATUS = 14;		// B
 			public static final byte INS_SC_DH_SIGN = 15;		// B
 			public static final byte INS_TEST = 104;		// B
-			public static final byte INS_TEST2 = 103;		// B
-			public static final byte INS_TEST3 = 102;		// B
-			public static final byte INS_SC_N = -104;		// B
-			public static final byte INS_CS_A = -105;		// B
-			public static final byte INS_CS_DH_K = -106;		// B
-			public static final byte INS_SC_DH_K = -107;		// B
-			public static final byte INS_GET_SERVER_PUB_MOD = -108;		// B
-			public static final byte INS_GET_SERVER_PUB_EXP = -109;		// B
-			public static final byte INS_GET_CARD_PUB_MOD = -110;		// B
-			public static final byte INS_GET_CARD_PUB_EXP = -111;		// B
-			public static final byte INS_CS_ENC_AES = -112;		// B
-			public static final byte INS_CS_DEC_AES = -119;		// B
-			public static final byte INS_TEST_K = -120;		// B
-			public static final byte INS_TEST_SIGN = -121;		// B
 			public static final byte INS_SC_K = -122;		// B
-			public static final byte INS_CS_HASH = -103;		// B
 			public static byte[] cpt 0 = {0};		// [B
 			public static final byte[] SUCCESS 1 = {-112};		// [B
 			public static final byte[] FAIL 2 = {103};		// [B
@@ -368,7 +358,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 40;		// javacard/framework/Applet.<init>()V
+					invokespecial 23;		// javacard/framework/Applet.<init>()V
 					aload_0;
 					sspush 128;
 					newarray 11;
@@ -406,13 +396,25 @@
 					newarray 11;
 					putfield_a 11;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyExp
 					aload_0;
-					bspush 64;
+					sspush 128;
 					newarray 11;
-					putfield_a 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardUID
+					putfield_a 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.tmpp
+					aload_0;
+					bspush 32;
+					newarray 11;
+					putfield_a 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.hashb
 					aload_0;
 					sspush 128;
 					newarray 11;
-					putfield_a 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
+					putfield_a 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.out
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardUID
+					aload_0;
+					sspush 128;
+					newarray 11;
+					putfield_a 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
 					return;
 		}
 
@@ -420,26 +422,26 @@
 			.stack 2;
 			.locals 1;
 
-				L0:	new 21;		// jsr268gp/sampleapplet/SampleTestApplet
+				L0:	new 24;		// jsr268gp/sampleapplet/SampleTestApplet
 					dup;
-					invokespecial 22;		// jsr268gp/sampleapplet/SampleTestApplet.<init>()V
+					invokespecial 25;		// jsr268gp/sampleapplet/SampleTestApplet.<init>()V
 					astore_3;
 					aload_3;
-					invokevirtual 23;		// register()V
+					invokevirtual 26;		// register()V
 					return;
 		}
 
 		.method public process(Ljavacard/framework/APDU;)V 7 {
 			.stack 5;
-			.locals 4;
+			.locals 1;
 
 			.descriptor	Ljavacard/framework/APDU;	3.10;
 
 				L0:	aload_1;
-					invokevirtual 24;		// getBuffer()[B
+					invokevirtual 27;		// getBuffer()[B
 					astore_2;
 					aload_0;
-					invokevirtual 25;		// selectingApplet()Z
+					invokevirtual 28;		// selectingApplet()Z
 					ifeq L2;
 				L1:	return;
 				L2:	aload_2;
@@ -448,165 +450,168 @@
 					bspush -128;
 					if_scmpeq L4;
 				L3:	sspush 28160;
-					invokestatic 26;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 29;		// javacard/framework/ISOException.throwIt(S)V
 				L4:	aload_2;
 					sconst_1;
 					baload;
 					slookupswitch L20 13 -122 L18 1 L5 3 L7 4 L8 7 L6 9 L9 11 L12 13 L13 14 L15 15 L14 17 L11 18 L10 104 L19;
 				L5:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
 					putfield_a 8;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyMod
 					goto_w L21;
 				L6:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
 					putfield_a 11;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyExp
 					goto_w L21;
 				L7:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
 					putfield_a 9;		// reference jsr268gp/sampleapplet/SampleTestApplet.serverPublicKeyMod
 					goto_w L21;
 				L8:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
 					putfield_a 10;		// reference jsr268gp/sampleapplet/SampleTestApplet.serverPublicKeyExp
 					goto_w L21;
 				L9:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
-					putfield_a 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardUID
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					putfield_a 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardUID
 					goto_w L21;
 				L10:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
 					putfield_a 3;		// reference jsr268gp/sampleapplet/SampleTestApplet.P
 					aload_0;
-					invokestatic 28;		// jsr268gp/sampleapplet/Utils.generateRandomNumber()[B
+					invokestatic 31;		// jsr268gp/sampleapplet/Utils.generateRandomNumber()[B
 					putfield_a 4;		// reference jsr268gp/sampleapplet/SampleTestApplet.n
 					aload_0;
-					getstatic_a 29;		// reference jsr268gp/sampleapplet/SampleTestApplet.G
+					getstatic_a 32;		// reference jsr268gp/sampleapplet/SampleTestApplet.G
 					getfield_a_this 4;		// reference jsr268gp/sampleapplet/SampleTestApplet.n
 					getfield_a_this 3;		// reference jsr268gp/sampleapplet/SampleTestApplet.P
-					invokestatic 30;		// jsr268gp/sampleapplet/jcDH.modPowRSA([B[B[B)[B
+					invokestatic 33;		// jsr268gp/sampleapplet/jcDH.modPowRSA([B[B[B)[B
 					putfield_a 6;		// reference jsr268gp/sampleapplet/SampleTestApplet.A
 					aload_1;
 					getfield_a_this 6;		// reference jsr268gp/sampleapplet/SampleTestApplet.A
-					invokestatic 31;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
+					invokestatic 34;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
 					goto_w L21;
 				L11:	aload_1;
-					getfield_a_this 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardUID
-					invokestatic 31;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
+					getfield_a_this 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardUID
+					invokestatic 34;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
 					goto_w L21;
 				L12:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
 					putfield_a 7;		// reference jsr268gp/sampleapplet/SampleTestApplet.B
 					aload_0;
 					getfield_a_this 7;		// reference jsr268gp/sampleapplet/SampleTestApplet.B
 					getfield_a_this 4;		// reference jsr268gp/sampleapplet/SampleTestApplet.n
 					getfield_a_this 3;		// reference jsr268gp/sampleapplet/SampleTestApplet.P
-					invokestatic 30;		// jsr268gp/sampleapplet/jcDH.modPowRSA([B[B[B)[B
-					invokestatic 32;		// jsr268gp/sampleapplet/Utils.masqueFunction([B)[B
+					invokestatic 33;		// jsr268gp/sampleapplet/jcDH.modPowRSA([B[B[B)[B
+					invokestatic 35;		// jsr268gp/sampleapplet/Utils.masqueFunction([B)[B
 					putfield_a 5;		// reference jsr268gp/sampleapplet/SampleTestApplet.K
 					goto_w L21;
 				L13:	aload_0;
 					aload_1;
-					invokestatic 27;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
-					putfield_a 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
+					invokestatic 30;		// jsr268gp/sampleapplet/UtilAPDU.receiveFromClient(Ljavacard/framework/APDU;)[B
+					putfield_a 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
 					aload_0;
 					sspush 128;
 					newarray 11;
-					putfield_a 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					putfield_a 17;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
 					aload_0;
-					new 34;		// jsr268gp/sampleapplet/AES
+					new 37;		// jsr268gp/sampleapplet/AES
 					dup;
-					invokespecial 35;		// jsr268gp/sampleapplet/AES.<init>()V
-					putfield_a 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
-					getfield_a_this 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
+					invokespecial 38;		// jsr268gp/sampleapplet/AES.<init>()V
+					putfield_a 18;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
+					getfield_a_this 18;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
 					getfield_a_this 5;		// reference jsr268gp/sampleapplet/SampleTestApplet.K
-					invokevirtual 37;		// keySetUp([B)V
-					getfield_a_this 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
-					getfield_a_this 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
-					getfield_a_this 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
-					getfield_a_this 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
+					invokevirtual 40;		// keySetUp([B)V
+					getfield_a_this 18;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
+					getfield_a_this 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
+					getfield_a_this 17;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					getfield_a_this 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.signEnc
 					arraylength;
-					invokevirtual 38;		// AesDecrypt([B[BS)V
+					invokevirtual 41;		// AesDecrypt([B[BS)V
 					aload_0;
 					getfield_a_this 6;		// reference jsr268gp/sampleapplet/SampleTestApplet.A
 					getfield_a_this 7;		// reference jsr268gp/sampleapplet/SampleTestApplet.B
-					invokestatic 39;		// jsr268gp/sampleapplet/Utils.concat([B[B)[B
-					putfield_a 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.AB
+					invokestatic 42;		// jsr268gp/sampleapplet/Utils.concat([B[B)[B
+					putfield_a 19;		// reference jsr268gp/sampleapplet/SampleTestApplet.AB
 					aload_0;
 					sconst_0;
-					putfield_b 17;		// boolean jsr268gp/sampleapplet/SampleTestApplet.isVerified
+					putfield_b 20;		// boolean jsr268gp/sampleapplet/SampleTestApplet.isVerified
 					aload_0;
-					getfield_a_this 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.AB
-					getfield_a_this 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					getfield_a_this 19;		// reference jsr268gp/sampleapplet/SampleTestApplet.AB
+					getfield_a_this 17;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
 					getfield_a_this 10;		// reference jsr268gp/sampleapplet/SampleTestApplet.serverPublicKeyExp
 					getfield_a_this 9;		// reference jsr268gp/sampleapplet/SampleTestApplet.serverPublicKeyMod
-					invokestatic 42;		// jsr268gp/sampleapplet/jcDH.verifySignRSA([B[B[B[B)Z
-					putfield_b 17;		// boolean jsr268gp/sampleapplet/SampleTestApplet.isVerified
+					invokestatic 45;		// jsr268gp/sampleapplet/jcDH.verifySignRSA([B[B[B[B)Z
+					putfield_b 20;		// boolean jsr268gp/sampleapplet/SampleTestApplet.isVerified
 					goto_w L21;
-				L14:	sspush 128;
-					newarray 11;
-					astore_3;
-					getfield_a_this 16;		// reference jsr268gp/sampleapplet/SampleTestApplet.AB
-					invokestatic 43;		// jsr268gp/sampleapplet/jcDH.hash([B)[B
-					astore 4;
-					aload 4;
-					sconst_0;
-					aload_3;
-					bspush 96;
-					aload 4;
-					arraylength;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
-					pop;
-					aload_0;
-					aload_3;
-					getfield_a_this 11;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyExp
-					getfield_a_this 8;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyMod
-					invokestatic 45;		// jsr268gp/sampleapplet/jcDH.signRSA([B[B[B)[B
-					putfield_a 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
-					aload_0;
-					new 34;		// jsr268gp/sampleapplet/AES
-					dup;
-					invokespecial 35;		// jsr268gp/sampleapplet/AES.<init>()V
-					putfield_a 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
-					getfield_a_this 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
-					getfield_a_this 5;		// reference jsr268gp/sampleapplet/SampleTestApplet.K
-					invokevirtual 37;		// keySetUp([B)V
+				L14:	aload_0;
 					sspush 128;
 					newarray 11;
-					astore 5;
-					getfield_a_this 15;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
-					aload 5;
-					getfield_a_this 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
-					getfield_a_this 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					putfield_a 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.tmpp
+					aload_0;
+					getfield_a_this 19;		// reference jsr268gp/sampleapplet/SampleTestApplet.AB
+					invokestatic 46;		// jsr268gp/sampleapplet/jcDH.hash([B)[B
+					putfield_a 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.hashb
+					getfield_a_this 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.hashb
+					sconst_0;
+					getfield_a_this 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.tmpp
+					bspush 96;
+					getfield_a_this 13;		// reference jsr268gp/sampleapplet/SampleTestApplet.hashb
 					arraylength;
-					invokevirtual 46;		// AesEncryption([B[BS)V
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_0;
+					getfield_a_this 12;		// reference jsr268gp/sampleapplet/SampleTestApplet.tmpp
+					getfield_a_this 11;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyExp
+					getfield_a_this 8;		// reference jsr268gp/sampleapplet/SampleTestApplet.cardPrivateKeyMod
+					invokestatic 48;		// jsr268gp/sampleapplet/jcDH.signRSA([B[B[B)[B
+					putfield_a 17;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					aload_0;
+					new 37;		// jsr268gp/sampleapplet/AES
+					dup;
+					invokespecial 38;		// jsr268gp/sampleapplet/AES.<init>()V
+					putfield_a 18;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
+					getfield_a_this 18;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
+					getfield_a_this 5;		// reference jsr268gp/sampleapplet/SampleTestApplet.K
+					invokevirtual 40;		// keySetUp([B)V
+					aload_0;
+					sspush 128;
+					newarray 11;
+					putfield_a 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.out
+					getfield_a_this 18;		// reference jsr268gp/sampleapplet/SampleTestApplet.AESIns
+					getfield_a_this 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.out
+					getfield_a_this 17;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					getfield_a_this 17;		// reference jsr268gp/sampleapplet/SampleTestApplet.signDec
+					arraylength;
+					invokevirtual 49;		// AesEncryption([B[BS)V
 					aload_1;
-					aload 5;
-					invokestatic 31;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
+					getfield_a_this 14;		// reference jsr268gp/sampleapplet/SampleTestApplet.out
+					invokestatic 34;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
 					goto L21;
-				L15:	getfield_b_this 17;		// boolean jsr268gp/sampleapplet/SampleTestApplet.isVerified
+				L15:	getfield_b_this 20;		// boolean jsr268gp/sampleapplet/SampleTestApplet.isVerified
 					ifeq L17;
 				L16:	aload_1;
-					getstatic_a 47;		// reference jsr268gp/sampleapplet/SampleTestApplet.SUCCESS
-					invokestatic 31;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
+					getstatic_a 50;		// reference jsr268gp/sampleapplet/SampleTestApplet.SUCCESS
+					invokestatic 34;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
 					goto L21;
 				L17:	aload_1;
-					getstatic_a 48;		// reference jsr268gp/sampleapplet/SampleTestApplet.FAIL
-					invokestatic 31;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
+					getstatic_a 51;		// reference jsr268gp/sampleapplet/SampleTestApplet.FAIL
+					invokestatic 34;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
 					goto L21;
 				L18:	aload_1;
 					getfield_a_this 5;		// reference jsr268gp/sampleapplet/SampleTestApplet.K
-					invokestatic 31;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
+					invokestatic 34;		// jsr268gp/sampleapplet/UtilAPDU.sendToClient(Ljavacard/framework/APDU;[B)V
 					goto L21;
 				L19:	goto L21;
 				L20:	sspush 27904;
-					invokestatic 26;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 29;		// javacard/framework/ISOException.throwIt(S)V
 				L21:	return;
 		}
 
@@ -626,7 +631,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 18;		// java/lang/Object.<init>()V
+					invokespecial 39;		// java/lang/Object.<init>()V
 					return;
 		}
 
@@ -637,7 +642,7 @@
 			.descriptor	Ljavacard/framework/APDU;	3.10;
 
 				L0:	aload_0;
-					invokevirtual 24;		// getBuffer()[B
+					invokevirtual 27;		// getBuffer()[B
 					astore_2;
 					aload_1;
 					arraylength;
@@ -647,12 +652,12 @@
 					aload_2;
 					sconst_0;
 					sload_3;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_0;
 					sconst_0;
 					sload_3;
-					invokevirtual 49;		// setOutgoingAndSend(SS)V
+					invokevirtual 52;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
@@ -663,10 +668,10 @@
 			.descriptor	Ljavacard/framework/APDU;	3.10;
 
 				L0:	aload_0;
-					invokevirtual 24;		// getBuffer()[B
+					invokevirtual 27;		// getBuffer()[B
 					astore_1;
 					aload_0;
-					invokevirtual 50;		// setIncomingAndReceive()S
+					invokevirtual 53;		// setIncomingAndReceive()S
 					sstore_2;
 					sload_2;
 					newarray 11;
@@ -676,14 +681,14 @@
 					aload_3;
 					sconst_0;
 					sload_2;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_3;
 					arraylength;
 					sload_2;
 					if_scmpge L2;
 				L1:	sspush 26368;
-					invokestatic 26;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 29;		// javacard/framework/ISOException.throwIt(S)V
 				L2:	aload_3;
 					areturn;
 		}
@@ -709,7 +714,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 18;		// java/lang/Object.<init>()V
+					invokespecial 39;		// java/lang/Object.<init>()V
 					return;
 		}
 
@@ -734,7 +739,7 @@
 					sconst_0;
 					aload_1;
 					arraylength;
-					invokestatic 51;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+					invokestatic 54;		// javacard/framework/Util.arrayCompare([BS[BSS)B
 					ifne L6;
 				L5:	sconst_1;
 					sreturn;
@@ -759,7 +764,7 @@
 					sconst_0;
 					aload_0;
 					arraylength;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_1;
 					sconst_0;
@@ -768,7 +773,7 @@
 					arraylength;
 					aload_1;
 					arraylength;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_2;
 					areturn;
@@ -782,13 +787,13 @@
 					newarray 11;
 					astore_1;
 					aload_0;
-					invokestatic 43;		// jsr268gp/sampleapplet/jcDH.hash([B)[B
+					invokestatic 46;		// jsr268gp/sampleapplet/jcDH.hash([B)[B
 					sconst_0;
 					aload_1;
 					sconst_0;
 					aload_1;
 					arraylength;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_1;
 					areturn;
@@ -802,25 +807,25 @@
 					newarray 11;
 					astore_0;
 				L1:	sconst_1;
-					invokestatic 53;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
+					invokestatic 56;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
 					astore_1;
 					aload_1;
 					aload_0;
 					sconst_0;
 					sspush 128;
-					invokevirtual 54;		// generateData([BSS)V
+					invokevirtual 57;		// generateData([BSS)V
 				L2:	goto L4;
 				L3:	astore_1;
 					aload_1;
-					invokevirtual 55;		// getReason()S
+					invokevirtual 58;		// getReason()S
 					sstore_2;
 					sload_2;
-					invokestatic 26;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 29;		// javacard/framework/ISOException.throwIt(S)V
 				L4:	aload_0;
 					areturn;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L1 L2 L3 52;
+				L1 L2 L3 55;
 			}
 		}
 
@@ -845,7 +850,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 18;		// java/lang/Object.<init>()V
+					invokespecial 39;		// java/lang/Object.<init>()V
 					return;
 		}
 
@@ -858,20 +863,20 @@
 				L0:	sconst_4;
 					sspush 1024;
 					sconst_0;
-					invokestatic 20;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-					checkcast 0 56;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					invokestatic 44;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 59;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					astore_2;
 					aload_2;
 					aload_0;
 					sconst_0;
 					sspush 128;
-					invokeinterface 4 56 7;		// javacard/security/RSAPublicKey
+					invokeinterface 4 59 7;		// javacard/security/RSAPublicKey
 					aload_2;
 					aload_1;
 					sconst_0;
 					aload_1;
 					arraylength;
-					invokeinterface 4 56 6;		// javacard/security/RSAPublicKey
+					invokeinterface 4 59 6;		// javacard/security/RSAPublicKey
 					aload_2;
 					areturn;
 		}
@@ -885,20 +890,20 @@
 				L0:	sconst_5;
 					sspush 1024;
 					sconst_0;
-					invokestatic 20;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-					checkcast 0 57;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					invokestatic 44;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 60;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
 					astore_2;
 					aload_2;
 					aload_0;
 					sconst_0;
 					sspush 128;
-					invokeinterface 4 57 7;		// javacard/security/RSAPrivateKey
+					invokeinterface 4 60 7;		// javacard/security/RSAPrivateKey
 					aload_2;
 					aload_1;
 					sconst_0;
 					aload_1;
 					arraylength;
-					invokeinterface 4 57 6;		// javacard/security/RSAPrivateKey
+					invokeinterface 4 60 6;		// javacard/security/RSAPrivateKey
 					aload_2;
 					areturn;
 		}
@@ -909,30 +914,30 @@
 
 				L0:	bspush 12;
 					sconst_0;
-					invokestatic 19;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					invokestatic 43;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 					astore_3;
 					sconst_4;
 					sspush 1024;
 					sconst_0;
-					invokestatic 20;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-					checkcast 0 56;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					invokestatic 44;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 59;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					astore 4;
 					aload 4;
 					aload_1;
 					sconst_0;
 					aload_1;
 					arraylength;
-					invokeinterface 4 56 6;		// javacard/security/RSAPublicKey
+					invokeinterface 4 59 6;		// javacard/security/RSAPublicKey
 					aload 4;
 					aload_2;
 					sconst_0;
 					aload_2;
 					arraylength;
-					invokeinterface 4 56 7;		// javacard/security/RSAPublicKey
+					invokeinterface 4 59 7;		// javacard/security/RSAPublicKey
 					aload_3;
 					aload 4;
 					sconst_2;
-					invokevirtual 58;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 61;		// init(Ljavacard/security/Key;B)V
 					sspush 128;
 					newarray 11;
 					astore 5;
@@ -943,7 +948,7 @@
 					arraylength;
 					aload 5;
 					sconst_0;
-					invokevirtual 36;		// doFinal([BSS[BS)S
+					invokevirtual 22;		// doFinal([BSS[BS)S
 					pop;
 					aload 5;
 					areturn;
@@ -955,10 +960,10 @@
 
 				L0:	sconst_4;
 					sconst_0;
-					invokestatic 59;		// javacard/security/MessageDigest.getInstance(BZ)Ljavacard/security/MessageDigest;
+					invokestatic 62;		// javacard/security/MessageDigest.getInstance(BZ)Ljavacard/security/MessageDigest;
 					astore_1;
 					aload_1;
-					invokevirtual 60;		// reset()V
+					invokevirtual 63;		// reset()V
 					bspush 32;
 					newarray 11;
 					astore_2;
@@ -969,7 +974,7 @@
 					arraylength;
 					aload_2;
 					sconst_0;
-					invokevirtual 61;		// doFinal([BSS[BS)S
+					invokevirtual 64;		// doFinal([BSS[BS)S
 					pop;
 					aload_2;
 				L1:	areturn;
@@ -978,7 +983,7 @@
 					areturn;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L0 L1 L2 52;
+				L0 L1 L2 55;
 			}
 		}
 
@@ -988,30 +993,30 @@
 
 				L0:	bspush 12;
 					sconst_0;
-					invokestatic 19;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					invokestatic 43;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 					astore 4;
 					sconst_4;
 					sspush 1024;
 					sconst_0;
-					invokestatic 20;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-					checkcast 0 56;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					invokestatic 44;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 59;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					astore 5;
 					aload 5;
 					aload_2;
 					sconst_0;
 					aload_2;
 					arraylength;
-					invokeinterface 4 56 6;		// javacard/security/RSAPublicKey
+					invokeinterface 4 59 6;		// javacard/security/RSAPublicKey
 					aload 5;
 					aload_3;
 					sconst_0;
 					aload_3;
 					arraylength;
-					invokeinterface 4 56 7;		// javacard/security/RSAPublicKey
+					invokeinterface 4 59 7;		// javacard/security/RSAPublicKey
 					aload 4;
 					aload 5;
 					sconst_1;
-					invokevirtual 58;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 61;		// init(Ljavacard/security/Key;B)V
 					sspush 128;
 					newarray 11;
 					astore 6;
@@ -1022,7 +1027,7 @@
 					arraylength;
 					aload 6;
 					sconst_0;
-					invokevirtual 36;		// doFinal([BSS[BS)S
+					invokevirtual 22;		// doFinal([BSS[BS)S
 					pop;
 					bspush 32;
 					newarray 11;
@@ -1033,12 +1038,12 @@
 					sconst_0;
 					aload 7;
 					arraylength;
-					invokestatic 44;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					invokestatic 47;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_0;
-					invokestatic 43;		// jsr268gp/sampleapplet/jcDH.hash([B)[B
+					invokestatic 46;		// jsr268gp/sampleapplet/jcDH.hash([B)[B
 					aload 7;
-					invokestatic 62;		// jsr268gp/sampleapplet/Utils.areEqual([B[B)Z
+					invokestatic 65;		// jsr268gp/sampleapplet/Utils.areEqual([B[B)Z
 					sstore 8;
 					sload 8;
 					sreturn;
@@ -1050,30 +1055,30 @@
 
 				L0:	bspush 12;
 					sconst_0;
-					invokestatic 19;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					invokestatic 43;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 					astore_3;
 					sconst_5;
 					sspush 1024;
 					sconst_0;
-					invokestatic 20;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
-					checkcast 0 57;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					invokestatic 44;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 60;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
 					astore 4;
 					aload 4;
 					aload_1;
 					sconst_0;
 					aload_1;
 					arraylength;
-					invokeinterface 4 57 6;		// javacard/security/RSAPrivateKey
+					invokeinterface 4 60 6;		// javacard/security/RSAPrivateKey
 					aload 4;
 					aload_2;
 					sconst_0;
 					aload_2;
 					arraylength;
-					invokeinterface 4 57 7;		// javacard/security/RSAPrivateKey
+					invokeinterface 4 60 7;		// javacard/security/RSAPrivateKey
 					aload_3;
 					aload 4;
 					sconst_2;
-					invokevirtual 58;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 61;		// init(Ljavacard/security/Key;B)V
 					sspush 128;
 					newarray 11;
 					astore 5;
@@ -1084,7 +1089,7 @@
 					arraylength;
 					aload 5;
 					sconst_0;
-					invokevirtual 36;		// doFinal([BSS[BS)S
+					invokevirtual 22;		// doFinal([BSS[BS)S
 					pop;
 					aload 5;
 					areturn;

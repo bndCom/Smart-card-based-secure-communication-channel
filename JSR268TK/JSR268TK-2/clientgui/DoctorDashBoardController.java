@@ -30,6 +30,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jsr268gp.sampleclient.NotAuthenticatedError;
+import jsr268gp.sampleclient.ServerError;
 
 public class DoctorDashBoardController {
 	
@@ -236,4 +238,36 @@ public class DoctorDashBoardController {
 		patientsButton.setText("   Patients");
 		
 	}
+	
+    @FXML
+    void onLogout(ActionEvent event) throws Exception {
+    	// logout of the session
+    	try {
+			Main.doctor.disconnect();
+
+    	}catch(NotAuthenticatedError e){
+        	Util.showAlert("Error", "Permission denied");
+        	return;
+        }catch(ServerError e){
+        	Util.showAlert("Error", "Server Error");
+        	return;
+        }
+		// return to home page
+        try {
+            // Load the Second side
+            Parent secondView = FXMLLoader.load(getClass().getResource("homePage2.fxml"));
+            Scene secondScene = new Scene(secondView);
+            
+            // Get the current stage (window) using the event's source
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the current stage
+            window.setScene(secondScene);
+            window.setTitle("Login");
+            window.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	
+    }
 }

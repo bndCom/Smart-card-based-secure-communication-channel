@@ -35,6 +35,9 @@ public class SampleTestApplet extends Applet {
 	private byte[] serverPublicKeyMod = new byte[MODULUS_SIZE];
 	private byte[] serverPublicKeyExp = new byte[MODULUS_SIZE];
 	private byte[] cardPrivateKeyExp = new byte[MODULUS_SIZE];
+	private byte[] tmpp = new byte[MODULUS_SIZE];
+	private byte[] hashb = new byte[HASH_SIZE];
+	private byte[] out = new byte[MODULUS_SIZE];
 	private byte[] cardUID = new byte[64];
 	public static byte[] cpt={(byte) 0x00};
 	public static final byte[] SUCCESS = {(byte)0x90};
@@ -177,14 +180,14 @@ public class SampleTestApplet extends Applet {
         case(INS_SC_DH_SIGN):
 			
         	// signing data
-			byte[] tmpp = new byte[MODULUS_SIZE];
-			byte[] hashb = jcDH.hash(AB);
+			tmpp = new byte[MODULUS_SIZE];
+			hashb = jcDH.hash(AB);
 			Util.arrayCopyNonAtomic(hashb, (short)0, tmpp, (short)96, (short)hashb.length);
 			signDec = jcDH.signRSA(tmpp, cardPrivateKeyExp, cardPrivateKeyMod);
     		// encrypt the signature before sending it to the client
     		AESIns = new AES();
     		AESIns.keySetUp(K);
-    		byte[] out = new byte[MODULUS_SIZE];
+    		out = new byte[MODULUS_SIZE];
     		AESIns.AesEncryption(out, signDec, (short)signDec.length);
     		// sending encrypted signature to the client
     		UtilAPDU.sendToClient(apdu, out);

@@ -120,5 +120,6 @@
         </yAxis>
       </LineChart>
       <PieChart fx:id="patientsGenderPieChart" layoutX="700.0" layoutY="243.0" prefHeight="181.0" prefWidth="265.0" />
+      <Button layoutX="96.0" layoutY="23.0" mnemonicParsing="false" onAction="#onLogout" styleClass="logout-button" stylesheets="@style.css" text="Logout" />
    </children>
 </AnchorPane>

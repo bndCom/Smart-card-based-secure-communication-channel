@@ -43,10 +43,30 @@ public class Util {
 
     public static boolean isCardInserted() throws CardNotFound{
         TerminalFactory tf = TerminalFactory.getDefault();
-        CardTerminal cad = tf.terminals().getTerminal("ACS ACR1281 1S Dual Reader PICC 0");
-        Pair<CardChannel, Card> cadPair = APDUOps.connectAndSelect(cad);
+        CardTerminal cad = null;
+        // verifying reader
+ 		while(cad == null){
+ 			cad = tf.terminals().getTerminal("ACS ACR1281 1S Dual Reader PICC 0");
+
+ 		}
+ 		// verifying the card
+//        Pair<CardChannel, Card> cadPair = null;
+//        Card c = null;
+//        while(c == null){
+//        	try {
+//				c = cad.connect("T=0");
+//			} catch (CardException e) {
+//				// TODO Auto-generated catch block
+//				System.out.println("card not found!");
+//			}
+//        	
+//        }
+ 		Pair<CardChannel, Card> cadPair = APDUOps.connectAndSelect(cad);
         CardChannel canal = cadPair.getKey();
+        Card c = cadPair.getValue();
         if(cad == null | canal == null ) throw new CardNotFound();
+        Main.canal = canal;
+        Main.c= c;
         return canal != null;
     }
 

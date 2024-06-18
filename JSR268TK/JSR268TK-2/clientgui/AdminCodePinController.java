@@ -2,8 +2,11 @@ package clientgui;
 
 import java.io.IOException;
 
+import jsr268gp.sampleclient.SessionAdmin;
+
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
+import javax.smartcardio.TerminalFactory;
 
 import javacard.framework.CardException;
 import javafx.scene.Node;
@@ -21,6 +24,7 @@ import javafx.util.Pair;
 import jsr268gp.sampleclient.APDUOps;
 import jsr268gp.sampleclient.CardAuthFailed;
 import jsr268gp.sampleclient.CardNotFound;
+import jsr268gp.sampleclient.NotAuthenticatedError;
 import jsr268gp.sampleclient.ServerError;
 
 public class AdminCodePinController {
@@ -48,10 +52,13 @@ public class AdminCodePinController {
             return;
         }else{
     		// connecting to the card
-    		Pair <CardChannel, Card> cadPair = null;
-     		cadPair = APDUOps.connectAndSelect(Main.cad);
-     		Main.canal = cadPair.getKey();
-         	Main.c = cadPair.getValue();
+//        	TerminalFactory tf = TerminalFactory.getDefault();
+//        	Main.cad = tf.terminals().getTerminal("ACS ACR1281 1S Dual Reader PICC 0");
+//    		Pair <CardChannel, Card> cadPair = null;
+//     		cadPair = APDUOps.connectAndSelect(Main.cad);
+//     		Main.canal = cadPair.getKey();
+//         	Main.c = cadPair.getValue();
+         	Main.admin = new SessionAdmin(Main.canal, "http://localhost:8080");
          	boolean auth = false;
          	try{
 				auth = Main.admin.auth(pin.getText());
@@ -132,6 +139,26 @@ public class AdminCodePinController {
 		window.setScene(secondScene);
 		window.show();
 	}
+	
+    @FXML
+    void onBack(ActionEvent event) throws Exception {
+    	try{
+            // Load the Second side
+            Parent secondView = FXMLLoader.load(getClass().getResource("homePage2.fxml"));
+            Scene secondScene = new Scene(secondView);
+            
+            // Get the current stage (window) using the event's source
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene on the current stage
+            window.setScene(secondScene);
+            window.setTitle("Login");
+            window.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	
+    }
 
     
 }

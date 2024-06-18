@@ -34,6 +34,7 @@ public class APDUOps {
 				
 			}catch(Exception e){
 				System.out.println("Error! Couldn't connect to the reader!!");
+				return null;
 			}
 		
 			return new Pair<CardChannel, Card>(canal, c);

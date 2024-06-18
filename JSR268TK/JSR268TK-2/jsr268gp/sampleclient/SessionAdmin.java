@@ -317,7 +317,18 @@ public class SessionAdmin extends Session{
     		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_CS_RSA_SERVER_PUBLIC_MOD, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("serverPublicMod")), newCanal);
     		// sending the UID of the card
     		respApdu = APDUOps.sendApduToCard(CLA_APPLET, INS_SC_UID, (byte)0x00, (byte)0x00, b64Decoder.decode(mp.get("userCardNumber")), newCanal);
-    	
+    		// printing variables
+    		System.out.println("card public mod");
+    		DH.printByteArray(b64Decoder.decode(mp.get("cardPublicMod")));
+    		System.out.println("card private mod");
+    		DH.printByteArray(b64Decoder.decode(mp.get("cardPrivateExp")));
+    		System.out.println("server public exp");
+    		DH.printByteArray(b64Decoder.decode(mp.get("serverPublicExp")));
+    		System.out.println("server public mod");
+    		DH.printByteArray(b64Decoder.decode(mp.get("serverPublicMod")));
+    		System.out.println("card num");
+    		DH.printByteArray(b64Decoder.decode(mp.get("userCardNumber")));
+    		
     	}catch(Exception e){
     		return false;
     	}
@@ -386,6 +397,39 @@ public class SessionAdmin extends Session{
     	
     	return true;
 		
+	}
+	
+	// disconnect
+	public boolean disconnect() throws Exception{
+		if(this.K == null){
+			throw new NotAuthenticatedError();
+		}
+		
+		timestamp = System.currentTimeMillis();
+    	hmac = UtilRequest.requestHash(timestamp, this.K, "");
+    	// url encode data
+    	hmac = URLEncoder.encode(hmac, StandardCharsets.UTF_8.toString());
+    	// sending the request
+    	response = UtilRequest.sendRequest(
+    			"POST",
+    			"uid="+this.UID+"&timestamp="+timestamp+"&hmac="+hmac,
+    			this.url+"/admins/disconnect",
+    			"application/x-www-form-urlencoded"
+    			);
+    	// checking the status of the request
+    	if(response.getCode() != HttpURLConnection.HTTP_OK){
+    		// the user is not authenticated
+    		if(response.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
+    			throw new NotAuthenticatedError();
+    		}
+    		throw new ServerError(response.getCode());
+    	}
+    	// decrypting the received data
+    	//data = new String(AesCBCPad.decrypt_CBC(b64Decoder.decode(response.getBody()), b64Decoder.decode(this.K)), StandardCharsets.UTF_8);
+    //convert json to a map
+    	//mapList = UtilRequest.jsonObjStringToMap(data);
+    	return true;
+    	
 	}
 	
 }

@@ -61,5 +61,34 @@ public class SessionDoctor extends Session{
     	return mapList;
     	
 	}
+	
+	// disconnect
+		public boolean disconnect() throws Exception{
+			if(this.K == null){
+				throw new NotAuthenticatedError();
+			}
+			
+			timestamp = System.currentTimeMillis();
+	    	hmac = UtilRequest.requestHash(timestamp, this.K, "");
+	    	// url encode data
+	    	hmac = URLEncoder.encode(hmac, StandardCharsets.UTF_8.toString());
+	    	// sending the request
+	    	response = UtilRequest.sendRequest(
+	    			"POST",
+	    			"uid="+this.UID+"&timestamp="+timestamp+"&hmac="+hmac,
+	    			this.url+"/doctors/disconnect",
+	    			"application/x-www-form-urlencoded"
+	    			);
+	    	// checking the status of the request
+	    	if(response.getCode() != HttpURLConnection.HTTP_OK){
+	    		// the user is not authenticated
+	    		if(response.getCode() == HttpURLConnection.HTTP_UNAUTHORIZED){
+	    			throw new NotAuthenticatedError();
+	    		}
+	    		throw new ServerError(response.getCode());
+	    	}
+	    	return true;
+	    	
+		}
 		
 }

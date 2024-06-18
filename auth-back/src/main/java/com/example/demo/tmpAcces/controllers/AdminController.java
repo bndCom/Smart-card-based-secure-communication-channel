@@ -254,6 +254,41 @@ public class AdminController {
             return ResponseEntity.status(505).build();
         }
     }
+    
+    // disconnect
+    @PostMapping("/disconnect")
+    public ResponseEntity<String> disconnect(
+    		@RequestParam long uid,
+    		@RequestParam long timestamp,
+    		@RequestParam String hmac
+    		) {
+        Optional<online> OptionalData = onlineRepository.findById(uid);
+
+        if (OptionalData.isPresent()) {
+            online authentedUser = OptionalData.get();
+            String AesKey = authentedUser.getK();
+            // once the user exists and is logged in validate the request
+    	    try{
+    		if(!Util.validateRequest(timestamp, AesKey, "", hmac)){
+        		return ResponseEntity.status(401).build();
+        	}
+    	    }catch(NoSuchAlgorithmException e){
+    		    throw new RuntimeException();
+    	    }
+    	    // deleting the session from online table
+    	    onlineRepository.deleteById(uid);
+    	    
+//                 List<Admin> admins = (List<Admin>) adminRepository.findAll();
+//                String js = Util.adminListToJson(admins);
+//        return ResponseEntity.ok(js);
+                try{
+        	        return ResponseEntity.ok("");
+                }catch(Exception e){
+        	        throw new RuntimeException();
+                }
+    }else{
+            return ResponseEntity.status(505).build();
+        }}
 
 
 

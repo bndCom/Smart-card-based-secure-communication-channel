@@ -265,3 +265,23 @@
     -fx-opacity: 0.6;
     -fx-cursor: hand;
 }
+
+.logout-button {
+    -fx-background-color: linear-gradient(#185FA1, #2175B5);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
+}
+
+.logout-button:hover {
+    -fx-background-color: linear-gradient(#2175B5, #2B8CC9);
+}
+
+.logout-button:pressed {
+    -fx-background-color: linear-gradient(#2B8CC9, #2175B5);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.5, 0, 0);
+}
